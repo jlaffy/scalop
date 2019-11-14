@@ -3,30 +3,14 @@
     factor(as.numeric(!cols %in% x) + 1)
 }
 
-#' @title Differential Expression Analysis
-#' @description Differential Expression Analysis. Compute gene-level fold changes and (adjusted) p-values between cell clusters of an expression matrix.
-#' @param x the group to be tested. This can be supplied as a character vector, or as a factor containing two levels where the first corresponds to the group.
-#' @param m numeric matrix. The matrix should not contain NA values.
-#' @param is.log is the data in log2 space? Fold change cutoff and calculation are adjusted accordingly. Default: T
-#' @param fc fold change cutoff. Set to NULL to not filter genes based on fold change. Default: 2
-#' @param p p value cutoff. Set to NULL to not filter genes based on p-values. Default: 0.05
-#' @param p.adjust.method correction for multiple testing? One of stats::p.adjust.methods, or 'none' if not desired. Default: 'BH'
-#' @param sortby sort genes by 'fc', 'p' or NULL. Default: 'fc'
-#' @param val return a named numeric vector of 'fc' or 'p' values. If NULL, returns the full dataframe. Default: NULL 
-#' @return a numeric vector of gene fold changes or p-values or a dataframe with both.
-#' @seealso 
-#'  \code{\link[stats]{character(0)}}
-#' @rdname dea
-#' @export 
-#' @importFrom stats p.adjust.methods
-dea = function(x,
-               m,
-               is.log = T,
-               fc = 2L,
-               p = 0.05,
-               p.adjust.method = 'BH',
-               sortby = 'fc',
-               val = NULL) {
+.dea = function(m,
+                x,
+                is.log = T,
+                fc = 2L,
+                p = 0.05,
+                p.adjust.method = 'BH',
+                sortby = 'fc',
+                val = NULL) {
 
     if (is.log & !is.null(fc)) fc = log2(fc)
     if (!is.factor(x)) x = .as_fac(x, cols = colnames(m))
@@ -47,4 +31,36 @@ dea = function(x,
     else if (val == 'p') return(stats::setNames(res$p.value, res$gene))
     else if (val != 'fc') warning('<val> not recognised. Reverting to default: "fc"')
     stats::setNames(res$fc, res$gene)
+}
+
+#' @title Differential Expression Analysis
+#' @description Differential Expression Analysis. Compute gene-level fold changes and (adjusted) p-values between cell clusters of an expression matrix.
+#' @param m numeric matrix. The matrix should not contain NA values.
+#' @param groups the group(s) to be tested. Each group should be a character vector or a two-level factor in which the first corresponds to the group. Multiple groups must be supplied as a list.
+#' @param is.log is the data in log2 space? Fold change cutoff and calculation are adjusted accordingly. Default: T
+#' @param fc fold change cutoff; numeric value or NULL. Default: 2
+#' @param p p-value cutoff; numeric value between 0 and 1 or NULL. Default: 0.05
+#' @param p.adjust.method correction method for multiple testing or 'none' if not desired. See stats::p.adjust.methods for options. Default: 'BH'
+#' @param sortby sort genes by 'fc', 'p' or NULL. Default: 'fc'
+#' @param val return a named numeric vector of 'fc' or 'p' values. If NULL, returns the full dataframe. Default: NULL 
+#' @return a numeric vector of gene fold changes or p-values or a dataframe with both.
+#' @seealso 
+#'  \code{\link[stats]{character(0)}}
+#' @rdname dea
+#' @export 
+#' @importFrom stats p.adjust.methods
+dea = function(m,
+               groups,
+               is.log = T,
+               fc = 2L,
+               p = 0.05,
+               p.adjust.method = 'BH',
+               sortby = 'fc',
+               val = NULL) {
+
+    if (is.character(groups) | is.factor(groups)) x = list(x)
+    else stopifnot(is.list(groups))
+    if (is.null(names(groups)) && length(groups) > 1) names(groups) = 1:length(groups)
+    Args = mget(ls(), envir = environment())[names(Args) != 'x']
+    Map(.dea, x = groups, MoreArgs = Args)
 }
