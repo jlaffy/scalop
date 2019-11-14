@@ -1,0 +1,15 @@
+Package: scalop
+Title: Single Cell Analysis Operations
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: A toolbox for analyses of single-cell RNA-seq data. High-level functions include hca() for hierarchical clustering analysis and dea() for differential expression analysis. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+URL: https://github.com/jlaffy/scalop
+BugReports: https://github.com/jlaffy/scalop/issues
