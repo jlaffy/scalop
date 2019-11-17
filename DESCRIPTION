@@ -13,10 +13,10 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/jlaffy/scalop
 BugReports: https://github.com/jlaffy/scalop/issues
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 Imports: 
     stats,
     dplyr,
     zeallot,
     grid,
-    ggplot2,
+    ggplot2

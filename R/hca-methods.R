@@ -33,112 +33,112 @@
 #' @details To begin the function from a precomputed object, pass to the appropriate argument. This allows you to skip precomputed steps and provide custom objects -- for example a similarity matrix (instead of the default correlation matrix computed in 'cr').
 #' @details The hca_[*] wrapper functions act as a shorthand to retrieve specific objects (replace [*] with object name). hca_* wrappers have simpler syntax but always return _one_ object.
 #' @return object or list of objects. If the latter, a full list contains m (input matrix to be clustered), cr (correlation matrix), dst (distance matrix), hc (hclust object), ord (char. vector), clusters (list of char. vectors).
+#' @name hca
 #' @seealso 
 #'  \code{\link[stats]{cor}},\code{\link[stats]{hclust}},\code{\link[stats]{dist}}
 #' @examples hca_clusters(hc = hc)
 #' @examples hca_ord(m = m)
-#' @rdname hca
-#' @export 
-#' @importFrom stats cor hclust dist as.dist
-hca = function(m = NULL,
-               cr = FALSE,
-               dst = FALSE,
-               hc = FALSE,
-               ord = FALSE,
-               clusters = F,
-               return.steps = TRUE,
-               hc.method = 'average', 
-               cor.method = 'pearson',
-               compute.dist = T,
-               dist.method = 'euclidean',
-               ord.labels = T,
-  		       h = NULL,
-		       k = NULL,
-		       min.cluster.size = 5,
-		       max.cluster.size = 0.8) {
+NULL
+
+.hca = function(m = NULL,
+                cr = FALSE,
+                dst = FALSE,
+                hc = FALSE,
+                ord = FALSE,
+                clusters = F,
+                return.steps = TRUE,
+                hc.method = 'average', 
+                cor.method = 'pearson',
+                compute.dist = T,
+                dist.method = 'euclidean',
+                ord.labels = T,
+   		        h = NULL,
+ 		        k = NULL,
+ 		        min.cluster.size = 5,
+ 		        max.cluster.size = 0.8) {
 
   # CORRELATION MATRIX
   # run?
     
     List = c()
     objects_to_compute = list(cr, dst, hc, ord, clusters)
-    start_computation = 0
-    end_computation = 6
+    start_at = 0
+    end_at = 6
     custom_start = sapply(objects_to_compute, function(obj) !is.logical(obj))
     custom_end = sapply(objects_to_compute, isTRUE)
 
     if (any(custom_start)) {
-        start_computation = max(which(custom_start))
+        start_at = max(which(custom_start))
     }
 
     if (any(custom_end)) {
-        end_computation = max(which(custom_end))
+        end_at = max(which(custom_end))
     }
 
-    if (start_computation == 0) {
+    if (start_at == 0) {
         List = c(List, list(m = m))
         cr = stats::cor(m, method = cor.method)
         cr[is.na(cr)] <- 0
-        start_computation = start_computation + 1
+        start_at = start_at + 1
     }
 
     List = c(List, list(cr = cr))
     
-    if (end_computation == 1) {
+    if (end_at == 1) {
         if (return.steps) return(List)
         return(cr)
     }
 
-    if (start_computation == 1) {
+    if (start_at == 1) {
         if (compute.dist) dst = stats::dist(1 - cr, method = dist.method)
         else dst = stats::as.dist(1 - cr)
-        start_computation = start_computation + 1
+        start_at = start_at + 1
     }
 
     List = c(List, list(dst = dst))
     
-    if (end_computation == 2) {
+    if (end_at == 2) {
         if (return.steps) return(List)
         return(dst)
     }
 
-    if (start_computation == 2) {
+    if (start_at == 2) {
         hc = stats::hclust(dst, method = hc.method)
-        start_computation = start_computation + 1
+        start_at = start_at + 1
     }
 
     List = c(List, list(hc = hc))
 
-    if (end_computation == 3) {
+    if (end_at == 3) {
         if (return.steps) return(List)
         else return(hc)
     }
 
-    if (start_computation == 3) {
+    if (start_at == 3) {
         if (!ord.labels) ord = hc$order
         else ord = hc$labels[hc$order]
-        start_computation = start_computation + 1
+        start_at = start_at + 1
     }
 
     List = c(List, list(ord = ord))
 
-    if (end_computation == 4) {
+    if (end_at == 4) {
         if (return.steps) return(List)
         else return(ord)
     }
 
-    if (start_computation == 4) {
+    if (start_at == 4) {
 	    clusters = .extractClusters(hc = hc,
 				                    h = h,
 				                    k = k,
 				                    min.cluster.size = min.cluster.size,
 				                    max.cluster.size = max.cluster.size)
-        start_computation = start_computation + 1
+        start_at = start_at + 1
     }
 
     List = c(List, list(clusters = clusters))
 
-    if (end_computation == 5) {
+    if (end_at == 5) {
         if (return.steps) return(List)
         else return(clusters)
     }
@@ -147,47 +147,29 @@ hca = function(m = NULL,
 }
 
 
- 
+
+#' @export
 #' @rdname hca
-#' @export 
-hca_cr = function(m, ...) {
-    hca(m = m, cr = T, ...)$cr
-}
+setMethod("hca", "missing", function() {
+              stop('missing input value')
+})
 
+#' @export
 #' @rdname hca
-#' @export 
-hca_dst = function(...) {
-    hca(dst = T, ...)$dst
-}
+setMethod("hca", "matrix", function(x, ...) {
+              if (is.cor(x)) .hca(cr = x, ...)
+              else .hca(m = x, ...)
+})
 
+#' @export
 #' @rdname hca
-#' @export 
-hca_hc = function(...) {
-    hca(hc = T, ...)$hc
-}
+setMethod("hca", "dist", function(x, ...) {
+              .hca(dst = x, ...)
+})
 
-
+#' @export
 #' @rdname hca
-#' @export 
-hca_ord = function(...) {
-    hca(ord = T, ...)$ord
-}
+setMethod("hca", "hclust", function(x, ...) {
+              .hca(hc = x, ...)
+})
 
-#' @rdname hca
-#' @export 
-hca_clusters = function(...) {
-    hca(...)$clusters
-}
-
-hca_reord = function(m, row = T, col = T, ...) {
-    if (col) m = m[, hca_ord(m = m, ...)]
-    if (row) m = m[hca_ord(m = t(m), ...), ]
-    m
-}
-
-hca_creord = function(m, row = T, col = T, ...) {
-    c(cr, ord) %<-% hca(m = m, ord = T, ...)[c("cr", "ord")]
-    if (col) cr = cr[, ord]
-    if (row) cr = cr[ord, ]
-    cr
-}

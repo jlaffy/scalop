@@ -1,0 +1,3 @@
+
+setOldClass('dist')
+setOldClass('hclust')

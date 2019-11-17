@@ -4,8 +4,18 @@
 \alias{score}
 \title{Score matrix columns for groups of rows}
 \usage{
-score(mat, groups, binmat = NULL, bins = NULL, controls = NULL,
-  bin.control = F, center = F, nbin = 30, n = 100, replace = F)
+score(
+  mat,
+  groups,
+  binmat = NULL,
+  bins = NULL,
+  controls = NULL,
+  bin.control = F,
+  center = F,
+  nbin = 30,
+  n = 100,
+  replace = F
+)
 }
 \arguments{
 \item{mat}{an expression matrix of gene rows by cell columns.}

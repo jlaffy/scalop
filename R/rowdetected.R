@@ -7,8 +7,6 @@
 #'  \code{\link[stats]{setNames}}
 #' @rdname rowdetected
 #' @export 
-#' @importFrom matrixStats rowCounts
-#' @importFrom stats setNames
 rowdetected = function(m) {
     m = as.matrix(m)
     res = matrixStats::rowCounts(m != 0)

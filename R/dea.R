@@ -10,22 +10,21 @@
     if (is.log & !is.null(fc)) fc = log2(fc)
     if (!is.factor(x)) x = makefac(x, cols = colnames(m))
 
-    res = genefilter::rowttests(m, fac = x)[, c("dm", "p.value")]
+    res = rowttests(m, fac = x)[, c("foldchange", "p.value")]
     res = tibble::rownames_to_column(res, 'gene')
-    colnames(res)[2] = 'fc'
 
-    if (!is.null(fc)) res = dplyr::filter(res, fc >= fc)
+    if (!is.null(fc)) res = dplyr::filter(res, foldchange >= fc)
     res = dplyr::mutate(res, p.value = stats::p.adjust(p.value, method = p.adjust.method))
     if (!is.null(p)) res = dplyr::filter(res, p.value <= p)
 
-    if (sortby == 'fc') res = dplyr::arrange(res, desc(fc))
+    if (sortby == 'fc') res = dplyr::arrange(res, desc(foldchange))
     else if (sortby == 'p') res = dplyr::arrange(res, p.value)
     else stop('<sortby> not recognised.')
 
     if (is.null(val)) return(res)
     else if (val == 'p') return(stats::setNames(res$p.value, res$gene))
     else if (val != 'fc') warning('<val> not recognised. Reverting to default: "fc"')
-    stats::setNames(res$fc, res$gene)
+    stats::setNames(res$foldchange, res$gene)
 }
 
 #' @title Differential Expression Analysis
@@ -43,7 +42,6 @@
 #'  \code{\link[stats]{character(0)}}
 #' @rdname dea
 #' @export 
-#' @importFrom stats p.adjust.methods
 dea = function(m,
                groups,
                is.log = T,

@@ -8,7 +8,6 @@
 #'  \code{\link[dplyr]{mutate}}
 #' @rdname hierarchy
 #' @export 
-#' @importFrom dplyr mutate transmute
 hierarchy = function(m, quadrants = NULL, log.scale = T) {
 
     if (!is.null(quadrants)) {

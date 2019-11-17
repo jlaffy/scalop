@@ -17,3 +17,9 @@ setGeneric("rowttests", function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
 #' @export
 setGeneric("colttests", function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
            standardGeneric("colttests"))
+
+
+#' @export
+#' @rdname hca
+setGeneric("hca", function(x, ...)
+           standardGeneric("hca"))

@@ -10,8 +10,6 @@
 #'  \code{\link[grid]{grid.draw}}
 #' @rdname grombine
 #' @export 
-#' @importFrom ggplot2 ggplotGrob
-#' @importFrom grid grid.draw
 grombine <- function(..., by = 'x', size = 'last', draw = T) {
     if (by %in% c('y', 'column')) {
         FUN.count = nrow

@@ -9,7 +9,6 @@
 #'  \code{\link[stats]{setNames}}
 #' @rdname comply
 #' @export 
-#' @importFrom stats setNames
 comply = function(x, y = NULL, FUN = jaccard) {
     # map function FUN to all combinations of x and y
     # if y is null, y is set to x

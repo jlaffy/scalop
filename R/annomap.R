@@ -21,7 +21,6 @@
 #'  \code{\link[ggpubr]{get_legend}},\code{\link[ggpubr]{rremove}}
 #' @rdname annomap
 #' @export 
-#' @importFrom ggpubr get_legend rremove
 annomap = function(X,
                    title = NULL,
                    x.title = NULL, 
