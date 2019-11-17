@@ -1,8 +1,3 @@
-
-.as_fac = function(x, cols) {
-    factor(as.numeric(!cols %in% x) + 1)
-}
-
 .dea = function(m,
                 x,
                 is.log = T,
@@ -13,7 +8,7 @@
                 val = NULL) {
 
     if (is.log & !is.null(fc)) fc = log2(fc)
-    if (!is.factor(x)) x = .as_fac(x, cols = colnames(m))
+    if (!is.factor(x)) x = makefac(x, cols = colnames(m))
 
     res = genefilter::rowttests(m, fac = x)[, c("dm", "p.value")]
     res = tibble::rownames_to_column(res, 'gene')
