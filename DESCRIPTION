@@ -20,6 +20,3 @@ Imports:
     zeallot,
     grid,
     ggplot2,
-    Rcpp
-LinkingTo: 
-    Rcpp

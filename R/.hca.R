@@ -45,8 +45,8 @@ hca = function(m = NULL,
                dst = FALSE,
                hc = FALSE,
                ord = FALSE,
-               clusters = F,
-               return.steps = TRUE,
+		       clusters = FALSE,
+               return.steps = FALSE,
                hc.method = 'average', 
                cor.method = 'pearson',
                compute.dist = T,
@@ -99,7 +99,7 @@ hca = function(m = NULL,
     
     if (end_computation == 2) {
         if (return.steps) return(List)
-        return(dst)
+        return(d)
     }
 
     if (start_computation == 2) {
@@ -150,44 +150,31 @@ hca = function(m = NULL,
  
 #' @rdname hca
 #' @export 
-hca_cr = function(m, ...) {
-    hca(m = m, cr = T, ...)$cr
+hca_cr = function(m) {
+    hca(m = m, cr = T, return.steps = F)
 }
 
 #' @rdname hca
 #' @export 
 hca_dst = function(...) {
-    hca(dst = T, ...)$dst
+    hca(dst = T, return.steps = F, ...)
 }
 
 #' @rdname hca
 #' @export 
 hca_hc = function(...) {
-    hca(hc = T, ...)$hc
+    hca(hc = T, return.steps = F, ...)
 }
 
 
 #' @rdname hca
 #' @export 
 hca_ord = function(...) {
-    hca(ord = T, ...)$ord
+    hca(ord = T, return.steps = F, ...)
 }
 
 #' @rdname hca
 #' @export 
 hca_clusters = function(...) {
-    hca(...)$clusters
-}
-
-hca_reord = function(m, row = T, col = T, ...) {
-    if (col) m = m[, hca_ord(m = m, ...)]
-    if (row) m = m[hca_ord(m = t(m), ...), ]
-    m
-}
-
-hca_creord = function(m, row = T, col = T, ...) {
-    c(cr, ord) %<-% hca(m = m, ord = T, ...)[c("cr", "ord")]
-    if (col) cr = cr[, ord]
-    if (row) cr = cr[ord, ]
-    cr
+    hca(clusters = T, return.steps = F, ...)
 }

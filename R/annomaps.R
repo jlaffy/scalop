@@ -12,7 +12,6 @@
 #'  \code{\link[ggplot2]{waiver}},\code{\link[ggplot2]{theme}}
 #' @rdname annomaps
 #' @export 
-#' @importFrom ggplot2 waiver theme
 annomaps = function(..., titles = NULL, flip = F, ratio = 0.03, mar = 0.015, angle = T) {
     .annomap = function(X, pal, title = NULL, breaks = NULL) {
         annomap(X, title = title, flip = flip,

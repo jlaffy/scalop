@@ -21,7 +21,6 @@
 #'  \code{\link[ggpubr]{get_legend}},\code{\link[ggpubr]{rremove}}
 #' @rdname annomap
 #' @export 
-#' @importFrom ggplot2 waiver ggplot scale_x_continuous scale_x_discrete geom_tile theme_bw scale_y_continuous theme element_text scale_fill_brewer scale_fill_manual coord_flip
 #' @importFrom ggpubr get_legend rremove
 annomap = function(X,
                    title = NULL,
