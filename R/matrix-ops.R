@@ -1,3 +1,62 @@
+#' @title Center a matrix column-wise 
+#' @description Center a matrix column-wise 
+#' @param m a matrix or Matrix
+#' @param by either "mean", "median" or a numeric vector of length equal to the number of columns of ‘m’. Default: "mean"
+#' @return column-centered matrix
+#' @rdname colcenter
+#' @export 
+colcenter = function(m, by = 'mean') {
+    m = as.matrix(m)
+    if (by == 'mean')  by = T
+    else if (by == 'median') by = matrixStats::colMedians(m)
+    else stopifnot(is.numeric(by) & length(by) == ncol(m))
+    scale(m, center = by, scale = F)
+}
+
+#' @title Center a matrix row-wise 
+#' @description Center a matrix row-wise 
+#' @param m a matrix or Matrix
+#' @param by either "mean", "median" or a numeric vector of length equal to the number of rows of ‘m’. Default: "mean"
+#' @return row-centered matrix
+#' @rdname rowcenter
+#' @export 
+rowcenter = function(m, by = 'mean') {
+    m = as.matrix(m)
+    if (by == 'mean')  by = T
+    else if (by == 'median') by = matrixStats::rowMedians(m)
+    else stopifnot(is.numeric(by) & length(by) == nrow(m))
+    t(scale(t(m), center = by, scale = F))
+}
+
+#' @title Number of non-zero values per column
+#' @description Number of non-zero values per column
+#' @param m matrix 
+#' @return numeric vector
+#' @seealso 
+#'  \code{\link[matrixStats]{rowCounts}}
+#'  \code{\link[stats]{setNames}}
+#' @rdname coldetected
+#' @export 
+coldetected = function(m) {
+    m = as.matrix(m)
+    res = matrixStats::colCounts(m != 0)
+    stats::setNames(res, colnames(m))
+}
+
+#' @title Number of non-zero values per row
+#' @description Number of non-zero values per row
+#' @param m matrix 
+#' @return numeric vector
+#' @seealso 
+#'  \code{\link[matrixStats]{rowCounts}}
+#'  \code{\link[stats]{setNames}}
+#' @rdname rowdetected
+#' @export 
+rowdetected = function(m) {
+    m = as.matrix(m)
+    res = matrixStats::rowCounts(m != 0)
+    stats::setNames(res, rownames(m))
+}
 
 #' @title <dim> for many matrices
 #' @description Returns the result of dim for every matrix in a list
@@ -66,11 +125,11 @@ have_equal_rownames = function(m1, m2) {
     all(rownames(m1) == rownames(m2))
 }
 
-have_equal_dims = function(m) {
+is_square = function(m) {
     nrow(m) == ncol(m)
 }
 
-is_square = have_equal_dims
+have_equal_dims = is_square
 
 is_cor = function(m) {
     rg = range(m)

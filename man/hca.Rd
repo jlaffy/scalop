@@ -11,8 +11,8 @@
 \title{Hierarchical clustering analysis}
 \usage{
 hca(x, cor.method = cor.methods, dist.method = dist.methods,
-  cluster.method = cluster.methods, h = NULL, k = NULL,
-  groups.minsize = 5, groups.maxsize = 0.5)
+  cluster.method = cluster.methods, max.dist = 1, h = NULL,
+  k = NULL, groups.minsize = 5, groups.maxsize = 0.5)
 
 hca_cor(x, return.steps = F, reorder = T, reorder.col = reorder,
   reorder.row = reorder, ...)

@@ -186,7 +186,7 @@ checkfac = function(fac) {
   return(list(fac=fac, nrgrp=nrgrp))
 }
 
-makefac = function(fac, xcols) {
-    factor(as.integer(!xcols %in% fac) + 1)
+makefac = function(fac, cols) {
+    factor(as.integer(!cols %in% fac) + 1)
 }
 

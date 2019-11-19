@@ -1,0 +1,41 @@
+---
+title: "hca"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{hca}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(scalop)
+dim(scdata)
+head(scdata)
+m = rowcenter(scdata)
+range_rowmeans(m)
+groups = hca_groups(m, groups.minsize = 5, groups.maxsize = 0.5)
+range(lengths(groups))
+groups = hca_groups(m, groups.minsize = 0.1, groups.maxsize = 0.5)
+table(lengths(groups))
+head(names(groups))
+hca_groups(m, k = 4) %>% lengths
+```
+
+```{r dea}
+args(dea)
+dea(m = m, groups = groups[[1]], val = NULL) %>% head
+dea(m = m, groups = groups[[1]], val = 'fc') %>% head
+dea(m = m, groups = groups[[1]], val = 'p') %>% head
+dea(m = m, groups = groups[[1]], val = 'fc', sortby = 'p') %>% head
+
+results = dea(m = m, groups = groups, fc = 3L, p = 0.05)
+```
+
+

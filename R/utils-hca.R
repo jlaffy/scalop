@@ -101,7 +101,7 @@
                         h = h,
                         groups.minsize = groups.minsize, 
                         groups.maxsize = groups.maxsize)
-        c(res, list(groups = x))
+        res = c(res, list(groups = x))
     }
 
     res

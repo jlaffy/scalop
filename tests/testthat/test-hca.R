@@ -35,7 +35,7 @@ test_that("hca_dist warns if matrix diagonal does not equal max.dist", {
 })
 
 test_that("is_cor recognises correlation matrix", {
-    cr = matrix(rnorm(mean = 0, sd = 1, n = 9), ncol = 3)
+    cr = matrix(rnorm(mean = 0, sd = 0.1, n = 9), ncol = 3)
     diag(cr) = 1
     expect_true(is_cor(cr))
 })
