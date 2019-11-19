@@ -10,7 +10,6 @@
 #' @param groups.maxsize PARAM_DESCRIPTION, Default: 0.5
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples 
 #' @rdname hca
 #' @export 
 hca = function(x,
@@ -34,9 +33,14 @@ hca = function(x,
 
 #' @rdname hca
 #' @export 
-hca_cor = function(x, return.steps = F, ...) {
-    if (return.steps) return(.hca(x, cor.end = T, ...))
-    .hca(x, cor.end = T, ...)$cr
+hca_cor = function(x, return.steps = F, reorder = T, reorder.col = reorder, reorder.row = reorder, ...) {
+    if (reorder.col|reorder.row) {
+        obj = .hca(x, hclust.end = T, ...)
+        if (reorder.col) obj$cr = obj$cr[, obj$ord]
+        if (reorder.row) obj$cr = obj$cr[obj$ord, ...]
+    } else obj = .hca(x, cor.end = T, ...)
+    if (return.steps) return(obj)
+    obj$cr
 }
 
 #' @rdname hca
@@ -65,4 +69,24 @@ hca_order = function(x, return.steps = F, ...) {
 hca_groups = function(x, return.steps = F, ...) {
     if (return.steps) return(.hca(x, ...))
     .hca(x, ...)$groups
+}
+
+
+#' @rdname hca
+#' @export 
+hca_reorder = function(x, col = T, row = T, cor.force = F, ...) {
+    stopifnot(has_dim(x))
+    skip.cor = (!isTRUE(cor.force) & is_cor(x))
+    if (skip.cor) {
+        cor.method = NULL
+        message('Input matrix <x> is a correlation matrix. Skipping correlation...')
+        message('Set cor.force = T to force correlation step.')
+        ord = .hca(x = x, hclust.end = T, cor.method = NULL, ...)$order
+        if (col) x = x[, ord]
+        if (row) x = x[ord, ]
+    } else {
+        if (col) x = x[, .hca(x = x, hclust.end = T, ...)$order]
+        if (row) x = x[.hca(x = t(x), hclust.end = T, ...)$order, ]
+    } 
+    x
 }

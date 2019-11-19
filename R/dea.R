@@ -21,10 +21,10 @@
     else if (sortby == 'p') res = dplyr::arrange(res, p.value)
     else stop('<sortby> not recognised.')
 
-    if (is.null(val)) return(res)
-    else if (val == 'p') return(stats::setNames(res$p.value, res$gene))
-    else if (val != 'fc') warning('<val> not recognised. Reverting to default: "fc"')
-    stats::setNames(res$foldchange, res$gene)
+    if (val == 'p') res = stats::setNames(res$p.value, res$gene)
+    else if (val == 'fc') res = stats::setNames(res$foldchange, res$gene)
+    else if (!is.null(val)) warning('<val> not recognised. Reverting to default value (dataframe)')
+    class(res) = append(class(res), "dea")
 }
 
 #' @title Differential Expression Analysis
@@ -36,7 +36,7 @@
 #' @param p p-value cutoff; numeric value between 0 and 1 or NULL. Default: 0.05
 #' @param p.adjust.method correction method for multiple testing or 'none' if not desired. See stats::p.adjust.methods for options. Default: 'BH'
 #' @param sortby sort genes by 'fc', 'p' or NULL. Default: 'fc'
-#' @param val return a named numeric vector of 'fc' or 'p' values. If NULL, returns the full dataframe. Default: NULL 
+#' @param val NULL, 'fc' or 'p'. If NULL returns full dataframe. If 'fc' or 'p', returns a named numeric value with fold change of p-values. Default: NULL 
 #' @return a numeric vector of gene fold changes or p-values or a dataframe with both.
 #' @seealso 
 #'  \code{\link[stats]{character(0)}}

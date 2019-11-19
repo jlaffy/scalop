@@ -66,7 +66,7 @@ have_equal_rownames = function(m1, m2) {
     all(rownames(m1) == rownames(m2))
 }
 
-have_equal_dims = function(m1) {
+have_equal_dims = function(m) {
     nrow(m) == ncol(m)
 }
 

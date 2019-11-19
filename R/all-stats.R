@@ -127,4 +127,3 @@ genescale <- function (m, axis=2, method=c("Z", "R"), na.rm=TRUE) {
 	method(m, na.rm=na.rm)
 }
 
-
