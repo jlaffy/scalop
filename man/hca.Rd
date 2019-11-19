@@ -7,13 +7,15 @@
 \alias{hca_tree}
 \alias{hca_order}
 \alias{hca_groups}
-\title{FUNCTION_TITLE}
+\alias{hca_reorder}
+\title{Hierarchical clustering analysis}
 \usage{
 hca(x, cor.method = cor.methods, dist.method = dist.methods,
   cluster.method = cluster.methods, h = NULL, k = NULL,
   groups.minsize = 5, groups.maxsize = 0.5)
 
-hca_cor(x, return.steps = F, ...)
+hca_cor(x, return.steps = F, reorder = T, reorder.col = reorder,
+  reorder.row = reorder, ...)
 
 hca_dist(x, return.steps = F, ...)
 
@@ -22,19 +24,21 @@ hca_tree(x, return.steps = F, ...)
 hca_order(x, return.steps = F, ...)
 
 hca_groups(x, return.steps = F, ...)
+
+hca_reorder(x, col = T, row = T, cor.force = F, ...)
 }
 \arguments{
-\item{x}{PARAM_DESCRIPTION}
+\item{x}{a matrix (features X observations), a dist object or hclust object.}
 
-\item{cor.method}{PARAM_DESCRIPTION, Default: cor.methods}
+\item{cor.method}{if correlation is desired, a character string, else NULL. If character string, one of 'pearson' (default), 'kendall' or 'spearman'. Applicable only when <x> is a matrix. One of scalop::cor.methods.  If correlation of <x> is not desired (e.g. if <x> is already a correlation or similarity mabtrix), set cor.method = NULL. Else 'pearson'. If <x> is a correlation/similarity matrix, set cor.method = NULL. Default: cor.methods}
 
-\item{dist.method}{PARAM_DESCRIPTION, Default: dist.methods}
+\item{dist.method}{NULL or a character string, where default is 'euclidean'. See scalop::dist.methods for alternatives. Default: dist.methods}
 
-\item{cluster.method}{PARAM_DESCRIPTION, Default: cluster.methods}
+\item{cluster.method}{character string; one of scalop::cluster.methods. Default is 'average'. Default: cluster.methods}
 
-\item{h}{PARAM_DESCRIPTION, Default: NULL}
+\item{h}{height(s) at which to cut the tree. If NULL, h will be set to all tree heights. Default: NULL}
 
-\item{k}{PARAM_DESCRIPTION, Default: NULL}
+\item{k}{number of groups to return from tree. If <h> and <k> are both not NULL, <k> takes precedence. Default: NULL}
 
 \item{groups.minsize}{PARAM_DESCRIPTION, Default: 5}
 
@@ -44,7 +48,7 @@ hca_groups(x, return.steps = F, ...)
 OUTPUT_DESCRIPTION
 }
 \description{
-FUNCTION_DESCRIPTION
+Hierarchical clustering analysis, beginning from a matrix, a `dist` object or a `hclust` object. All subsequent objects necessary to be obtained groups or clusters from the clustering analysis will be generated. Use hca_[*] where * an object in question to stop the ste
 }
 \details{
 DETAILS

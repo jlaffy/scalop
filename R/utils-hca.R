@@ -1,24 +1,21 @@
-.hca_cor = function(m, method = cor.methods) {
-    method = match.arg(method)
+.hca_cor = function(m, method) {
     stats::cor(m, method = method)
 }
 
-.hca_dist = function(m, maxd = 1, method = dist.methods) {
-    if (is.null(maxd)) dm = m
+.hca_dist = function(m, method, max.dist = NULL) {
+    if (is.null(max.dist)) dm = m
     else {
-        if (is_square(m) && unique(diag(m)) != maxd) {
-            warning("max. distance <maxd> = ", maxd,
+        if (is_square(m) && unique(diag(m)) != max.dist) {
+            warning("max. distance <max.dist> = ", max.dist,
                     " but <m> diagonal = ", unique(diag(m)), "...")
         }
-        dm = maxd - m
+        dm = max.dist - m
     }
     if (is.null(method)) return(stats::as.dist(dm))
-    method = match.arg(method)
     stats::dist(dm, method = method)
 }
 
-.hca_tree = function(d, method = cluster.methods) {
-    method = match.arg(method)
+.hca_tree = function(d, method) {
     stats::hclust(d, method = method)
 }
 
@@ -62,6 +59,7 @@
                 cor.method = cor.methods, 
                 dist.method = dist.methods,
                 cluster.method = cluster.methods,
+                max.dist = 1,
                 h = NULL,
                 k = NULL,
                 groups.minsize = 5,
@@ -71,16 +69,21 @@
                 hclust.end = F) {
 
     res = c()
+    if (!is.null(cor.method)) cor.method = match.arg(cor.method)
+    if (!is.null(dist.method)) dist.method = match.arg(dist.method)
+    cluster.method = match.arg(cluster.method)
 
     if (class(x) == 'matrix') {
         if (!is.null(cor.method)) {
             if (is_cor(x)) {
                 warning('\nComputing correlations over a correlation matrix...\n',
-                        'Set `cor.method = NULL` to skip correlation step.')} 
+                        'Set `cor.method = NULL` to skip correlation step.')
+            }
             x = .hca_cor(x, method = cor.method)
             res = c(res, list(cr = x))
-            if (cor.end) return(res)}
-        x = .hca_dist(x, method = dist.method)
+            if (cor.end) return(res)
+        }
+        x = .hca_dist(x, method = dist.method, max.dist = max.dist)
         res = c(res, list(dist = x))
         if (dist.end) return(res)
     }

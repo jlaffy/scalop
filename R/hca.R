@@ -16,14 +16,16 @@ hca = function(x,
                cor.method = cor.methods,
                dist.method = dist.methods,
                cluster.method = cluster.methods,
+               max.dist = 1,
                h = NULL,
                k = NULL,
                groups.minsize = 5,
                groups.maxsize = 0.5) {
     .hca(x,
-         cor.method = cor.methods,
-         dist.method = dist.methods,
-         cluster.method = cluster.methods,
+         cor.method = cor.method,
+         dist.method = dist.method,
+         cluster.method = cluster.method,
+         max.dist = max.dist,
          h = h,
          k = k,
          groups.minsize = groups.minsize,
@@ -37,7 +39,7 @@ hca_cor = function(x, return.steps = F, reorder = T, reorder.col = reorder, reor
     if (reorder.col|reorder.row) {
         obj = .hca(x, hclust.end = T, ...)
         if (reorder.col) obj$cr = obj$cr[, obj$ord]
-        if (reorder.row) obj$cr = obj$cr[obj$ord, ...]
+        if (reorder.row) obj$cr = obj$cr[obj$ord, ]
     } else obj = .hca(x, cor.end = T, ...)
     if (return.steps) return(obj)
     obj$cr
@@ -78,9 +80,8 @@ hca_reorder = function(x, col = T, row = T, cor.force = F, ...) {
     stopifnot(has_dim(x))
     skip.cor = (!isTRUE(cor.force) & is_cor(x))
     if (skip.cor) {
-        cor.method = NULL
-        message('Input matrix <x> is a correlation matrix. Skipping correlation...')
-        message('Set cor.force = T to force correlation step.')
+        message('\nInput matrix <x> is a correlation matrix. Skipping correlation...',
+                '\nSet cor.force = T to force correlation step.')
         ord = .hca(x = x, hclust.end = T, cor.method = NULL, ...)$order
         if (col) x = x[, ord]
         if (row) x = x[ord, ]

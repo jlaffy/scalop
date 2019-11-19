@@ -22,7 +22,7 @@ dea(m, groups, is.log = T, fc = 2L, p = 0.05,
 
 \item{sortby}{sort genes by 'fc', 'p' or NULL. Default: 'fc'}
 
-\item{val}{return a named numeric vector of 'fc' or 'p' values. If NULL, returns the full dataframe. Default: NULL}
+\item{val}{NULL, 'fc' or 'p'. If NULL returns full dataframe. If 'fc' or 'p', returns a named numeric value with fold change of p-values. Default: NULL}
 }
 \value{
 a numeric vector of gene fold changes or p-values or a dataframe with both.
