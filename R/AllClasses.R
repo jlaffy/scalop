@@ -1,3 +1,0 @@
-
-setOldClass('dist')
-setOldClass('hclust')

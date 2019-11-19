@@ -4,7 +4,8 @@
 \alias{annomaps}
 \title{many-bar annotations ggplot}
 \usage{
-annomaps(..., titles = NULL, flip = F, ratio = 0.03, mar = 0.015, angle = T)
+annomaps(..., titles = NULL, flip = F, ratio = 0.03, mar = 0.015,
+  angle = T)
 }
 \arguments{
 \item{...}{named character vectors of observations and groups (names). All vectors must contain the same observations, and the ordering in the first vector provided is preserved.}

@@ -4,22 +4,10 @@
 \alias{annomap}
 \title{One-bar annotation ggplot}
 \usage{
-annomap(
-  X,
-  title = NULL,
-  x.title = NULL,
-  pal = 1,
-  angle = F,
-  breaks = ggplot2::waiver(),
-  x.num = T,
-  flip = F,
-  hide.legend = T,
-  legend.pos = "top",
-  ratio = 0.03,
-  mar = 0.015,
-  cols = NULL,
-  cols.order = names(cols)
-)
+annomap(X, title = NULL, x.title = NULL, pal = 1, angle = F,
+  breaks = ggplot2::waiver(), x.num = T, flip = F, hide.legend = T,
+  legend.pos = "top", ratio = 0.03, mar = 0.015, cols = NULL,
+  cols.order = names(cols))
 }
 \arguments{
 \item{X}{named character vector of observations and groups (names); or a dataframe with first two columns as observations and groups.}

@@ -4,16 +4,8 @@
 \alias{binmatch}
 \title{Control Signatures From Expression Bins}
 \usage{
-binmatch(
-  Group,
-  mat = NULL,
-  x = NULL,
-  bins = NULL,
-  nbin = 30,
-  n = 100,
-  replace = FALSE,
-  ...
-)
+binmatch(Group, mat = NULL, x = NULL, bins = NULL, nbin = 30,
+  n = 100, replace = FALSE, ...)
 }
 \arguments{
 \item{Group}{a character vector.}

@@ -4,16 +4,8 @@
 \alias{dea}
 \title{Differential Expression Analysis}
 \usage{
-dea(
-  m,
-  groups,
-  is.log = T,
-  fc = 2L,
-  p = 0.05,
-  p.adjust.method = "BH",
-  sortby = "fc",
-  val = NULL
-)
+dea(m, groups, is.log = T, fc = 2L, p = 0.05,
+  p.adjust.method = "BH", sortby = "fc", val = NULL)
 }
 \arguments{
 \item{m}{numeric matrix. The matrix should not contain NA values.}
