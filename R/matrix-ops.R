@@ -114,7 +114,7 @@ split_matrix = function(m, by) {
     stopifnot(has_dim(m))
     stopifnot(is.character(by))
     stopifnot(all(by %in% colnames(m)))
-    list(x = m[, by], y = m[, !colnames(m) %in% by])
+    list(x = m[, by, drop = F], y = m[, !colnames(m) %in% by, drop = F])
 }
 
 have_equal_nrows = function(m1, m2) {

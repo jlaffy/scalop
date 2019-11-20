@@ -21,9 +21,11 @@
     else if (sortby == 'p') res = dplyr::arrange(res, p.value)
     else stop('<sortby> not recognised.')
 
-    if (val == 'p') res = stats::setNames(res$p.value, res$gene)
-    else if (val == 'fc') res = stats::setNames(res$foldchange, res$gene)
-    else if (!is.null(val)) warning('<val> not recognised. Reverting to default value (dataframe)')
+    if (!is.null(val)) {
+        if (val == 'p') res = stats::setNames(res$p.value, res$gene)
+        else if (val == 'fc') res = stats::setNames(res$foldchange, res$gene)
+        else warning('<val> not recognised. Reverting to default value (dataframe)')
+    }
     class(res) = c(class(res), "dea")
     res
 }
@@ -53,7 +55,7 @@ dea = function(m,
                val = NULL) {
 
     if (is.character(groups) | is.factor(groups)) groups = list(groups)
-    else stopifnot(is.list(groups))
+    stopifnot(is.list(groups))
     if (is.null(names(groups)) && length(groups) > 1) names(groups) = 1:length(groups)
     Args = mget(ls(), envir = environment())
     Args = Args[names(Args) != 'groups']
