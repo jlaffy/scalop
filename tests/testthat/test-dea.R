@@ -1,0 +1,10 @@
+test_that("foldchange works with character group", {
+    genes = sample(rownames(scdata), 1)
+    cells = sample(colnames(m), 10) 
+    m = rowcenter(scdata[genes, , drop = F])
+    c(m1,m2) %<-% split_matrix(m, cells)
+    ref = rowMeans(m1) - rowMeans(m2)
+    class(ref) = c(class(ref), "dea")
+    res = dea(m, cells, fc = NULL, p = NULL, val = 'fc')
+    expect_equal(res, ref)
+})

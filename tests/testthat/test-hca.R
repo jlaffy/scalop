@@ -1,7 +1,5 @@
 context('hierarchical clustering analysis')
 
-m = rowcenter(scdata[1:50, 1:10])
-
 test_that("NULL cor.method skips correlation step", {
     Names = names(hca(m, cor.method = NULL))
     expect_false("cr" %in% Names)
