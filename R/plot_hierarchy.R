@@ -28,7 +28,7 @@ plot_hierarchy = function(X,
     if (is.null(groups)) col = 'darkred'
     else col = 'grey85'
 
-    plot(X[,1], X[,2], pch = 20, col = col, main = main, xlab = xlab, ylab = ylab)
+    graphics::plot(X[,1], X[,2], pch = 20, col = col, main = main, xlab = xlab, ylab = ylab)
 
     if (is.null(groups)) legend = F
     else {
@@ -37,16 +37,16 @@ plot_hierarchy = function(X,
         groups = split(groups, names(groups))
         Xgrp = sapply(groups, function(rows) X[rows,,drop = F], simplify = F)
         if (!is.null(group.cols)) colgrp = group.cols[names(groups)]
-        else colgrp = rainbow(n = length(Xgrp))
-        Map(points,
+        else colgrp = grDevices::rainbow(n = length(Xgrp))
+        Map(graphics::points,
             x = sapply(Xgrp, `[[`, 1, simplify = F),
             y = sapply(Xgrp, `[[`, 2, simplify = F),
             col = colgrp,
             MoreArgs = list(pch = 20))
     }
 
-    abline(v = 0, lty = 2)
-    abline(h = 0, lty = 2)
+    graphics::abline(v = 0, lty = 2)
+    graphics::abline(h = 0, lty = 2)
 
     if (legend) {
         legend(legend.pos,
@@ -61,8 +61,8 @@ plot_hierarchy = function(X,
 
     Names = quadrant.names
     cex = 1.2
-    mtext(side = 1, adj = 0, text = Names[1], cex = cex, line = cex - 1)
-    mtext(side = 1, adj = 1, text = Names[2], cex = cex, line = cex - 1)
-    mtext(side = 3, adj = 0, text = Names[3], cex = cex)
-    mtext(side = 3, adj = 1, text = Names[4], cex = cex)
+    graphics::mtext(side = 1, adj = 0, text = Names[1], cex = cex, line = cex - 1)
+    graphics::mtext(side = 1, adj = 1, text = Names[2], cex = cex, line = cex - 1)
+    graphics::mtext(side = 3, adj = 0, text = Names[3], cex = cex)
+    graphics::mtext(side = 3, adj = 1, text = Names[4], cex = cex)
 }

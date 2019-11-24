@@ -21,15 +21,15 @@ hierarchy = function(m, quadrants = NULL, log.scale = T) {
     rows = rownames(m)
     colnames(dat) = c('bl', 'br', 'tl', 'tr')
 
-    dat = dat %>%
-        dplyr::mutate(bottom = pmax(bl, br),
-                      top = pmax(tl, tr),
-                      b.center = br - bl,
-                      t.center = tr - tl,
-                      x = ifelse(bottom > top, b.center, t.center), # dependent var
-                      x.scaled = (sign(x) * log2(abs(x) + 1)),
-                      y = top - bottom, # independent var
-                      y.scaled = (sign(y) * log2(abs(y) + 1)))
+    dat = dplyr::mutate(dat,
+                        bottom = pmax(bl, br),
+                        top = pmax(tl, tr),
+                        b.center = br - bl,
+                        t.center = tr - tl,
+                        x = ifelse(bottom > top, b.center, t.center), # dependent var
+                        x.scaled = (sign(x) * log2(abs(x) + 1)),
+                        y = top - bottom, # independent var
+                        y.scaled = (sign(y) * log2(abs(y) + 1)))
 
     if (!log.scale) dat = dplyr::transmute(dat, X = x, Y = y)
     else dat = dplyr::transmute(dat, X = x.scaled, Y = y.scaled)

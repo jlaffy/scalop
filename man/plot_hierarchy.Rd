@@ -4,11 +4,18 @@
 \alias{plot_hierarchy}
 \title{Plot State Hierarchy (Quadrant plot)}
 \usage{
-plot_hierarchy(X, quadrant.names = c("bl", "br", "tl", "tr"),
-  main = NULL, xlab = "Relative meta-module score [log2(|SC1-SC2|+1)]",
+plot_hierarchy(
+  X,
+  quadrant.names = c("bl", "br", "tl", "tr"),
+  main = NULL,
+  xlab = "Relative meta-module score [log2(|SC1-SC2|+1)]",
   ylab = "Relative meta-module score [log2(|SC1-SC2|+1)]",
-  groups = NULL, group.cols = NULL, legend = T,
-  legend.pos = "bottom", legend.horiz = T)
+  groups = NULL,
+  group.cols = NULL,
+  legend = T,
+  legend.pos = "bottom",
+  legend.horiz = T
+)
 }
 \arguments{
 \item{X}{two-column matrix or dataframe with x and y coordinates.}
