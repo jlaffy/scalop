@@ -1,10 +1,7 @@
 .hca_cor = function(m, method) {
     method = match.arg(method, cor.methods)
-    if (!is.null(cor.method)) {
-            if (is_cor(x)) {
-            }
     if (method == 'none') return(m)
-    else if (is_cor(m)) {
+    if (is_cor(m)) {
         warning('\nComputing correlations over a correlation matrix...\n',
                 'Set `cor.method = "none"` to skip correlation step.')
     }

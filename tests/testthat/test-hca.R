@@ -1,8 +1,8 @@
 context('hierarchical clustering analysis')
 
-test_that("NULL cor.method skips correlation step", {
-    Names = names(hca(m, cor.method = NULL))
-    expect_false("cr" %in% Names)
+test_that("cor.method 'none' skips correlation step", {
+    x = hca(m, cor.method = "none")
+    expect_identical(m, x$cr)
 })
 
 test_that("ordered correlation matrices are equal", {
@@ -19,7 +19,7 @@ test_that("ordered correlation matrices are equal", {
 
 test_that("order output is the same from matrix and correlation matrix", {
     ord1 = .hca(m, hclust.end = T)$order
-    ord2 = hca(hca_cor(m, reorder = F), cor.method = NULL)$ord
+    ord2 = hca(hca_cor(m, reorder = F), cor.method = "none")$ord
     expect_identical(ord1, ord2)
 })
 
