@@ -43,7 +43,7 @@
 
     # Center?
     if (center) {
-        s.mat = colCenter(s.mat)
+        s.mat = colcenter(s.mat)
     }
 
     return(s.mat)

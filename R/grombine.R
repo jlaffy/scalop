@@ -47,7 +47,7 @@ grombine <- function(..., by = 'x', size = 'last', draw = T) {
                         ifelse(is_grob(obj), return(obj), return(ggplotGrob(obj)))}
         , simplify = F)
 
-    Grob = marrangeGrob(grobs = grobs, nrow = nrow, ncol = ncol)
+    Grob = gridExtra::marrangeGrob(grobs = grobs, nrow = nrow, ncol = ncol)
     if (!draw) return(Grob)
     grid::grid.draw(Grob)
 }

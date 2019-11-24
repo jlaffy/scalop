@@ -69,11 +69,11 @@ annomap = function(X,
 
     # ggplot x scale
     if (x.num) {
-        G = ggplot2::ggplot(X, aes(x = as.numeric(x), fill = fill, y = 1))
+        G = ggplot2::ggplot(X, ggplot2::aes(x = as.numeric(x), fill = fill, y = 1))
         scale_x_choose = ggplot2::scale_x_continuous
     }
     else {
-        G = ggplot2::ggplot(X, aes(x = x, fill = fill, y = 1))
+        G = ggplot2::ggplot(X, ggplot2::aes(x = x, fill = fill, y = 1))
         scale_x_choose = ggplot2::scale_x_discrete
     }
 
@@ -97,7 +97,7 @@ annomap = function(X,
 
     if (!is.null(cols.order)) {
         col.groups = unique(X$fill)
-        if (is.null(cols)) cols = rainbow(n = length(col.groups))
+        if (is.null(cols)) cols = grDevices::rainbow(n = length(col.groups))
         cols = cols[match(col.groups, cols.order)]
         G = G + ggplot2::scale_fill_manual(values = cols)
     }

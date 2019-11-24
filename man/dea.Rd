@@ -38,6 +38,3 @@ a numeric vector of gene fold changes or p-values or a dataframe with both.
 \description{
 Differential Expression Analysis. Compute gene-level fold changes and (adjusted) p-values between cell clusters of an expression matrix.
 }
-\seealso{
-\code{\link[stats]{character(0)}}
-}

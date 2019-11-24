@@ -41,8 +41,6 @@
 #' @param sortby sort genes by 'fc', 'p' or NULL. Default: 'fc'
 #' @param val NULL, 'fc' or 'p'. If NULL returns full dataframe. If 'fc' or 'p', returns a named numeric value with fold change of p-values. Default: NULL 
 #' @return a numeric vector of gene fold changes or p-values or a dataframe with both.
-#' @seealso 
-#'  \code{\link[stats]{character(0)}}
 #' @rdname dea
 #' @export 
 dea = function(m,

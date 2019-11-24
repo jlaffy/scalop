@@ -1,13 +1,14 @@
 
+#' @keywords internal
 x_in_y_overA = function(A = 0.1) {
     function(x, y) {
-        if(na.rm) x = x[!is.na(x)]
         x = sort(x, decreasing = T)
         y = sort(y, decreasing = F)[1:length(x)]
         sum( x >= y ) >= A
     }
 }
 
+#' @keywords internal
 kOverA <- function(k, A=100, na.rm = TRUE) {
   function(x) {
       if(na.rm)
@@ -16,11 +17,13 @@ kOverA <- function(k, A=100, na.rm = TRUE) {
   }
 }
 
+#' @keywords internal
 maxA <- function(A=75, na.rm=TRUE) {
     function(x) {max(x, na.rm=na.rm) >= A }
 }
 
 
+#' @keywords internal
 pOverA <-  function(p=0.05, A=100, na.rm = TRUE) {
   function(x) {
       if(na.rm)
@@ -30,6 +33,7 @@ pOverA <-  function(p=0.05, A=100, na.rm = TRUE) {
 }
 
 
+#' @keywords internal
 cv <- function(a=1, b=Inf, na.rm=TRUE) {
     function(x) {
         	sdx <- stats::sd(x, na.rm=na.rm)
@@ -41,6 +45,7 @@ cv <- function(a=1, b=Inf, na.rm=TRUE) {
             }
 }
 
+#' @keywords internal
 anova <- function(cov, p=0.05, na.rm=TRUE)
 {
     function(x) {
@@ -59,6 +64,7 @@ anova <- function(cov, p=0.05, na.rm=TRUE)
     }
 }
 
+#' @keywords internal
 coxfilter <- function(surt, cens, p) {
    autoload("coxph", "survival")
    function(x) {
@@ -73,6 +79,7 @@ coxfilter <- function(surt, cens, p) {
    }
 }
 
+#' @keywords internal
 ttest <- function(m, p=0.05, na.rm=TRUE) {
     if( length(m) == 1)
         function(x) {
@@ -100,8 +107,9 @@ ttest <- function(m, p=0.05, na.rm=TRUE) {
 
 
 
-# genefinder functions.
+# gf functions.
 
+#' @keywords internal
 genescale <- function (m, axis=2, method=c("Z", "R"), na.rm=TRUE) {
     ##scale by the range
     RscaleVector <- function(v, na.rm) {

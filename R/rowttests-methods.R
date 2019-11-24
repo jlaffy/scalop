@@ -6,6 +6,7 @@
 # change "dm" to "foldchange" in c code
 # add methods in colttests and rowttests with fac as character in signature definition
 
+#' @keywords internal
 #' @useDynLib scalop rowcolttests
 rowcoltt =  function(x, fac, tstatOnly, which, na.rm) {
   if (!missing(tstatOnly) && (!is.logical(tstatOnly) || is.na(tstatOnly)))
@@ -32,6 +33,7 @@ rowcoltt =  function(x, fac, tstatOnly, which, na.rm) {
   return(res)
 }
 
+#' @keywords internal
 rowcolFt =  function(x, fac, var.equal, which) {
   
   if(!(which %in% c(1L, 2L)))
@@ -119,28 +121,34 @@ rowcolFt =  function(x, fac, var.equal, which) {
 ## ==========================================================================
 ## rowttests and colttests methods for 'matrix'
 ## ==========================================================================
+#' @keywords internal
 setMethod("rowttests", signature(x="matrix", fac="factor"),
           function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
           rowcoltt(x, fac, tstatOnly, 1L, na.rm))
 
+#' @keywords internal
 setMethod("rowttests", signature(x="matrix", fac="missing"),
           function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
           rowcoltt(x, factor(integer(ncol(x))), tstatOnly, 1L, na.rm))
 
+#' @keywords internal
 setMethod("colttests", signature(x="matrix", fac="factor"),
           function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
           rowcoltt(x, fac, tstatOnly, 2L, na.rm))
 
+#' @keywords internal
 setMethod("colttests", signature(x="matrix", fac="missing"),
           function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
           rowcoltt(x, factor(integer(ncol(x))), tstatOnly, 2L, na.rm))
 
 ## new
 
+#' @keywords internal
 setMethod("rowttests", signature(x="matrix", fac="character"),
           function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
           rowcoltt(x, makefac(fac, colnames(x)), tstatOnly, 1L, na.rm))
 
+#' @keywords internal
 setMethod("colttests", signature(x="matrix", fac="character"),
           function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
           rowcoltt(x, makefac(fac, rownames(x)), tstatOnly, 2L, na.rm))
@@ -149,10 +157,12 @@ setMethod("colttests", signature(x="matrix", fac="character"),
 ## ==========================================================================
 ## rowFtests and colFtests methods for 'matrix'
 ## ==========================================================================
+#' @keywords internal
 setMethod("rowFtests", signature(x="matrix", fac="factor"),
           function(x, fac, var.equal=TRUE)
           rowcolFt(x, fac, var.equal, 1L))
 
+#' @keywords internal
 setMethod("colFtests", signature(x="matrix", fac="factor"),
           function(x, fac, var.equal=TRUE)
           rowcolFt(x, fac, var.equal, 2L))
@@ -163,6 +173,7 @@ setMethod("colFtests", signature(x="matrix", fac="factor"),
 ## convert fac from factor or numeric to integer and then
 ## make sure it is an integer 
 ## ------------------------------------------------------------
+#' @keywords internal
 checkfac = function(fac) {
 
   if(is.numeric(fac)) {
@@ -186,6 +197,7 @@ checkfac = function(fac) {
   return(list(fac=fac, nrgrp=nrgrp))
 }
 
+#' @keywords internal
 makefac = function(fac, cols) {
     factor(as.integer(!cols %in% fac) + 1)
 }
