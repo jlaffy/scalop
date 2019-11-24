@@ -7,7 +7,7 @@
 dims(mats)
 }
 \arguments{
-\item{m}{a list of matrices (or a single matrix)}
+\item{mats}{a list of matrices (or a single matrix)}
 }
 \value{
 dim for each matrix provided.

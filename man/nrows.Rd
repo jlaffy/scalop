@@ -7,7 +7,7 @@
 nrows(mats)
 }
 \arguments{
-\item{m}{a list of matrices (or a single matrix)}
+\item{mats}{a list of matrices (or a single matrix)}
 }
 \value{
 nrow for each matrix provided.

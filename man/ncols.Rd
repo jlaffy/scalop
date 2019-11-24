@@ -7,7 +7,7 @@
 ncols(mats)
 }
 \arguments{
-\item{m}{a list of matrices (or a single matrix)}
+\item{mats}{a list of matrices (or a single matrix)}
 }
 \value{
 ncol for each matrix provided.
