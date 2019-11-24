@@ -42,7 +42,7 @@ hca = function(x,
 #' @rdname hca
 #' @export 
 hca_cor = function(x,
-                   cor.method,
+                   cor.method = 'pearson',
                    return.steps = F,
                    reorder = T,
                    reorder.col = reorder,
@@ -74,9 +74,9 @@ hca_tree = function(x, return.steps = F, ...) {
 
 #' @rdname hca
 #' @export 
-hca_order = function(x, return.steps = F, ...) {
-    if (return.steps) return(.hca(x, hclust.end = T, ...))
-    .hca(x, hclust.end = T, ...)$order
+hca_order = function(x, return.steps = F, cor.method = 'pearson', ...) {
+    if (return.steps) return(.hca(x, hclust.end = T, cor.method = cor.method, ...))
+    .hca(x, hclust.end = T, cor.method = cor.method, ...)$order
 }
 
 #' @rdname hca
@@ -89,7 +89,7 @@ hca_groups = function(x, return.steps = F, ...) {
 
 #' @rdname hca
 #' @export 
-hca_reorder = function(x, col = T, row = T, cor.force = F, ...) {
+hca_reorder = function(x, cor.method = 'pearson', col = T, row = T, cor.force = F, ...) {
     stopifnot(has_dim(x))
     skip.cor = (!isTRUE(cor.force) & is_cor(x))
     if (skip.cor) {
@@ -99,8 +99,8 @@ hca_reorder = function(x, col = T, row = T, cor.force = F, ...) {
         if (col) x = x[, ord]
         if (row) x = x[ord, ]
     } else {
-        if (col) x = x[, .hca(x = x, hclust.end = T, ...)$order]
-        if (row) x = x[.hca(x = t(x), hclust.end = T, ...)$order, ]
+        if (col) x = x[, .hca(x = x, cor.method = cor.method, hclust.end = T, ...)$order]
+        if (row) x = x[.hca(x = t(x), cor.method = cor.method, hclust.end = T, ...)$order, ]
     } 
     x
 }
