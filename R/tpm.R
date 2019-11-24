@@ -1,3 +1,4 @@
+#' @export
 tpm = function(m, bulk = F) {
     if (has_dim(m)) m = as.matrix(m)
     if (bulk) x = 1
