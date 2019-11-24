@@ -1,21 +1,24 @@
 .hca_cor = function(m, method) {
+    method = match.arg(method, cor.methods)
+    if (method == 'none') return(m)
     stats::cor(m, method = method)
 }
 
 .hca_dist = function(m, method, max.dist = NULL) {
-    if (is.null(max.dist)) dm = m
-    else {
+    method = match.arg(method, dist.methods)
+    if (!is_square(m)) m = t(m)
+    if (!is.null(max.dist)) {
         if (is_square(m) && unique(diag(m)) != max.dist) {
-            warning("max. distance <max.dist> = ", max.dist,
-                    " but <m> diagonal = ", unique(diag(m)), "...")
+            warning("<max.dist> = ", max.dist, " but <m> diagonal = ", unique(diag(m)), "...")
         }
-        dm = max.dist - m
+        m = max.dist - m
     }
-    if (is.null(method)) return(stats::as.dist(dm))
-    stats::dist(dm, method = method)
+    if (method == 'none') return(stats::as.dist(m))
+    stats::dist(m, method = method)
 }
 
 .hca_tree = function(d, method) {
+    method = match.arg(method, cluster.methods)
     stats::hclust(d, method = method)
 }
 
@@ -78,8 +81,8 @@
             if (is_cor(x)) {
                 warning('\nComputing correlations over a correlation matrix...\n',
                         'Set `cor.method = NULL` to skip correlation step.')
-                x = .hca_cor(x, method = cor.method)
             }
+            x = .hca_cor(x, method = cor.method)
             res = c(res, list(cr = x))
             if (cor.end) return(res)
         }

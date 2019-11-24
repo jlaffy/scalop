@@ -35,7 +35,7 @@ hca_dist(x, return.steps = F, ...)
 
 hca_tree(x, return.steps = F, ...)
 
-hca_order(x, return.steps = F, ...)
+hca_order(x, return.steps = F, cor.method = "pearson", ...)
 
 hca_groups(x, return.steps = F, ...)
 
@@ -44,9 +44,9 @@ hca_reorder(x, col = T, row = T, cor.force = F, ...)
 \arguments{
 \item{x}{a matrix (features X observations), an object of class `dist` or an object of class `hclust`.}
 
-\item{cor.method}{option if <x> is a matrix. One of 'pearson' (default), 'kendall', 'spearman' or NULL (no correlation coefficents computed). Default: scalop::cor.methods}
+\item{cor.method}{option if <x> is a matrix. One of 'pearson' (default), 'kendall', 'spearman' or 'none' (no correlation coefficents computed). Default: scalop::cor.methods}
 
-\item{dist.method}{option if <x> is a matrix or correlation matrix. One of 'euclidean' (default), 'maximum', 'manhattan', 'canberra', 'binary', 'minkowski' or NULL (in which case stats::as.dist() will be used). Default: scalop::dist.methods}
+\item{dist.method}{option if <x> is a matrix or correlation matrix. One of 'euclidean' (default), 'maximum', 'manhattan', 'canberra', 'binary', 'minkowski' or 'none' (in which case stats::as.dist() will be used). Default: scalop::dist.methods}
 
 \item{cluster.method}{one of "average" (default), "complete", "single", "ward.D", "ward.D2", "mcquitty", "median" or "centroid". Default: scalop::cluster.methods}
 
@@ -56,16 +56,13 @@ hca_reorder(x, col = T, row = T, cor.force = F, ...)
 
 \item{k}{number of groups to return from tree. If <h> and <k> are both not NULL, <k> takes precedence. Default: NULL}
 
-\item{min.size}{PARAM_DESCRIPTION, Default: 5}
+\item{min.size}{minimum allowed cluster/group size. Values between 0 and 1 are interpreted as fractions of total count. Groups smaller than <min.size> are filtered out. Default: 5}
 
-\item{max.size}{PARAM_DESCRIPTION, Default: 0.5}
+\item{max.size}{maximum allowed cluster/group size. Values between 0 and 1 are interpreted as fractions of total count. Groups larger than <max.size> are filtered.out. Default: 0.5}
 }
 \value{
-OUTPUT_DESCRIPTION
+list
 }
 \description{
 Hierarchical clustering analysis
-}
-\details{
-DETAILS
 }
