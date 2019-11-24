@@ -105,11 +105,12 @@ nrows <- function(mats) {
     sapply(mats, nrow, simplify = T)
 }
 
-
+#' @export
 has_dim <- function(x) {
   !is.null(attr(x, "dim"))
 }
 
+#' @export
 split_matrix = function(m, by) {
     stopifnot(has_dim(m))
     stopifnot(is.character(by))
@@ -117,20 +118,27 @@ split_matrix = function(m, by) {
     list(x = m[, by, drop = F], y = m[, !colnames(m) %in% by, drop = F])
 }
 
+#' @export
 have_equal_nrows = function(m1, m2) {
     nrow(m1) == nrow(m2)
 }
 
+#' @export
 have_equal_rownames = function(m1, m2) {
     all(rownames(m1) == rownames(m2))
 }
 
+#' @export
 is_square = function(m) {
     nrow(m) == ncol(m)
 }
 
-have_equal_dims = is_square
+#' @export
+have_equal_dims = function(m1, m2) {
+    identical(dim(m1), dim(m2))
+}
 
+#' @export
 is_cor = function(m) {
     rg = range(m)
     if ((is_square(m)) & (rg[1] >= -1) & (rg[2] <= 1)) {
@@ -140,6 +148,7 @@ is_cor = function(m) {
     FALSE
 }
 
+#' @export
 is_symm = function(m) {
     (is_square(m)) && (sum(m == t(m)) != nrow(m)^2)
 }
