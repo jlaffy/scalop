@@ -1,6 +1,13 @@
 .hca_cor = function(m, method) {
     method = match.arg(method, cor.methods)
+    if (!is.null(cor.method)) {
+            if (is_cor(x)) {
+            }
     if (method == 'none') return(m)
+    else if (is_cor(m)) {
+        warning('\nComputing correlations over a correlation matrix...\n',
+                'Set `cor.method = "none"` to skip correlation step.')
+    }
     stats::cor(m, method = method)
 }
 
@@ -72,20 +79,11 @@
                 hclust.end = F) {
 
     res = c()
-    if (!is.null(cor.method)) cor.method = match.arg(cor.method)
-    if (!is.null(dist.method)) dist.method = match.arg(dist.method)
-    cluster.method = match.arg(cluster.method)
 
     if (class(x) == 'matrix') {
-        if (!is.null(cor.method)) {
-            if (is_cor(x)) {
-                warning('\nComputing correlations over a correlation matrix...\n',
-                        'Set `cor.method = NULL` to skip correlation step.')
-            }
-            x = .hca_cor(x, method = cor.method)
-            res = c(res, list(cr = x))
-            if (cor.end) return(res)
-        }
+        x = .hca_cor(x, method = cor.method)
+        res = c(res, list(cr = x))
+        if (cor.end) return(res)
         x = .hca_dist(x, method = dist.method, max.dist = max.dist)
         res = c(res, list(dist = x))
         if (dist.end) return(res)
