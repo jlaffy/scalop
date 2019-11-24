@@ -78,8 +78,8 @@
             if (is_cor(x)) {
                 warning('\nComputing correlations over a correlation matrix...\n',
                         'Set `cor.method = NULL` to skip correlation step.')
+                x = .hca_cor(x, method = cor.method)
             }
-            x = .hca_cor(x, method = cor.method)
             res = c(res, list(cr = x))
             if (cor.end) return(res)
         }
