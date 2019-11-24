@@ -19,13 +19,13 @@
     stats::hclust(d, method = method)
 }
 
-.hca_cutree = function(tree, k, h, groups.minsize, groups.maxsize) {
+.hca_cutree = function(tree, k, h, min.size, max.size) {
     groups = .hca_cutree_as_list(tree = tree, k = k, h = h)
     ncells = length(tree$labels)
-    groups.minsize = .cluster_size(groups.minsize, ncells)
-    groups.maxsize = .cluster_size(groups.maxsize, ncells)
+    min.size = .cluster_size(min.size, ncells)
+    max.size = .cluster_size(max.size, ncells)
     lens = lengths(groups)
-    groups[lens >= groups.minsize & lens <= groups.maxsize]
+    groups[lens >= min.size & lens <= max.size]
 }
 
 .cluster_size = function(cluster.size, ncells) {
@@ -62,8 +62,8 @@
                 max.dist = 1,
                 h = NULL,
                 k = NULL,
-                groups.minsize = 5,
-                groups.maxsize = 0.5, 
+                min.size = 5,
+                max.size = 0.5, 
                 cor.end = F,
                 dist.end = F,
                 hclust.end = F) {
@@ -99,8 +99,8 @@
         x = .hca_cutree(x,
                         k = k,
                         h = h,
-                        groups.minsize = groups.minsize, 
-                        groups.maxsize = groups.maxsize)
+                        min.size = min.size, 
+                        max.size = max.size)
         res = c(res, list(groups = x))
     }
 
