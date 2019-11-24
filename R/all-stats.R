@@ -32,7 +32,7 @@ pOverA <-  function(p=0.05, A=100, na.rm = TRUE) {
 
 cv <- function(a=1, b=Inf, na.rm=TRUE) {
     function(x) {
-        	sdx <- sd(x, na.rm=na.rm)
+        	sdx <- stats::sd(x, na.rm=na.rm)
         if(is.na(sdx) || sdx == 0 ) return(FALSE)
 	val <- sdx/abs(mean(x, na.rm=na.rm))
         if(val < a ) return(FALSE)
@@ -41,7 +41,7 @@ cv <- function(a=1, b=Inf, na.rm=TRUE) {
             }
 }
 
-Anova <- function(cov, p=0.05, na.rm=TRUE)
+anova <- function(cov, p=0.05, na.rm=TRUE)
 {
     function(x) {
         if( na.rm ) {
@@ -49,9 +49,9 @@ Anova <- function(cov, p=0.05, na.rm=TRUE)
             x <- x[!drop]
             cov <- cov[!drop]
         }
-        m1 <- lm(x~cov)
-        m2 <- lm(x~1)
-        av <- anova(m2,m1)
+        m1 <- stats::lm(x~cov)
+        m2 <- stats::lm(x~1)
+        av <- stats::anova(m2,m1)
         fstat <- av[["Pr(>F)"]][2]
         if( fstat < p )
             return(TRUE)
@@ -66,7 +66,7 @@ coxfilter <- function(surt, cens, p) {
        if( inherits(srvd, "try-error") )
            return(FALSE)
        ltest <- -2*(srvd$loglik[1] - srvd$loglik[2])
-       pv <- 1 - pchisq(ltest, 1)
+       pv <- 1 - stats::pchisq(ltest, 1)
        if( pv < p )
            return(TRUE)
        return(FALSE)
@@ -110,7 +110,7 @@ genescale <- function (m, axis=2, method=c("Z", "R"), na.rm=TRUE) {
     }
     ##scale using Zscore
     ZscaleVector <- function(v, na.rm)
-        (v - mean(v, na.rm=na.rm))/sd(v, na.rm=na.rm)
+        (v - mean(v, na.rm=na.rm))/stats::sd(v, na.rm=na.rm)
 #
 # scales a matrix using the scaleVector function.
 #

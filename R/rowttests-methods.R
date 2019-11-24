@@ -26,7 +26,7 @@ rowcoltt =  function(x, fac, tstatOnly, which, na.rm) {
                    row.names = dimnames(x)[[which]])
 
   if (!tstatOnly)
-    res = cbind(res, p.value = 2*pt(abs(res$statistic), cc$df, lower.tail=FALSE))
+    res = cbind(res, p.value = 2*stats::pt(abs(res$statistic), cc$df, lower.tail=FALSE))
 
   attr(res, "df") = cc$df    
   return(res)
@@ -109,7 +109,7 @@ rowcolFt =  function(x, fac, var.equal, which) {
   }
   
   res = data.frame(statistic = fstat,
-                   p.value   = pf(fstat, dff, dfr, lower.tail=FALSE),
+                   p.value   = stats::pf(fstat, dff, dfr, lower.tail=FALSE),
                    row.names = rownames(x))
 
   attr(res, "df") = c(dff=dff, dfr=dfr)

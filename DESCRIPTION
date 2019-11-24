@@ -1,11 +1,11 @@
 Package: scalop
 Title: Single Cell Analysis Operations
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Julie",
+           family = "Laffy",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "julie.laffy@weizmann.ac.il",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: A toolbox for analyses of single-cell RNA-seq data. High-level functions include hca() for hierarchical clustering analysis and dea() for differential expression analysis. 
 License: MIT + file LICENSE
@@ -14,15 +14,28 @@ LazyData: true
 URL: https://github.com/jlaffy/scalop
 BugReports: https://github.com/jlaffy/scalop/issues
 RoxygenNote: 7.0.0
+Depends:
+    R (>= 2.10)
 Imports: 
     stats,
     dplyr,
     zeallot,
     grid,
-    ggplot2
+    ggplot2,
+    Rcpp,
+    methods,
+    magrittr,
+    ggpubr,
+    gtable,
+    tibble,
+    matrixStats,
+    grDevices,
+    graphics
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
     rmarkdown,
     pkgdown
 VignetteBuilder: knitr
+LinkingTo: 
+    Rcpp

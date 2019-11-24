@@ -36,7 +36,7 @@
             control.call = quote(colMeans(mat[controls[[i]], , drop = F]))
         }
         # Score
-        groupids = setNames(1:length(groups), names(groups))
+        groupids = stats::setNames(1:length(groups), names(groups))
         score.call = quote(colMeans(mat[groups[[i]], , drop = F]))
         s.mat = sapply(groupids, function(i) eval(score.call) - eval(control.call))
     }
