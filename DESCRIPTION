@@ -1,6 +1,6 @@
 Package: scalop
 Title: Single Cell Analysis Operations
-Version: 0.1.0
+Version: 1.0.0
 Authors@R: 
     person(given = "Julie",
            family = "Laffy",
