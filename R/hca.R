@@ -36,12 +36,19 @@ hca = function(x,
 
 #' @rdname hca
 #' @export 
-hca_cor = function(x, return.steps = F, reorder = T, reorder.col = reorder, reorder.row = reorder, ...) {
+hca_cor = function(x,
+                   cor.method,
+                   return.steps = F,
+                   reorder = T,
+                   reorder.col = reorder,
+                   reorder.row = reorder,
+                   ...) {
+
     if (reorder.col|reorder.row) {
-        obj = .hca(x, hclust.end = T, ...)
+        obj = .hca(x, hclust.end = T, cor.method = cor.method, ...)
         if (reorder.col) obj$cr = obj$cr[, obj$ord]
         if (reorder.row) obj$cr = obj$cr[obj$ord, ]
-    } else obj = .hca(x, cor.end = T, ...)
+    } else obj = .hca(x, cor.end = T, cor.method = cor.method, ...)
     if (return.steps) return(obj)
     obj$cr
 }
