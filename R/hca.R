@@ -22,6 +22,11 @@ hca = function(x,
                k = NULL,
                min.size = 5,
                max.size = 0.5) {
+
+    if (!is.null(cor.method)) cor.method = match.arg(cor.method)
+    if (!is.null(dist.method)) dist.method = match.arg(dist.method)
+    cluster.method = match.arg(cluster.method)
+
     .hca(x,
          cor.method = cor.method,
          dist.method = dist.method,
