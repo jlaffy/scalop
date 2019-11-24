@@ -4,12 +4,24 @@
 \alias{jaccard}
 \title{Compute Jaccard Similarities between Pairs of Character Vectors}
 \usage{
-jaccard(x, y = NULL, order = F, dist.method = "manhattan")
+jaccard(
+  x,
+  y = NULL,
+  order = F,
+  dist.method = "manhattan",
+  cluster.method = "average"
+)
 }
 \arguments{
 \item{x}{character vector or list of character vectors}
 
 \item{y}{optional character vector or list of character vectors. If x is a character vector, y must be provided. Default: NULL}
+
+\item{order}{reorder rows and columns by hierarchical clustering. Not applicable if <x> and <y> are character vectors. Default: F}
+
+\item{dist.method}{distance metric to be computed, applicable if <order> is TRUE. See scalop::dist.methods. Default: "manhattan"}
+
+\item{cluster.method}{the agglomeration method to be used in hierachical clustering. See scalop::cluster.methods. Default: "average"}
 }
 \value{
 numeric Jaccard value between x and y if both are character vectors or a matrix of Jaccard values between all pairs of character vectors amongst x if x is a list and y was not provided, or between x and y if y was provided. If x and y were provided, the elements in x correspond to the columns in the output matrix.

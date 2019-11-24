@@ -10,12 +10,26 @@
 \alias{hca_reorder}
 \title{Hierarchical clustering analysis}
 \usage{
-hca(x, cor.method = cor.methods, dist.method = dist.methods,
-  cluster.method = cluster.methods, max.dist = 1, h = NULL,
-  k = NULL, groups.minsize = 5, groups.maxsize = 0.5)
+hca(
+  x,
+  cor.method = cor.methods,
+  dist.method = dist.methods,
+  cluster.method = cluster.methods,
+  max.dist = 1,
+  h = NULL,
+  k = NULL,
+  min.size = 5,
+  max.size = 0.5
+)
 
-hca_cor(x, return.steps = F, reorder = T, reorder.col = reorder,
-  reorder.row = reorder, ...)
+hca_cor(
+  x,
+  return.steps = F,
+  reorder = T,
+  reorder.col = reorder,
+  reorder.row = reorder,
+  ...
+)
 
 hca_dist(x, return.steps = F, ...)
 
@@ -28,27 +42,29 @@ hca_groups(x, return.steps = F, ...)
 hca_reorder(x, col = T, row = T, cor.force = F, ...)
 }
 \arguments{
-\item{x}{a matrix (features X observations), a dist object or hclust object.}
+\item{x}{a matrix (features X observations), an object of class `dist` or an object of class `hclust`.}
 
-\item{cor.method}{if correlation is desired, a character string, else NULL. If character string, one of 'pearson' (default), 'kendall' or 'spearman'. Applicable only when <x> is a matrix. One of scalop::cor.methods.  If correlation of <x> is not desired (e.g. if <x> is already a correlation or similarity mabtrix), set cor.method = NULL. Else 'pearson'. If <x> is a correlation/similarity matrix, set cor.method = NULL. Default: cor.methods}
+\item{cor.method}{option if <x> is a matrix. One of 'pearson' (default), 'kendall', 'spearman' or NULL (no correlation coefficents computed). Default: scalop::cor.methods}
 
-\item{dist.method}{NULL or a character string, where default is 'euclidean'. See scalop::dist.methods for alternatives. Default: dist.methods}
+\item{dist.method}{option if <x> is a matrix or correlation matrix. One of 'euclidean' (default), 'maximum', 'manhattan', 'canberra', 'binary', 'minkowski' or NULL (in which case stats::as.dist() will be used). Default: scalop::dist.methods}
 
-\item{cluster.method}{character string; one of scalop::cluster.methods. Default is 'average'. Default: cluster.methods}
+\item{cluster.method}{one of "average" (default), "complete", "single", "ward.D", "ward.D2", "mcquitty", "median" or "centroid". Default: scalop::cluster.methods}
+
+\item{max.dist}{maximum distance between observations. Default: 1}
 
 \item{h}{height(s) at which to cut the tree. If NULL, h will be set to all tree heights. Default: NULL}
 
 \item{k}{number of groups to return from tree. If <h> and <k> are both not NULL, <k> takes precedence. Default: NULL}
 
-\item{groups.minsize}{PARAM_DESCRIPTION, Default: 5}
+\item{min.size}{PARAM_DESCRIPTION, Default: 5}
 
-\item{groups.maxsize}{PARAM_DESCRIPTION, Default: 0.5}
+\item{max.size}{PARAM_DESCRIPTION, Default: 0.5}
 }
 \value{
 OUTPUT_DESCRIPTION
 }
 \description{
-Hierarchical clustering analysis, beginning from a matrix, a `dist` object or a `hclust` object. All subsequent objects necessary to be obtained groups or clusters from the clustering analysis will be generated. Use hca_[*] where * an object in question to stop the ste
+Hierarchical clustering analysis
 }
 \details{
 DETAILS
