@@ -12,9 +12,9 @@
 
     res = rowttests(m, fac = x)[, c("foldchange", "p.value")]
     res = tibble::rownames_to_column(res, 'gene')
+    res = dplyr::mutate(res, p.value = stats::p.adjust(p.value, method = p.adjust.method))
 
     if (!is.null(fc)) res = dplyr::filter(res, foldchange >= fc)
-    res = dplyr::mutate(res, p.value = stats::p.adjust(p.value, method = p.adjust.method))
     if (!is.null(p)) res = dplyr::filter(res, p.value <= p)
 
     if (sortby == 'fc') res = dplyr::arrange(res, desc(foldchange))
