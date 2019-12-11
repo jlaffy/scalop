@@ -61,3 +61,30 @@ is_number = function(x) {
 #' @importFrom magrittr %>%
 #' @usage lhs \%>\% rhs
 NULL
+
+headl = function(m, i = 6L) {
+    i = min(i, ncol(m))
+    format(head(m[, 1:i]))
+}
+
+headr = function(m, i = 6L) {
+    i = min(i, ncol(m))
+    i2 = ncol(m)
+    i = i2 - i
+    banner = paste0(rep("=", 40))
+    message = paste('Head first', i, ' columns:')
+    format(head(m[, i:i2]))
+}
+
+taill = function(m, i = 6L) {
+    i = min(i, ncol(m))
+    format(tail(m[, 1:i]))
+}
+
+
+tailr = function(m, i = 6L) {
+    i = min(i, ncol(m))
+    i2 = ncol(m)
+    i = i2 - i
+    format(tail(m[, i:i2]))
+}
