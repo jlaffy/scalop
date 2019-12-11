@@ -62,11 +62,15 @@ is_number = function(x) {
 #' @usage lhs \%>\% rhs
 NULL
 
+#' @rdname headl
+#' @export
 headl = function(m, i = 6L) {
     i = min(i, ncol(m))
     format(head(m[, 1:i]))
 }
 
+#' @rdname headr
+#' @export
 headr = function(m, i = 6L) {
     i = min(i, ncol(m))
     i2 = ncol(m)
@@ -76,12 +80,16 @@ headr = function(m, i = 6L) {
     format(head(m[, i:i2]))
 }
 
+#' @rdname taill
+#' @export
 taill = function(m, i = 6L) {
     i = min(i, ncol(m))
     format(tail(m[, 1:i]))
 }
 
 
+#' @rdname tailr
+#' @export
 tailr = function(m, i = 6L) {
     i = min(i, ncol(m))
     i2 = ncol(m)
