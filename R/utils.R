@@ -62,6 +62,9 @@ is_number = function(x) {
 #' @usage lhs \%>\% rhs
 NULL
 
+#' @title Left-hand head a matrix or dataframe
+#' @param m a matrix or dataframe
+#' @param i number of columns to print
 #' @rdname headl
 #' @export
 headl = function(m, i = 6L) {
@@ -69,6 +72,9 @@ headl = function(m, i = 6L) {
     format(head(m[, 1:i]))
 }
 
+#' @title Right-hand head a matrix or dataframe
+#' @param m a matrix or dataframe
+#' @param i number of columns to print
 #' @rdname headr
 #' @export
 headr = function(m, i = 6L) {
@@ -80,6 +86,9 @@ headr = function(m, i = 6L) {
     format(head(m[, i:i2]))
 }
 
+#' @title Left-hand tail a matrix or dataframe
+#' @param m a matrix or dataframe
+#' @param i number of columns to print
 #' @rdname taill
 #' @export
 taill = function(m, i = 6L) {
@@ -88,6 +97,9 @@ taill = function(m, i = 6L) {
 }
 
 
+#' @title Right-hand tail a matrix or dataframe
+#' @param m a matrix or dataframe
+#' @param i number of columns to print
 #' @rdname tailr
 #' @export
 tailr = function(m, i = 6L) {
