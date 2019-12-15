@@ -22,7 +22,11 @@ get_sample_names = function(x, sep = "-|_", pos = 1, max.nchar = NULL, replace =
     samples = unique(samples)
 
     if (!is.null(replace)) {
-        samples = sapply(replace, function(r) stringr::str_replace(samples, paste0(r, collapse = '|'), r[[2]]))
+        for (i in 1:length(replace)) {
+            r.old = paste0(replace[[i]], collapse = '|')
+            r.new = replace[[i]][[2]]
+            samples = stringr::str_replace(samples, r.old, r.new)
+        }
     }
 
     unique(samples)
