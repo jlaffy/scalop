@@ -13,7 +13,7 @@
 split_by_match = function(x, pattern) {
     stopifnot(is.character(x) & is.character(pattern))
     sapply(pattern, function(pat) {
-               x[stringr::str_detect(x, p)]},
+               x[stringr::str_detect(x, pat)]},
                simplify = F)
 }
 
