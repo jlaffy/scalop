@@ -4,7 +4,6 @@
 #' @param x character vector
 #' @param pattern character vector with pattern(s) to match
 #' @return list of character vectors with patterns as list names
-#' }
 #' @seealso 
 #'  \code{\link[stringr]{str_detect}}
 #' @rdname split_by_match

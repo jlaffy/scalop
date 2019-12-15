@@ -4,7 +4,7 @@
 \alias{get_sample_names}
 \title{Get unique sample names}
 \usage{
-get_sample_names(x, sep = "-|_", pos = 1, max.nchar = NULL)
+get_sample_names(x, sep = "-|_", pos = 1, max.nchar = NULL, replace = NULL)
 }
 \arguments{
 \item{x}{character vector of cell ids}
@@ -14,6 +14,8 @@ get_sample_names(x, sep = "-|_", pos = 1, max.nchar = NULL)
 \item{pos}{position of sample name given separator. First position is 1. Default: 1}
 
 \item{max.nchar}{maximum number of characters to take as sample name (starting from the first). Default: NULL}
+
+\item{replace}{a list of character vectors to replace. Takes the form list(c(old, new), c(old, new)). Default: NULL}
 }
 \value{
 character vector of unique sample names
