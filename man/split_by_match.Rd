@@ -12,7 +12,7 @@ split_by_match(x, pattern)
 \item{pattern}{character vector with pattern(s) to match}
 }
 \value{
-
+list of character vectors with patterns as list names
 }
 \description{
 Split character vector into subsets according to detected pattern matches.

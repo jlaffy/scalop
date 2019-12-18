@@ -6,34 +6,40 @@
 \usage{
 dea(
   m,
-  groups,
-  is.log = T,
-  fc = 2L,
+  group,
+  group2 = NULL,
+  lfc = log2(2),
   p = 0.05,
-  p.adjust.method = "BH",
-  sortby = "fc",
-  val = NULL
+  pmethod = "BH",
+  arrange.by = c("lfc", "p", "none"),
+  return.val = c("lfc", "df", "gene", "p"),
+  center.rows = FALSE,
+  two.way = FALSE
 )
 }
 \arguments{
 \item{m}{numeric matrix. The matrix should not contain NA values.}
 
-\item{groups}{the group(s) to be tested. Each group should be a character vector or a two-level factor in which the first corresponds to the group. Multiple groups must be supplied as a list.}
+\item{group}{the group to be tested. It should be a character vector or a two-level factor in which the first corresponds to the group.}
 
-\item{is.log}{is the data in log2 space? Fold change cutoff and calculation are adjusted accordingly. Default: T}
+\item{group2}{the group to test against. It should be a character vector or a two-level factor in which the first corresponds to the group and the second to group2.}
 
-\item{fc}{fold change cutoff; numeric value or NULL. Default: 2}
+\item{lfc}{log2-fold change cutoff; numeric value or NULL. Default: log2(2)}
 
-\item{p}{p-value cutoff; numeric value between 0 and 1 or NULL. Default: 0.05}
+\item{p}{(adjusted) p-value cutoff; numeric value between 0 and 1 or NULL. Default: 0.05}
 
-\item{p.adjust.method}{correction method for multiple testing or 'none' if not desired. See stats::p.adjust.methods for options. Default: 'BH'}
+\item{pmethod}{correction method for multiple testing or 'none' if not desired. See stats::p.adjust.methods for options. Default: 'BH'}
 
-\item{sortby}{sort genes by 'fc', 'p' or NULL. Default: 'fc'}
+\item{arrange.by}{arrange genes by decreasing 'lfc', increasing 'p' or 'none. Default: 'lfc'}
 
-\item{val}{NULL, 'fc' or 'p'. If NULL returns full dataframe. If 'fc' or 'p', returns a named numeric value with fold change of p-values. Default: NULL}
+\item{return.val}{'lfc', 'df', 'gene' or 'p'. Default: 'lfc'}
+
+\item{center.rows}{should the matrix rows be centered around 0? If TRUE and group2 was provided, centering is performed after the matrix has been subset to include only group and group2 columns. Default: F}
+
+\item{two.way}{should the reverse dea test be performed too? i.e. group becomes group2 and vice versa. Default: FALSE}
 }
 \value{
-a numeric vector of gene fold changes or p-values or a dataframe with both.
+a numeric vector of gene fold changes or p-values, a character vector of gene names or the full dataframe.
 }
 \description{
 Differential Expression Analysis. Compute gene-level fold changes and (adjusted) p-values between cell clusters of an expression matrix.
