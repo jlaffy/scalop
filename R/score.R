@@ -121,5 +121,6 @@ score <- function(mat,
     }
 
     # Score (with controls or without if controls = NULL)
-    .score(mat = mat, groups = groups, controls = controls, center = center)
+    res = .score(mat = mat, groups = groups, controls = controls, center = center)
+    as.data.frame(res)
 }
