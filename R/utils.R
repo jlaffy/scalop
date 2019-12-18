@@ -1,12 +1,3 @@
-#' @title Turn a list into a dataframe
-#' @param L a list
-#' @rdname ldcast
-#' @return a dataframe with as many rows as the longest vector in the list
-#' @export
-ldcast = function(L) {
-    as.data.frame(sapply(L, "length<-", max(lengths(L))))
-}
-
 ## approximate equality
 about_equal = function(x,y,tol=1e-10) {
     stopifnot(is.numeric(x), is.numeric(y), length(x)==length(y), all(abs(x-y) < tol))
