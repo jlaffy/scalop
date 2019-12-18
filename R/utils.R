@@ -4,7 +4,7 @@
 #' @return a dataframe with as many rows as the longest vector in the list
 #' @export
 ldcast = function(L) {
-    as.data.frame(sapply(List, "length<-", max(lengths(List))))
+    as.data.frame(sapply(L, "length<-", max(lengths(L))))
 }
 
 ## approximate equality
