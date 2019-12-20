@@ -360,7 +360,7 @@ map1bar <- function(dat,
                                                            colour = legend.colour,
                                                            hjust = 0.5),
                        legend.title = ggplot2::element_text(size = ggplot2::rel(legend.title.rel)),
-                       legend.margin = ggplot2;:ggplot2::margin(t = -0.5, unit='cm'),
+                       legend.margin = ggplot2::margin(t = -0.5, unit='cm'),
                        legend.key.height = grid::unit(legend.height, "cm"),
                        legend.key.width = grid::unit(legend.width, "cm")) +
         eval(x.scale) +
