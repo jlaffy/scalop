@@ -6,6 +6,7 @@
 #' @rdname frac_mito
 frac_mito = function(m) {
     genes = rownames(m)[startsWith(rownames(m), "MT")]
+    m = scalop::tpm(m)
     colSums(m[genes, ])/colSums(m)
 }
 
@@ -18,7 +19,7 @@ frac_mito = function(m) {
 expr_housekeeping = function(m) {
     genes = Markers_Normal$Housekeeping
     genes = genes[genes %in% rownames(m)]
-    colMeans(m[genes, ])
+    scalop::logtpm(colMeans(m[genes, ]), bulk = T)
 }
 
 
