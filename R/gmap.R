@@ -97,13 +97,13 @@ gmap <- function(dat,
         y.labels = labels
     }
 
-    if (x.num | num | class(dat %>% pull(!!x)) == 'numeric') {
+    if (x.num | num | class(dat %>% dplyr::pull(!!x)) == 'numeric') {
         dat = dat %>% dplyr::mutate(!!xname := as.numeric(!!x))
         x.scale.FUN = ggplot2::scale_x_continuous
     } else {
         x.scale.FUN = ggplot2::scale_x_discrete
     }
-    if (y.num | num | class(dat %>% pull(!!y)) == 'numeric') {
+    if (y.num | num | class(dat %>% dplyr::pull(!!y)) == 'numeric') {
         dat = dat %>% dplyr::mutate(!!yname := as.numeric(!!y))
         y.scale.FUN = ggplot2::scale_y_continuous
     } else {
@@ -144,13 +144,9 @@ gmap <- function(dat,
                  "#67001f")
     }
 
-    if (isTRUE(angle)) {
-        angle = 45
-    }
+    if (isTRUE(angle)) angle = 45
 
-    if (is.numeric(angle)) {
-        angle = ggpubr::rotate_x_text(angle = angle, vjust = 1)
-    }
+    if (is.numeric(angle)) angle = ggpubr::rotate_x_text(angle = angle, vjust = 1)
 
     legend = .axis.spacer(breaks = legend.breaks, labels = legend.labels, limits = limits)
     legend.breaks = legend$breaks
@@ -171,7 +167,7 @@ gmap <- function(dat,
                                       labels = legend.breaks,
                                       name = legend.title,
                                       na.value = na.value,
-                                      guide = guide_colorbar(frame.colour = 'black')) +
+                                      guide = ggplot2::guide_colorbar(frame.colour = 'black')) +
         ggplot2::labs(x = x.name,
                       y = y.name,
                       title = title,
@@ -188,7 +184,7 @@ gmap <- function(dat,
                                                            colour = legend.colour,
                                                            hjust = 0.5),
                        legend.title = ggplot2::element_text(size = ggplot2::rel(legend.title.rel)),
-                       legend.margin = margin(t = -0.5, unit='cm'),
+                       legend.margin = ggplot2::margin(t = -0.5, unit='cm'),
                        legend.key.height = grid::unit(legend.height, "cm"),
                        legend.key.width = grid::unit(legend.width, "cm")) +
         eval(x.scale) +
@@ -223,7 +219,7 @@ mapAssign <- function(dat,
     }
 
     x.scale = quote(ggplot2::scale_x_discrete(expand = expand, breaks = x.breaks))
-    if (x.num | num | class(unlist(dat %>% select(!!x))) == 'numeric') {
+    if (x.num | num | class(unlist(dat %>% dplyr::select(!!x))) == 'numeric') {
         dat = dat %>% dplyr::mutate(!!xname := as.numeric(!!x))
         x.scale = quote(ggplot2::scale_x_continuous(expand = expand, breaks = x.breaks))
     }
@@ -298,11 +294,11 @@ map1bar <- function(dat,
     x.scale = quote(ggplot2::scale_x_discrete(expand = expand, breaks = x.breaks))
     y.scale = quote(ggplot2::scale_y_discrete(expand = expand, breaks = y.breaks))
 
-    if (x.num | num | class(unlist(dat %>% select(!!x))) == 'numeric') {
+    if (x.num | num | class(unlist(dat %>% dplyr::select(!!x))) == 'numeric') {
         dat = dat %>% dplyr::mutate(!!xname := as.numeric(!!x))
         x.scale = quote(ggplot2::scale_x_continuous(expand = expand, breaks = x.breaks))
     }
-    if (y.num | num | class(unlist(dat %>% select(!!y))) == 'numeric') {
+    if (y.num | num | class(unlist(dat %>% dplyr::select(!!y))) == 'numeric') {
         dat = dat %>% dplyr::mutate(!!yname := as.numeric(!!y))
         y.scale = quote(ggplot2::scale_y_continuous(expand = expand, breaks = breaks))
     }
@@ -347,7 +343,7 @@ map1bar <- function(dat,
                                       breaks = legend.breaks,
                                       labels = legend.breaks,
                                       name = legend.title,
-                                      guide = guide_colorbar(frame.colour = 'black')) +
+                                      guide = ggplot2::guide_colorbar(frame.colour = 'black')) +
         ggplot2::labs(x = x.name,
                       y = y.name,
                       title = title,
@@ -364,7 +360,7 @@ map1bar <- function(dat,
                                                            colour = legend.colour,
                                                            hjust = 0.5),
                        legend.title = ggplot2::element_text(size = ggplot2::rel(legend.title.rel)),
-                       legend.margin = margin(t = -0.5, unit='cm'),
+                       legend.margin = ggplot2;:ggplot2::margin(t = -0.5, unit='cm'),
                        legend.key.height = grid::unit(legend.height, "cm"),
                        legend.key.width = grid::unit(legend.width, "cm")) +
         eval(x.scale) +
