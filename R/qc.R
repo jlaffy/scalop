@@ -17,7 +17,7 @@ frac_mito = function(m) {
 #' @export
 #' @rdname expr_housekeeping
 expr_housekeeping = function(m) {
-    genes = Markers_Normal$Housekeeping
+    genes = scalop::Markers_Normal$Housekeeping
     genes = genes[genes %in% rownames(m)]
     logtpm(colMeans(tpm(m[genes, ])), bulk = T)
 }
