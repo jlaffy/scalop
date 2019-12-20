@@ -1,4 +1,7 @@
 
+#' @title Get Genomic Information
+#' @param symbols character vector of HGNC symbols
+#' @rdname GeneInfo
 GeneInfo = function(symbols) {
 # see https://davetang.org/muse/2013/12/16/bioconductor-annotation-packages/
     library(AnnotationDbi)

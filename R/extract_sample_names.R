@@ -6,10 +6,10 @@
 #' @param max.nchar maximum number of characters to take as sample name (starting from the first). Default: NULL
 #' @param replace a list of character vectors to replace. Takes the form list(c(old, new), c(old, new)). Default: NULL
 #' @return character vector of unique sample names
-#' @rdname get_sample_names
+#' @rdname extract_sample_names
 #' @export 
 #' @importFrom stringr str_split
-get_sample_names = function(x, sep = "-|_", pos = 1, max.nchar = NULL, replace = NULL) {
+extract_sample_names = function(x, sep = "-|_", pos = 1, max.nchar = NULL, replace = NULL) {
 
     samples = sapply(stringr::str_split(x, sep), `[`, pos)
 
