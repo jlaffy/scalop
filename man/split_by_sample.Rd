@@ -9,9 +9,9 @@ split_by_sample(x, samples = NULL, ...)
 \arguments{
 \item{x}{character vector of cell IDs}
 
-\item{...}{other arguments passed to scalop::get_sample_names.}
+\item{samples}{a character vector of sample names, or NULL. If NULL, uses scalop::extract_sample_names to find samples.}
 
-\item{pattern}{a character vector of sample names, or NULL. If NULL, uses scalop::get_sample_names to find samples.}
+\item{...}{other arguments passed to scalop::extract_sample_names.}
 }
 \value{
 
