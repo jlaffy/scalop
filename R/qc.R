@@ -16,10 +16,10 @@ frac_mito = function(m) {
 #' @param m matrix of expression values to test
 #' @export
 #' @rdname expr_housekeeping
-expr_housekeeping = function(m) {
+expr_housekeeping = function(m, na.rm = T) {
     genes = scalop::Markers_Normal$Housekeeping
     genes = genes[genes %in% rownames(m)]
-    logtpm(colMeans(tpm(m[genes, ])), bulk = T)
+    logtpm(colMeans(tpm(m[genes, ]), na.rm = na.rm), bulk = T)
 }
 
 
@@ -29,6 +29,6 @@ expr_housekeeping = function(m) {
 #' @param m matrix of expression values to test
 #' @export
 #' @rdname aggr_gene_expr
-aggr_gene_expr = function(m) {
-    logtpm(rowMeans(tpm(m)), bulk = TRUE)
+aggr_gene_expr = function(m, na.rm = T) {
+    logtpm(rowMeans(tpm(m), na.rm = na.rm), bulk = TRUE)
 }
