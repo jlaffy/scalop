@@ -4,11 +4,11 @@
 \alias{expr_housekeeping}
 \title{Expression level of Housekeeping Genes}
 \usage{
-expr_housekeeping(m)
+expr_housekeeping(m, na.rm = T)
 }
 \arguments{
 \item{m}{matrix of expression values to test}
 }
 \description{
-Often used as a QC parameter for cells in scRNA-seq data. The lower the expression level of housekeeping the genes, the more DNA contamination it suggests for the sample. In scRNAseq cancer data, this value is also used as a cutoff: e.g. a logTPM value >= 2.5 in order for a cell to be retained as HQ and with minimal DNA contamination. note: the list of housekeeping genes is taken from scalop::Normal_Markers$Housekeeping
+Often used as a QC parameter for cells in scRNA-seq data. The lower the expression level of housekeeping the genes, the more DNA contamination it suggests for the sample. In scRNAseq cancer data, this value is also used as a cutoff: e.g. a logTPM value >= 2.5 in order for a cell to be retained as HQ and with minimal DNA contamination. note: the list of housekeeping genes is taken from Normal_Markers$Housekeeping
 }

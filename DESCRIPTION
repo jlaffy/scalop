@@ -31,7 +31,8 @@ Imports:
     matrixStats,
     grDevices,
     graphics,
-    gridExtra
+    gridExtra,
+    stringr
 Suggests: 
     testthat (>= 2.1.0),
     knitr,

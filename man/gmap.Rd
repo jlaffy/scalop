@@ -9,6 +9,7 @@ gmap(
   x = Var1,
   y = Var2,
   fill = value,
+  tile.labels = FALSE,
   limits = c(-0.5, 0.5),
   lim.find = F,
   lim.sym = T,
