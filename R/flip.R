@@ -9,7 +9,7 @@
 #' @export 
 #' @importFrom stats setNames
 flip = function(X) {
-    stopifnot(is.null(names(X)))
+    stopifnot(!is.null(names(X)))
     if (is.character(X)) {
         return(stats::setNames(names(X), X))
     }

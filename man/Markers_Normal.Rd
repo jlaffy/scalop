@@ -3,12 +3,15 @@
 \docType{data}
 \name{Markers_Normal}
 \alias{Markers_Normal}
-\title{List of Marker Genes for Normal Cell Types}
-\format{A list of gene names  by cell type}
+\title{Marker gene sets of Normal Cell Types and Pan-Cancer Programs}
+\format{A list of character vectors (i.e. sets of gene per cell type / program)}
+\source{
+Microglia signature: \url{doi:10.1016/j.cell.2019.11.010}; Housekeeping signature: \url{doi:10.1126/science.aad0501}.
+}
 \usage{
 Markers_Normal
 }
 \description{
-List of Marker Genes for Normal Cell Types
+Marker genes for different normal cell types and some pan-cancer expression programs.
 }
 \keyword{datasets}

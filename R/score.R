@@ -5,8 +5,17 @@
     err = 'Error: Returning missing name(s)...'
     if (any(are_missing)) {
         missing = Group[are_missing]
-        stop(cat(c(err, missing), sep = '\n'))
+        warning(cat(c(err, missing), sep = '\n'))
     }
+}
+
+.filter_sigs = function(Group, ref, conserved = 0.5) {
+    Group = Group[Group %in% ref]
+    if ((length(Group)/length(ref)) < conserved) {
+        warning('Too few <group> genes conserved after filtering')
+        return(NULL)
+    }
+    Group
 }
 
 .score <- function(mat, groups, controls = NULL, center = FALSE) {
@@ -17,6 +26,7 @@
 
     # Input check
     .check_missing(Group = unique(unlist(groups)), ref = rownames(mat))
+    groups = sapply(groups, function(Group) .check_retained,Group = Group, ref= rownames(mat), simplify = F)
     
     # Score without controls
     if (is.null(controls) | isFALSE(controls)) {
@@ -51,18 +61,20 @@
 
 
 #' @title Score matrix columns for groups of rows 
-#' @description Score a matrix by groups of rows. Scores are column averages for the subset of rows specified in a group. Option to generate control group scores to subtract from the real scores. Control groups can either be user-provided or generated from binning of the rows. Similarly, the bins themselves can be user-provided or computed.
-#' @param mat an expression matrix of gene rows by cell columns.
-#' @param groups a character vector or list of character vectors. Each character vector is a group or signature to score each column against and should match subsets of rownames in <mat>.
-#' @param binmat an expression matrix of gene rows by cell columns that will be used to create the gene bins and ultimately the control signatures for correction of the cell scores. For our use cases, <mat> and <binmat> are identical except that the former is row-centered and used to generate cell scores and the latter is not row-centered and used to correct the cell scores. If NULL, and bin.control = T (and neither <bins> nor <controls> were provided), <mat> will be used. Careful that in this use case <mat> should not be row-centered for the correction to be meaningful. Default: NULL
-#' @param bins a named character vector with as names the rownames and as values the ID of each bin. You can provide the bins directly (e.g. with bin()) rather than these being generated from <binmat>. Default: NULL
-#' @param controls. A character vector if <groups> is a character vector a list of character vectors of the same length as <groups>. Each character vector is a control signature whose genes should have expression levels similar to those in the corresponding real signature, but be otherwise biologically meaningless. You can provide the control signatures directly (e.g. with binmatch()) rather than these being generated from <binmatch> / <bins>. Default: NULL
-#' @param bin.control boolean value. If your controls can be generated straight from <mat> (i.e. if mat is not row-centered and you do not provide <binmatch>, <bins>, or <controls>), then you can just call score(mat, groups, bin.control = TRUE). Default: F
-#' @param center boolean value. Should the resulting score matrix be column-centered? This option should be considered if binned controls are not used. Default: F
-#' @param nbin numeric value specifying the number of bins. Not relevant if <bins> or <controls> are provided on input. Default is 30, but please be aware that we chose 30 bins for ~ 8500 genes and if your # of genes is very different you should consider changing this. Default: 30
-#' @param n numeric value for the number of control genes to be sampled per gene in a signature. Not relevant if <controls> is provided on input. Default: 100
-#' @param replace boolean value. Allow bin sampling to be done with replacement. Default: F
-#' @return a matrix with as rows the columns of the input matrix and as columns the scores of each group provided in groups. If one group is provided, the matrix returned will have 1 column.
+#' @description This function has been deprecated and replaced with scalop::sigScores. Please see `?scalop::sigScores` for details.
+# #' @description Score a matrix by groups of rows. Scores are column averages for the subset of rows specified in a group. Option to generate control group scores to subtract from the real scores. Control groups can either be user-provided or generated from binning of the rows. Similarly, the bins themselves can be user-provided or computed.
+# #' @param mat an expression matrix of gene rows by cell columns.
+# #' @param groups a character vector or list of character vectors. Each character vector is a group or signature to score each column against and should match subsets of rownames in <mat>.
+# #' @param binmat an expression matrix of gene rows by cell columns that will be used to create the gene bins and ultimately the control signatures for correction of the cell scores. For our use cases, <mat> and <binmat> are identical except that the former is row-centered and used to generate cell scores and the latter is not row-centered and used to correct the cell scores. If NULL, and bin.control = T (and neither <bins> nor <controls> were provided), <mat> will be used. Careful that in this use case <mat> should not be row-centered for the correction to be meaningful. Default: NULL
+# #' @param bins a named character vector with as names the rownames and as values the ID of each bin. You can provide the bins directly (e.g. with bin()) rather than these being generated from <binmat>. Default: NULL
+# #' @param controls. A character vector if <groups> is a character vector a list of character vectors of the same length as <groups>. Each character vector is a control signature whose genes should have expression levels similar to those in the corresponding real signature, but be otherwise biologically meaningless. You can provide the control signatures directly (e.g. with binmatch()) rather than these being generated from <binmatch> / <bins>. Default: NULL
+# #' @param bin.control boolean value. If your controls can be generated straight from <mat> (i.e. if mat is not row-centered and you do not provide <binmatch>, <bins>, or <controls>), then you can just call score(mat, groups, bin.control = TRUE). Default: F
+# #' @param center boolean value. Should the resulting score matrix be column-centered? This option should be considered if binned controls are not used. Default: F
+# #' @param nbin numeric value specifying the number of bins. Not relevant if <bins> or <controls> are provided on input. Default is 30, but please be aware that we chose 30 bins for ~ 8500 genes and if your # of genes is very different you should consider changing this. Default: 30
+# #' @param n numeric value for the number of control genes to be sampled per gene in a signature. Not relevant if <controls> is provided on input. Default: 100
+# #' @param replace boolean value. Allow bin sampling to be done with replacement. Default: F
+# #' @return a matrix with as rows the columns of the input matrix and as columns the scores of each group provided in groups. If one group is provided, the matrix returned will have 1 column.
+
 #' @rdname score
 #' @export 
 score <- function(mat,
@@ -76,6 +88,9 @@ score <- function(mat,
                   n = 100,
                   replace = F) {
 
+    message('This function has been deprecated and replaced with scalop::sigScores...')
+    message('See `?scalop::sigScores` for details.')
+    return(NULL)
     # Wrapper for .score() with option to first generate control groups
     # Controls are generated with binmatch()
 

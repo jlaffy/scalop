@@ -7,7 +7,7 @@
 #' @param pal numeric value specifying different qualitative brewer palettes. See ggplot2::scale_fill_brewer for details. Default: 1
 #' @param angle logical indicating whether to angle title if flip = T. Default: T
 #' @param breaks set to NULL to remove x axis tick marks. Default: ggplot2::waiver()
-#' @param x.num enumerate observations on x axis? Default: T
+#' @param num enumerate observations on x axis? Default: T
 #' @param flip observations along y axis instead of x? Default: F
 #' @param hide.legend logical. Default: T
 #' @param legend.pos character string. See legend.position in ggplot2::theme for details. Default: 'top'
@@ -22,31 +22,26 @@
 #' @rdname annomap
 #' @export 
 annomap = function(X,
-                   title = NULL,
-                   x.title = NULL, 
-                   pal = 1,
+                   y.name = NULL,
+                   x.name = NULL, 
                    angle = F,
-                   breaks = ggplot2::waiver(),
-                   x.num = T,
+                   num = T,
                    flip = F,
                    hide.legend = T,
+                   get.legend = F,
                    legend.pos = 'top',
                    ratio = 0.03,
+                   tile.col = NULL,
+                   tile.size = 0.01,
                    mar = 0.015,
                    cols = NULL,
-                   cols.order = names(cols)) {
+                   limits = NULL,
+                   ...) {
 
     # fix dataframe
-    if (!is.null(dim(X))) {
-        X = as.data.frame(X)
-        colnames(X) = c('x', 'fill')
-    }
-    # OR make dataframe
-    else if (is.atomic(X)) {
-        stopifnot(!is.null(names(X)))
-        if (!is.null(levels(X))) X = X[match(X, levels(X))]
-        X = data.frame(x = X, fill = names(X))
-    }
+    if ('x' != colnames(X)[1]) X = X %>% tibble::rownames_to_column('x')
+    n = ncol(X)
+    if (is.null(levels(X$x))) X = dplyr::mutate(X, x = factor(as.character(x),levels = unique(as.character(x))))
 
     # internal plotting vars
     if (angle == F) angle = 0
@@ -66,48 +61,56 @@ annomap = function(X,
             vjust = 0.5
         }
     }
+    
+    cols = colnames(X)
+    Gs = sapply(2:n, function(i) 
+                {
+                    X = X[, c(1, i)]
+                    colnames(X) = c('x', 'fill')
 
-    # ggplot x scale
-    if (x.num) {
-        G = ggplot2::ggplot(X, ggplot2::aes(x = as.numeric(x), fill = fill, y = 1))
-        scale_x_choose = ggplot2::scale_x_continuous
+                    if (flip) {
+                        G = ggplot2::ggplot(X, aes(y = as.numeric(x), fill = fill, x = 1)) +
+                            ggplot2::geom_tile(col ='black') +
+                            ggplot2::scale_y_discrete(expand = c(0,0)) +
+                            ggplot2::scale_x_continuous(expand = c(0,0), breaks = NULL) +
+                            ggplot2::coord_flip()
+                    }
+        
+                    else {
+                        G = ggplot2::ggplot(X, aes(x = as.numeric(x), fill = fill, y = 1)) +
+                            ggplot2::geom_tile(col ='black') +
+                            ggplot2::scale_x_discrete(expand = c(0,0)) +
+                            ggplot2::scale_y_continuous(expand = c(0,0), breaks = NULL)
+                    }
+        
+                    if (is.numeric(X$fill)) {
+                        if (is.null(limits)) limits = range(X$fill)
+                        G = G + ggplot2::scale_fill_gradientn(colours = brewerland::colourPal('Blues'), oob = scales::squish, limits = limits)
+                    }
+        
+                    else {
+                        G = G + ggplot2::scale_fill_manual(values = sample(brewerland::discrete_colours))
+                    }
+        
+                    G = G + ggplot2::theme(aspect.ratio = ratio,
+                                           legend.position = legend.pos,
+                                           axis.title.x = ggplot2::element_text(angle = angle, hjust = hjust, vjust = vjust), 
+                                           axis.title.y = ggplot2::element_text(angle = angle, hjust = hjust, vjust = vjust),
+                                           plot.margin = ggplot2::margin(mar, mar, mar, mar, "cm")) +
+                            ggplot2::labs(x = x.name, y = cols[i])
+
+                    G
+
+                }, simplify = F)
+    
+    library(patchwork)
+    if (flip) {
+        out = Gs[[1]] + Gs[[2]] + Gs[[3]] + Gs[[4]] + Gs[[5]] + Gs[[6]] + Gs[[7]] + plot_layout(guides = 'collect', ncol = 7)
     }
+
     else {
-        G = ggplot2::ggplot(X, ggplot2::aes(x = x, fill = fill, y = 1))
-        scale_x_choose = ggplot2::scale_x_discrete
+        out = Gs[[1]] + Gs[[2]] + Gs[[3]] + Gs[[4]] + Gs[[5]] + Gs[[6]] + Gs[[7]] + plot_layout(guides = 'collect', ncol = 1, widths = c(9, 0.5))
     }
 
-    # plot
-    G = G + ggplot2::geom_tile() + 
-            ggplot2::theme_bw() +
-            scale_x_choose(expand = expand,
-                           position = x.title.pos,
-                           breaks = breaks,
-                           name = x.title) +
-            ggplot2::scale_y_continuous(name = title,
-                                        expand = expand,
-                                        breaks = NULL,
-                                        position = y.title.pos) +
-            ggplot2::theme(aspect.ratio = ratio,
-                           legend.position = legend.pos,
-                           axis.title.x = ggplot2::element_text(angle = angle, hjust = hjust, vjust = vjust), 
-                           axis.title.y = ggplot2::element_text(angle = angle, hjust = hjust, vjust = vjust),
-                           plot.margin = ggplot2::margin(mar, mar, mar, mar, "cm")) + 
-            ggplot2::scale_fill_brewer(palette = pal, type = 'qual')
-
-    if (!is.null(cols.order)) {
-        col.groups = unique(X$fill)
-        if (is.null(cols)) cols = grDevices::rainbow(n = length(col.groups))
-        cols = cols[match(col.groups, cols.order)]
-        G = G + ggplot2::scale_fill_manual(values = cols)
-    }
-
-    if (flip) G = G + ggplot2::coord_flip()
-    legend = ggpubr::get_legend(G)
-    if (hide.legend) G = G + ggpubr::rremove("legend")
-#    plot(G)
-#    invisible(list(plot = G, data = X, legend = legend))
-
-    G
+    out
 }
-

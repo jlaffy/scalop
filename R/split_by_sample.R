@@ -22,7 +22,6 @@ split_by_match = function(x, pattern) {
 #' @param samples a character vector of sample names, or NULL. If NULL, uses scalop::extract_sample_names to find samples. 
 #' @param ... other arguments passed to scalop::extract_sample_names.
 #' @return list of character vectors with samples as list names
-#' }
 #' @seealso 
 #'  \code{\link[stringr]{str_detect}}
 #' @rdname split_by_sample

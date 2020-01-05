@@ -14,7 +14,7 @@ split_by_sample(x, samples = NULL, ...)
 \item{...}{other arguments passed to scalop::extract_sample_names.}
 }
 \value{
-
+list of character vectors with samples as list names
 }
 \description{
 Split character vector of cell ids into subsets according to detected sample names.
