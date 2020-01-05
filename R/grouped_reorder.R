@@ -9,9 +9,9 @@
 #' @param cluster.method desired agglomeration method. Default: 'average'
 #' @param Names return the vector of ordered IDs instead of the reordered matrix. Default: FALSE
 #' @return reordered matrix (same dimensions as input) or a character vector of ordered column names if Names = T. 
-#' @rdname grouped_order
+#' @rdname grouped_reorder
 #' @export 
-grouped_order = function(m,
+grouped_reorder = function(m,
                          groups,
                          interorder = FALSE,
                          cor.method = 'pearson',
@@ -25,7 +25,7 @@ grouped_order = function(m,
     }
 
     m.list = sapply(groups, function(x) m[, x], simplify = F)
-    ord.list = sapply(m.list, function(m) hca_order(m,
+    ord.list = sapply(m.list, function(m) hca_order(rowcenter(m),
                                                     cor.method = cor.method,
                                                     dist.method = dist.method,
                                                     cluster.method = cluster.method))
