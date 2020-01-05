@@ -20,6 +20,10 @@ annomap(
   mar = 0.015,
   cols = NULL,
   limits = NULL,
+  ncol = 1,
+  patchwork = T,
+  widths = c(9, 1),
+  guides = "collect",
   ...
 )
 }

@@ -37,6 +37,7 @@ annomap = function(X,
                    cols = NULL,
                    limits = NULL,
                    ncol = 1,
+                   patchwork = T,
                    widths = c(9, 1),
                    guides = 'collect',
                    ...) {
@@ -124,5 +125,6 @@ annomap = function(X,
 
                 }, simplify = F)
 
+    if (!patchwork) return(Gs)
     patchwork::wrap_plots(Gs, guides = guides, ncol = ncol, widths = widths, ...)
 }
