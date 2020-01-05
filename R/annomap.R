@@ -36,12 +36,31 @@ annomap = function(X,
                    mar = 0.015,
                    cols = NULL,
                    limits = NULL,
+                   ncol = 1,
+                   widths = c(9, 1),
+                   guides = 'collect',
                    ...) {
 
+    if (is.character(X)) {
+        X = data.frame(fill = X)
+        rownames(X) = 1:nrow(X)
+    }
+    
+    else if (is.list(X) & !is.data.frame(X)) {
+        stopifnot(identical(lengths(X)))
+        X = do.call(cbind.data.frame, X)
+        rownames(X) = 1:nrow(X)
+    } 
+
     # fix dataframe
-    if ('x' != colnames(X)[1]) X = X %>% tibble::rownames_to_column('x')
+    if ('x' != colnames(X)[1]) {
+        X = X %>% tibble::rownames_to_column('x')
+    }
+    
     n = ncol(X)
-    if (is.null(levels(X$x))) X = dplyr::mutate(X, x = factor(as.character(x),levels = unique(as.character(x))))
+    if (is.null(levels(X$x))) {
+        X = dplyr::mutate(X, x = factor(as.character(x),levels = unique(as.character(x))))
+    }
 
     # internal plotting vars
     if (angle == F) angle = 0
@@ -89,6 +108,8 @@ annomap = function(X,
                     }
         
                     else {
+                        print(head(X$fill))
+                        X = X %>% dplyr::mutate(fill = factor(as.character(fill), levels = unique(as.character(fill))))
                         G = G + ggplot2::scale_fill_manual(values = sample(brewerland::discrete_colours))
                     }
         
@@ -102,15 +123,6 @@ annomap = function(X,
                     G
 
                 }, simplify = F)
-    
-    library(patchwork)
-    if (flip) {
-        out = Gs[[1]] + Gs[[2]] + Gs[[3]] + Gs[[4]] + Gs[[5]] + Gs[[6]] + Gs[[7]] + plot_layout(guides = 'collect', ncol = 7)
-    }
 
-    else {
-        out = Gs[[1]] + Gs[[2]] + Gs[[3]] + Gs[[4]] + Gs[[5]] + Gs[[6]] + Gs[[7]] + plot_layout(guides = 'collect', ncol = 1, widths = c(9, 0.5))
-    }
-
-    out
+    patchwork::wrap_plots(Gs, guides = guides, ncol = ncol, widths = widths, ...)
 }

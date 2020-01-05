@@ -107,7 +107,8 @@ nrows <- function(mats) {
 
 #' @export
 has_dim <- function(x) {
-  !is.null(attr(x, "dim"))
+    if (is.data.frame(x)) x = as.matrix(m)
+    !is.null(attr(x, "dim"))
 }
 
 #' @export

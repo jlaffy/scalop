@@ -80,8 +80,9 @@ filter_groups = function(groups, ref, conserved = 0.7) {
 baseScores = function(m, groups, conserved.genes = 0.7) {
     if (is.character(groups)) groups = list(groups)
     groups = filter_groups(groups, ref = rownames(m), conserved = conserved.genes)
-    sapply(groups, function(group) colMeans(m[group, ]))
+    sapply(groups, function(group) colMeans(m[group, , drop = F]))
 }
+
 
 #' @title Score a Matrix by Gene Groups (Signatures) 
 #' @description Score a Matrix by Gene Groups (Signatures). Raw scores are generated with scalop::baseScores (i.e. average xpression level of genes in the group in question). Options to normalise scores either by centering by the average expression level across all genes for each column of <m> (cells/samples) or by subtracting a score from an expression-bin-matched group. The default is the latter. 
@@ -113,6 +114,9 @@ sigScores = function(m,
 
     # if only one group, convert to list
     if (is.character(groups)) groups = list(groups)
+    
+    # filter groups
+    groups = filter_groups(groups, ref = rownames(m), conserved = conserved.genes)
 
     # base scores (no centering / expression normalisation of scores (yet))
     scores = baseScores(m = rowcenter(m), groups = groups, conserved = conserved.genes)
@@ -147,7 +151,6 @@ sigScores = function(m,
         if (!is.null(expr.bin.m)) center.scores = colMeans(expr.bin.m)
         else center.scores = colMeans(m)
         scores2 = sweep(scores, MARGIN = 1, STATS = center.scores, FUN = "-")
-        browser()
     }
 
     rows = rownames(scores)
@@ -165,5 +168,7 @@ sigScores = function(m,
 #' @rdname markerScores
 #' @export 
 markerScores = function(m, ...) {
-    sigScores(m = m, groups = Markers_Normal, ...)
+    groups = suppressWarnings(filter_groups(Markers_Normal, ref = rownames(m), conserved = 0.4))
+    groups = groups[lengths(groups) >= 2]
+    sigScores(m = m, groups = groups, conserved.genes = conserved, ...)
 } 
