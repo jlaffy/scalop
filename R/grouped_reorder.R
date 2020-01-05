@@ -21,7 +21,7 @@ grouped_reorder = function(m,
 
     if (interorder) {
         groupAvgs = sapply(groups, function(group) rowMeans(m[, group, drop = F]))
-        groups = groups[hca_order(groupAvgs)]
+        groups = groups[hca_order(rowcenter(groupAvgs))]
     }
 
     m.list = sapply(groups, function(x) m[, x], simplify = F)
