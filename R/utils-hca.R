@@ -59,7 +59,8 @@
     groups = as.list(as.data.frame(groups))
     groups = sapply(groups, function(ID) split(labels, ID), simplify =F)
     groups = unlist(groups, recursive = F, use.names = F)
-    stats::setNames(groups, clusterNames)
+    groups = stats::setNames(groups, clusterNames)
+    unique(groups)
 }
 
 .hca = function(x,
