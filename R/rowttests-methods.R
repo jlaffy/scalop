@@ -8,7 +8,7 @@
 
 #' @keywords internal
 #' @useDynLib scalop rowcolttests
-rowcoltt =  function(x, fac, tstatOnly, which, na.rm) {
+rowcoltt =  function(x, fac, tstatOnly, alternative, pmethod, which, na.rm) {
   if (!missing(tstatOnly) && (!is.logical(tstatOnly) || is.na(tstatOnly)))
       stop(sQuote("tstatOnly"), " must be TRUE or FALSE.")
   
@@ -26,12 +26,27 @@ rowcoltt =  function(x, fac, tstatOnly, which, na.rm) {
                    foldchange = cc$foldchange,
                    row.names = dimnames(x)[[which]])
 
-  if (!tstatOnly)
-    res = cbind(res, p.value = 2*stats::pt(abs(res$statistic), cc$df, lower.tail=FALSE))
+  if (!tstatOnly) {
+      if (alternative == 'greater') {
+          res = cbind(res, p.value = stats::pt(res$statistic, cc$df, lower.tail=FALSE))
+      }
+      
+      else if (alternative == 'less') {
+          res = cbind(res, p.value = stats::pt(res$statistic, cc$df, lower.tail=TRUE))
+      }
+      
+      else {
+          res = cbind(res, p.value = 2*stats::pt(abs(res$statistic), cc$df, lower.tail=FALSE))
+      }
+      
+      res = cbind(res, p.adj = stats::p.adjust(res$p.value, method = pmethod))
+  }
+
 
   attr(res, "df") = cc$df    
   return(res)
 }
+
 
 #' @keywords internal
 rowcolFt =  function(x, fac, var.equal, which) {
@@ -123,35 +138,34 @@ rowcolFt =  function(x, fac, var.equal, which) {
 ## ==========================================================================
 #' @keywords internal
 setMethod("rowttests", signature(x="matrix", fac="factor"),
-          function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
-          rowcoltt(x, fac, tstatOnly, 1L, na.rm))
-
-#' @keywords internal
-setMethod("rowttests", signature(x="matrix", fac="missing"),
-          function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
-          rowcoltt(x, factor(integer(ncol(x))), tstatOnly, 1L, na.rm))
+          function(x, fac, tstatOnly=FALSE, alternative='greater', pmethod='BH', na.rm=FALSE)
+          rowcoltt(x, fac, tstatOnly, alternative, pmethod, 1L, na.rm))
 
 #' @keywords internal
 setMethod("colttests", signature(x="matrix", fac="factor"),
-          function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
-          rowcoltt(x, fac, tstatOnly, 2L, na.rm))
+          function(x, fac, tstatOnly=FALSE, alternative='greater', pmethod='BH', na.rm=FALSE)
+          rowcoltt(x, fac, tstatOnly, alternative, pmethod, 2L, na.rm))
+
+#' @keywords internal
+setMethod("rowttests", signature(x="matrix", fac="missing"),
+          function(x, fac, tstatOnly=FALSE, alternative='greater', pmethod='BH', na.rm=FALSE)
+          rowcoltt(x, factor(integer(ncol(x))), tstatOnly, alternative, pmethod, 1L, na.rm))
 
 #' @keywords internal
 setMethod("colttests", signature(x="matrix", fac="missing"),
-          function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
-          rowcoltt(x, factor(integer(ncol(x))), tstatOnly, 2L, na.rm))
+          function(x, fac, tstatOnly=FALSE, alternative='greater', pmethod='BH', na.rm=FALSE)
+          rowcoltt(x, factor(integer(ncol(x))), tstatOnly, alternative, pmethod, 2L, na.rm))
 
 ## new
-
 #' @keywords internal
 setMethod("rowttests", signature(x="matrix", fac="character"),
-          function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
-          rowcoltt(x, makefac(fac, colnames(x)), tstatOnly, 1L, na.rm))
+          function(x, fac, tstatOnly=FALSE, alternative='greater', pmethod='BH', na.rm=FALSE)
+          rowcoltt(x, makefac(fac, colnames(x)), tstatOnly, alternative, pmethod, 1L, na.rm))
 
 #' @keywords internal
 setMethod("colttests", signature(x="matrix", fac="character"),
-          function(x, fac, tstatOnly=FALSE, na.rm = FALSE)
-          rowcoltt(x, makefac(fac, rownames(x)), tstatOnly, 2L, na.rm))
+          function(x, fac, tstatOnly=FALSE, alternative='greater', pmethod='BH', na.rm=FALSE)
+          rowcoltt(x, makefac(fac, colnames(x)), tstatOnly, alternative, pmethod, 2L, na.rm))
 
 
 ## ==========================================================================

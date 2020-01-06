@@ -19,10 +19,10 @@ dea = function(m,
                lfc = log2(2),
                p = 0.05,
                pmethod = 'BH',
+               alternative = c('greater', 'less', 'two-sided'),
                arrange.by = c('lfc', 'p', 'none'),
                return.val = c('lfc', 'df', 'gene', 'p'),
-               center.rows = FALSE,
-               two.way = FALSE) {
+               center.rows = FALSE) {
 
     .dea = function(m,
                     group,
@@ -30,6 +30,7 @@ dea = function(m,
                     lfc,
                     p,
                     pmethod,
+                    alternative,
                     arrange.by,
                     return.val,
                     center.rows) {
@@ -40,19 +41,18 @@ dea = function(m,
         }
         if (center.rows) m = rowcenter(m)
         print(range_rowmeans(m))
-        d = rowttests(m, fac = group)
+        d = rowttests(m, fac = group, alternative = alternative, pmethod = pmethod)
         d = as.data.frame(d)
         d = tibble::rownames_to_column(d, 'gene')
-        d$p.value = stats::p.adjust(d$p.value, method = pmethod)
         if (!is.null(lfc)) d = dplyr::filter(d, foldchange >= lfc)
-        if (!is.null(p)) d = dplyr::filter(d, p.value <= p)
+        if (!is.null(p)) d = dplyr::filter(d, p.adj <= p)
         if (arrange.by == 'lfc') d = dplyr::arrange(d, desc(foldchange))
-        else if (arrange.by == 'p') d = dplyr::arrange(d, p.value)
+        else if (arrange.by == 'p') d = dplyr::arrange(d, p.adj)
         else if (arrange.by != 'none') warning('Skipping arrange.by: value not recognised...')
         if (return.val == 'df') return(d)
         genes = dplyr::pull(d, gene)
         lfc = stats::setNames(dplyr::pull(d, foldchange), genes)
-        p = stats::setNames(dplyr::pull(d, p.value), genes)
+        p = stats::setNames(dplyr::pull(d, p.adj), genes)
         if (return.val == 'gene') return(genes)
         else if (return.val == 'lfc') return(lfc)
         else if (return.val == 'p') return(p)
@@ -61,26 +61,25 @@ dea = function(m,
 
     return.val = match.arg(return.val)
     arrange.by = match.arg(arrange.by)
+    alternative = match.arg(alternative)
 
-    Args = list(m = m,
-                group = group,
-                group2 = group2,
-                lfc = lfc,
-                p = p,
-                pmethod = pmethod,
-                arrange.by = arrange.by,
-                return.val = return.val,
-                center.rows = center.rows)
-
-    res = do.call(.dea, Args)
-
-    if (two.way) {
-        Args$group = group2
-        Args$group2 = group
-        res = c(list(res), list(do.call(.dea, Args)))
+    if (!is.list(group)) {
+        group = list(group)
     }
-    
-    res
 
+    sapply(group, function(gr) {
+               .dea(
+                    m = m,
+                    group = gr,
+                    group2 = group2,
+                    lfc = lfc,
+                    p = p,
+                    pmethod = pmethod,
+                    alternative = alternative,
+                    arrange.by = arrange.by,
+                    return.val = return.val,
+                    center.rows = center.rows
+                    )},
+           simplify = F)
 }
 
