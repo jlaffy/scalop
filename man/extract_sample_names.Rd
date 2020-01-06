@@ -2,24 +2,20 @@
 % Please edit documentation in R/extract_sample_names.R
 \name{extract_sample_names}
 \alias{extract_sample_names}
-\title{Get unique sample names}
+\title{Extract Sample Names}
 \usage{
-extract_sample_names(x, sep = "-|_", pos = 1, max.nchar = NULL, replace = NULL)
+extract_sample_names(x, ..., sample_names = NULL)
 }
 \arguments{
-\item{x}{character vector of cell ids}
+\item{x}{character vector of strings to extract sample names from}
 
-\item{sep}{separator Default: '-|_'}
+\item{...}{other arguments passed to `scalop::unique_sample_names`. Relevant only if sample_names is not provided.}
 
-\item{pos}{position of sample name given separator. First position is 1. Default: 1}
-
-\item{max.nchar}{maximum number of characters to take as sample name (starting from the first). Default: NULL}
-
-\item{replace}{a list of character vectors to replace. Takes the form list(c(old, new), c(old, new)). Default: NULL}
+\item{sample_names}{character vector of unique sample names to extract from x. Default: NULL}
 }
 \value{
-character vector of unique sample names
+character vector of sample names of the same length as x.
 }
 \description{
-Extract unique sample names from cell ids
+Convenient wrapper function for `scalop::extract_substring`. Extract sample names from character vector. Sample names can be provided or, if not, then are found with `scalop::unique_sample_names`.
 }
