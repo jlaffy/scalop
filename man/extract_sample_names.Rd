@@ -4,14 +4,27 @@
 \alias{extract_sample_names}
 \title{Extract Sample Names}
 \usage{
-extract_sample_names(x, ..., sample_names = NULL)
+extract_sample_names(
+  x,
+  samples = NULL,
+  sep = "-|_|\\\\.",
+  pos = 1,
+  max.nchar = NULL,
+  replace = NULL
+)
 }
 \arguments{
-\item{x}{character vector of strings to extract sample names from}
+\item{x}{character vector of strings to extract sample names from.}
 
-\item{...}{other arguments passed to `scalop::unique_sample_names`. Relevant only if sample_names is not provided.}
+\item{samples}{character vector of unique sample names to extract from x. Default: NULL}
 
-\item{sample_names}{character vector of unique sample names to extract from x. Default: NULL}
+\item{sep}{separator. Relevant only if samples = NULL. Default: "-|_|\\."}
+
+\item{pos}{position of sample name given separator. First position is 1. Relevant only if samples = NULL. Default: 1}
+
+\item{max.nchar}{maximum number of characters to take as sample name (starting from the first). Relevant only if samples = NULL. Default: NULL}
+
+\item{replace}{a list of character vectors to replace. Takes the form list(c(old, new), c(old, new)). Relevant only if samples = NULL. Default: NULL}
 }
 \value{
 character vector of sample names of the same length as x.

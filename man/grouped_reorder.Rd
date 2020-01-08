@@ -8,6 +8,7 @@ grouped_reorder(
   m,
   groups,
   interorder = FALSE,
+  intraorder = TRUE,
   cor.method = "pearson",
   dist.method = "euclidean",
   cluster.method = "average",

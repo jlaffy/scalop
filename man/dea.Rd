@@ -11,10 +11,10 @@ dea(
   lfc = log2(2),
   p = 0.05,
   pmethod = "BH",
+  alternative = c("greater", "less", "two-sided"),
   arrange.by = c("lfc", "p", "none"),
   return.val = c("lfc", "df", "gene", "p"),
-  center.rows = FALSE,
-  two.way = FALSE
+  center.rows = FALSE
 )
 }
 \arguments{

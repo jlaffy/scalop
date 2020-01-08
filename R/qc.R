@@ -6,7 +6,7 @@
 #' @rdname frac_mito
 frac_mito = function(m) {
     genes = rownames(m)[startsWith(rownames(m), "MT")]
-    m = tpm(m)
+    M = unlogtpm(m)
     colSums(m[genes, ])/colSums(m)
 }
 
@@ -19,7 +19,7 @@ frac_mito = function(m) {
 expr_housekeeping = function(m, na.rm = T) {
     genes = scalop::Markers_Normal$Housekeeping
     genes = genes[genes %in% rownames(m)]
-    logtpm(colMeans(tpm(m[genes, ]), na.rm = na.rm), bulk = T)
+    logtpm(colMeans(unlogtpm(m[genes, ]), na.rm = na.rm), bulk = T)
 }
 
 
@@ -30,5 +30,5 @@ expr_housekeeping = function(m, na.rm = T) {
 #' @export
 #' @rdname aggr_gene_expr
 aggr_gene_expr = function(m, na.rm = T) {
-    logtpm(rowMeans(tpm(m), na.rm = na.rm), bulk = TRUE)
+    logtpm(rowMeans(unlogtpm(m), na.rm = na.rm), bulk = TRUE)
 }
