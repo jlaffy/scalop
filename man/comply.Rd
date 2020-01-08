@@ -2,23 +2,24 @@
 % Please edit documentation in R/comply.R
 \name{comply}
 \alias{comply}
-\title{Apply a Function to All Combinations in One or between a Pair of Vectors}
+\title{Apply a Function to All Pairs of Elements in 'x' or Between 'x' and 'y'}
 \usage{
-comply(x, y = NULL, FUN = jaccard)
+comply(x, y = NULL, FUN = jaccard, ..., simplify = TRUE)
 }
 \arguments{
 \item{x}{a vector or a list of vectors}
 
 \item{y}{a vector or a list of vectors. If y is NULL, y will be set to x, such that if x is a list, the function FUN will be applied to all pairs of vectors in the list. Default: NULL}
 
-\item{FUN}{the function to apply to all pairs of x and y. Default: jaccard}
+\item{FUN}{the function to be applied to every pair of elements in 'x', or to every pair of elements between 'x' and 'y'. The function should take two arguments and return a numeric value. Default: jaccard}
+
+\item{...}{optional arguments to 'FUN'.}
+
+\item{simplify}{logical; should the result be simplified to a matrix? Default: TRUE}
 }
 \value{
 a matrix of resulting values after applying FUN to all pairs of x and y (or the one pair if x and y are both atomic vectors). The number of columns and the number of rows will correspond to the lengths of x and y respectively.
 }
 \description{
-Apply a Function to All Combinations in One or between a Pair of Vectors
-}
-\seealso{
-\code{\link[stats]{setNames}}
+Apply a Function to All Pairs of Elements in 'x' or Between 'x' and 'y'
 }
