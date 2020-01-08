@@ -88,9 +88,14 @@ annomap = function(X,
                     X = X[, c(1, i)]
                     colnames(X) = c('x', 'fill')
 
+                    if (!is.null(tile.col) || !is.null(tile.size)) {
+                        geomTile = ggplot2::geom_tile(col = tile.col, size = tile.size)
+                    } else {
+                        geomTile = ggplot2::geom_tile()
+                    }
                     if (flip) {
                         G = ggplot2::ggplot(X, aes(y = as.numeric(x), fill = fill, x = 1)) +
-                            ggplot2::geom_tile(col ='black') +
+                            geomTile +
                             ggplot2::scale_y_discrete(expand = c(0,0)) +
                             ggplot2::scale_x_continuous(expand = c(0,0), breaks = NULL) +
                             ggplot2::coord_flip()
@@ -98,7 +103,7 @@ annomap = function(X,
         
                     else {
                         G = ggplot2::ggplot(X, aes(x = as.numeric(x), fill = fill, y = 1)) +
-                            ggplot2::geom_tile(col ='black') +
+                            geomTile +
                             ggplot2::scale_x_discrete(expand = c(0,0)) +
                             ggplot2::scale_y_continuous(expand = c(0,0), breaks = NULL)
                     }
@@ -112,6 +117,7 @@ annomap = function(X,
                         print(head(X$fill))
                         X = X %>% dplyr::mutate(fill = factor(as.character(fill), levels = unique(as.character(fill))))
                         G = G + ggplot2::scale_fill_manual(values = sample(brewerland::discrete_colours))
+                        browser()
                     }
         
                     G = G + ggplot2::theme(aspect.ratio = ratio,
