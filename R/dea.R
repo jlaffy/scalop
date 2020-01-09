@@ -95,20 +95,26 @@ dea = function(m,
         group = list(group)
     }
 
+    if (!is.list(group2)) {
+        group2 = list(group2)
+    }
+
     sapply(group, function(gr) {
-               .dea(
-                    m = m,
-                    group = gr,
-                    group2 = group2,
-                    lfc = lfc,
-                    p = p,
-                    pmethod = pmethod,
-                    alternative = alternative,
-                    arrange.by = arrange.by,
-                    return.val = return.val,
-                    center.rows = center.rows,
-                    verbose = verbose
-                    )},
+               sapply(group2, function(gr2) {
+                          .dea(
+                               m = m,
+                               group = gr,
+                               group2 = gr2,
+                               lfc = lfc,
+                               p = p,
+                               pmethod = pmethod,
+                               alternative = alternative,
+                               arrange.by = arrange.by,
+                               return.val = return.val,
+                               center.rows = center.rows,
+                               verbose = verbose
+                               )},
+           simplify = F)},
            simplify = F)
 }
 
