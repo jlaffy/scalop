@@ -13,6 +13,7 @@ ldcast = function(L, na.rm = FALSE, na.value = NULL) {
     }
 
     else {
+        L = L[lengths(L) != 0]
         L.df = sapply(L, function(l) reshape2::melt(as.matrix(l))[,-2], simplify = F)
         d = Reduce(function(x, y) suppressWarnings(dplyr::full_join(x, y, by = "Var1")), L.df)
         d = tibble::column_to_rownames(d, 'Var1')
