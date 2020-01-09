@@ -8,7 +8,7 @@
 #' @param pmethod correction method for multiple testing or 'none' if not desired. See stats::p.adjust.methods for options. Default: 'BH'
 #' @param arrange.by arrange genes by decreasing 'lfc', increasing 'p' or 'none. Default: 'lfc'
 #' @param return.val 'lfc', 'df', 'gene' or 'p'. Default: 'lfc' 
-#' @param center.rows should the matrix rows be centered around 0? If TRUE and group2 was provided, centering is performed after the matrix has been subset to include only group and group2 columns. Default: F
+#' @param center.rows should the matrix rows be centered around 0? If TRUE and group2 was provided, centering is performed after the matrix has been subset to include only group and group2 columns. Default: TRUE
 #' @param two.way should the reverse dea test be performed too? i.e. group becomes group2 and vice versa. Default: FALSE
 #' @return a numeric vector of gene fold changes or p-values, a character vector of gene names or the full dataframe.
 #' @rdname dea
@@ -16,13 +16,14 @@
 dea = function(m,
                group,
                group2 = NULL,
-               lfc = log2(2),
-               p = 0.05,
+               lfc = log2(2L),
+               p = 1e-2,
                pmethod = 'BH',
                alternative = c('greater', 'less', 'two-sided'),
                arrange.by = c('lfc', 'p', 'none'),
                return.val = c('lfc', 'df', 'gene', 'p'),
-               center.rows = FALSE) {
+               center.rows = TRUE,
+               verbose = FALSE) {
 
     .dea = function(m,
                     group,
@@ -33,22 +34,49 @@ dea = function(m,
                     alternative,
                     arrange.by,
                     return.val,
-                    center.rows) {
+                    center.rows,
+                    verbose) {
     
         if (!is.null(group2)) {
+            if (verbose) message("Filtering out cells not in 'group' or 'group2'...")
             columns = unique(c(group, group2))
             m = m[, columns]
         }
-        if (center.rows) m = rowcenter(m)
-        print(range_rowmeans(m))
+
+        if (center.rows) {
+            if (verbose) message('Centering rows...')
+            m = rowcenter(m)
+        }
+
+        if (verbose) message('Calculating differential expression...')
         d = rowttests(m, fac = group, alternative = alternative, pmethod = pmethod)
         d = as.data.frame(d)
         d = tibble::rownames_to_column(d, 'gene')
-        if (!is.null(lfc)) d = dplyr::filter(d, foldchange >= lfc)
-        if (!is.null(p)) d = dplyr::filter(d, p.adj <= p)
-        if (arrange.by == 'lfc') d = dplyr::arrange(d, desc(foldchange))
-        else if (arrange.by == 'p') d = dplyr::arrange(d, p.adj)
-        else if (arrange.by != 'none') warning('Skipping arrange.by: value not recognised...')
+
+        if (!is.null(lfc)) {
+            if (verbose) message('Removing genes with lfc < ', lfc, '...')
+            d = dplyr::filter(d, foldchange >= lfc)
+        }
+        
+        if (!is.null(p)) {
+            if (verbose) message('Removing genes with (adjusted) p-value > ', p, '...')
+            d = dplyr::filter(d, p.adj <= p)
+        }
+
+        if (arrange.by == 'lfc') {
+            if (verbose) message('Ordering genes by log2-fold change...')
+            d = dplyr::arrange(d, desc(foldchange))
+        }
+
+        else if (arrange.by == 'p') {
+            if (verbose) message('Ordering genes by (adjusted) p-value...')
+            d = dplyr::arrange(d, p.adj)
+        }
+
+        else if (arrange.by != 'none') {
+            warning('Skipping arrange.by: value not recognised...')
+        }
+
         if (return.val == 'df') return(d)
         genes = dplyr::pull(d, gene)
         lfc = stats::setNames(dplyr::pull(d, foldchange), genes)
@@ -78,7 +106,8 @@ dea = function(m,
                     alternative = alternative,
                     arrange.by = arrange.by,
                     return.val = return.val,
-                    center.rows = center.rows
+                    center.rows = center.rows,
+                    verbose = verbose
                     )},
            simplify = F)
 }

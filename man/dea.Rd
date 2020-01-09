@@ -8,13 +8,14 @@ dea(
   m,
   group,
   group2 = NULL,
-  lfc = log2(2),
-  p = 0.05,
+  lfc = log2(2L),
+  p = 0.01,
   pmethod = "BH",
   alternative = c("greater", "less", "two-sided"),
   arrange.by = c("lfc", "p", "none"),
   return.val = c("lfc", "df", "gene", "p"),
-  center.rows = FALSE
+  center.rows = TRUE,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -34,7 +35,7 @@ dea(
 
 \item{return.val}{'lfc', 'df', 'gene' or 'p'. Default: 'lfc'}
 
-\item{center.rows}{should the matrix rows be centered around 0? If TRUE and group2 was provided, centering is performed after the matrix has been subset to include only group and group2 columns. Default: F}
+\item{center.rows}{should the matrix rows be centered around 0? If TRUE and group2 was provided, centering is performed after the matrix has been subset to include only group and group2 columns. Default: TRUE}
 
 \item{two.way}{should the reverse dea test be performed too? i.e. group becomes group2 and vice versa. Default: FALSE}
 }
