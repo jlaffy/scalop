@@ -117,7 +117,6 @@ annomap = function(X,
                         print(head(X$fill))
                         X = X %>% dplyr::mutate(fill = factor(as.character(fill), levels = unique(as.character(fill))))
                         G = G + ggplot2::scale_fill_manual(values = sample(brewerland::discrete_colours))
-                        browser()
                     }
         
                     G = G + ggplot2::theme(aspect.ratio = ratio,
