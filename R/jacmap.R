@@ -20,6 +20,7 @@
 #' @importFrom reshape2 melt
 #' @importFrom ggplot2 geom_text
 jacmap = function(L,
+                  L2 = NULL,
                   ratio = 1,
                   limits = c(0, 1),
                   tile.col = 'black',
@@ -31,7 +32,7 @@ jacmap = function(L,
                   tiletext = FALSE,
                   dcp = 1) {
 
-    d = reshape2::melt(hca_reorder(jaccard(L)))
+    d = reshape2::melt(hca_reorder(jaccard(x = L, y = L2)))
 
     G = gmap(d,
              ratio = ratio,
