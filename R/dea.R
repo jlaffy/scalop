@@ -77,13 +77,25 @@ dea = function(m,
             warning('Skipping arrange.by: value not recognised...')
         }
 
-        if (return.val == 'df') return(d)
+        if (return.val == 'df') {
+            class(d) <- c('dea.data.frame', class(d))
+            return(d)
+        }
         genes = dplyr::pull(d, gene)
         lfc = stats::setNames(dplyr::pull(d, foldchange), genes)
         p = stats::setNames(dplyr::pull(d, p.adj), genes)
-        if (return.val == 'gene') return(genes)
-        else if (return.val == 'lfc') return(lfc)
-        else if (return.val == 'p') return(p)
+        if (return.val == 'gene') {
+            class(genes) <- c('dea.character', class(genes))
+            return(genes)
+        }
+        else if (return.val == 'lfc') {
+            class(lfc) <- c('dea.numeric.lfc', class(lfc))
+            return(lfc)
+        }
+        else if (return.val == 'p') {
+            class(p) <- c('dea.numeric.p', class(p))
+            return(p)
+        }
         else stop('return.val not recognised.')
     }
 
@@ -95,26 +107,46 @@ dea = function(m,
         group = list(group)
     }
 
-    if (!is.list(group2)) {
-        group2 = list(group2)
-    }
+    if (is.null(group2)) {
+        res = sapply(group, function(gr) {
+                      .dea(
+                           m = m,
+                           group = gr,
+                           group2 = group2,
+                           lfc = lfc,
+                           p = p,
+                           pmethod = pmethod,
+                           alternative = alternative,
+                           arrange.by = arrange.by,
+                           return.val = return.val,
+                           center.rows = center.rows,
+                           verbose = verbose
+                           )},
+                  simplify = F)
+    } else {
+    
+        if (!is.list(group2)) {
+            group2 = list(group2)
+        }
 
-    sapply(group, function(gr) {
-               sapply(group2, function(gr2) {
-                          .dea(
-                               m = m,
-                               group = gr,
-                               group2 = gr2,
-                               lfc = lfc,
-                               p = p,
-                               pmethod = pmethod,
-                               alternative = alternative,
-                               arrange.by = arrange.by,
-                               return.val = return.val,
-                               center.rows = center.rows,
-                               verbose = verbose
-                               )},
-           simplify = F)},
-           simplify = F)
+        res = sapply(group, function(gr) {
+                         sapply(group2, function(gr2) {
+                                    .dea(
+                                         m = m,
+                                         group = gr,
+                                         group2 = gr2,
+                                         lfc = lfc,
+                                         p = p,
+                                         pmethod = pmethod,
+                                         alternative = alternative,
+                                         arrange.by = arrange.by,
+                                         return.val = return.val,
+                                         center.rows = center.rows,
+                                         verbose = verbose
+                                         )},
+                                simplify = F)},
+                     simplify = F)
+    }
+    res
 }
 
