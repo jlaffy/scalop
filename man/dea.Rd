@@ -15,6 +15,8 @@ dea(
   arrange.by = c("lfc", "p", "none"),
   return.val = c("lfc", "df", "gene", "p"),
   center.rows = TRUE,
+  center.rows.by.sample = FALSE,
+  samples = split_by_sample_names(colnames(m)),
   verbose = FALSE
 )
 }
