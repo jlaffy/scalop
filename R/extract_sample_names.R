@@ -11,7 +11,7 @@
 #' @export 
 extract_sample_names = function(x, 
                                 samples = NULL, 
-                                sep = "-|_|\\.",
+                                sep = "-|_",
                                 pos = 1,
                                 max.nchar = NULL,
                                 replace = NULL) {

@@ -6,12 +6,15 @@
 #' @return simulated bulk matrix. If groups is NULL, one column is returned for the average across all cells. Else one column per group in 'groups'.
 #' @rdname as_bulk
 #' @export 
-as_bulk = function(m, groups = NULL, isLog = TRUE) {
+as_bulk = function(m, groups = NULL, isLog = TRUE, by = 'mean') {
     if (isLog) {
-        m = tpm(m, bulk = FALSE)
+        m = unlogtpm(m, bulk = FALSE)
     }
 
-    .as_bulk = function(m) logtpm(rowMeans(m), bulk = TRUE)
+    if (by == 'median') FUN = matrixStats::rowMedians
+    else FUN = matrixStats::rowMeans2
+    
+    .as_bulk = function(m) logtpm(FUN(m), bulk = TRUE)
     
     if (is.null(groups)) {
         groups = colnames(m)
@@ -21,5 +24,21 @@ as_bulk = function(m, groups = NULL, isLog = TRUE) {
         groups = list(groups)
     }
     
-    sapply(groups, function(group) .as_bulk(m[, group]))
+    res = sapply(groups, function(group) .as_bulk(m[, group]))
+    rownames(res) = rownames(m)
+    res
+}
+
+#' @title Convert sc-matrix to simulated bulk samples matrix 
+#' @param m non-row-centered logTPM or TPM matrix.
+#' @param samples a list of cell IDs per sample. Default: split_by_sample_names(colnames(m))
+#' @param isLog set to FALSE if 'm' is in TPM form. Default: TRUE
+#' @return simulated bulk matrix,with as many columns as there are samples in the <samples> list.
+#' @rdname as_bulk_samples
+#' @export 
+as_bulk_samples = function(m,
+                           samples = split_by_sample_names(colnames(m)),
+                           isLog = TRUE, 
+                           by = 'median') {
+    as_bulk(m = m, groups = samples, isLog = isLog, by = by)
 }

@@ -19,8 +19,9 @@
 #' @export 
 #' @importFrom reshape2 melt
 #' @importFrom ggplot2 geom_text
-jacmap = function(L,
+jacmap = function(L = NULL,
                   L2 = NULL,
+                  m = NULL,
                   ratio = 1,
                   limits = c(0, 1),
                   tile.col = 'black',
@@ -32,7 +33,11 @@ jacmap = function(L,
                   tiletext = FALSE,
                   dcp = 1) {
 
-    d = reshape2::melt(hca_reorder(jaccard(x = L, y = L2)))
+    if (is.null(m)) {
+        m = hca_reorder(jaccard(x = L, y = L2))
+    }
+
+    d = reshape2::melt(m)
 
     G = gmap(d,
              ratio = ratio,
@@ -48,5 +53,6 @@ jacmap = function(L,
         G = G + ggplot2::geom_text(aes(label = round(value, dcp)))
     }
 
-    G
+    plot(G)
+    invisible(list(G = G, d = d))
 }

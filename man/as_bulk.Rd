@@ -4,7 +4,7 @@
 \alias{as_bulk}
 \title{Convert sc-matrix to simulated bulk}
 \usage{
-as_bulk(m, groups = NULL, isLog = TRUE)
+as_bulk(m, groups = NULL, isLog = TRUE, by = "mean")
 }
 \arguments{
 \item{m}{non-row-centered logTPM or TPM matrix.}

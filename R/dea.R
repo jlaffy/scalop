@@ -23,6 +23,8 @@ dea = function(m,
                arrange.by = c('lfc', 'p', 'none'),
                return.val = c('lfc', 'df', 'gene', 'p'),
                center.rows = TRUE,
+               center.rows.by.sample = FALSE,
+               samples = split_by_sample_names(colnames(m)),
                verbose = FALSE) {
 
     .dea = function(m,
@@ -43,7 +45,12 @@ dea = function(m,
             m = m[, columns]
         }
 
-        if (center.rows) {
+        if (center.rows.by.sample) {
+            if (verbose) message('Centering rows by sample...')
+            m = rowcenter_by_sample(m, samples = samples)
+        }
+
+        else if (center.rows) {
             if (verbose) message('Centering rows...')
             m = rowcenter(m)
         }

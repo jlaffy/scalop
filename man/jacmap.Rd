@@ -5,7 +5,9 @@
 \title{Convert a list to a jaccard matrix and plot with `scalop::gmap`}
 \usage{
 jacmap(
-  L,
+  L = NULL,
+  L2 = NULL,
+  m = NULL,
   ratio = 1,
   limits = c(0, 1),
   tile.col = "black",

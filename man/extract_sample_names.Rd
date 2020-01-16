@@ -7,7 +7,7 @@
 extract_sample_names(
   x,
   samples = NULL,
-  sep = "-|_|\\\\.",
+  sep = "-|_",
   pos = 1,
   max.nchar = NULL,
   replace = NULL
