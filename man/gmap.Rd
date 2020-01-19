@@ -29,9 +29,10 @@ gmap(
   col = NULL,
   na.value = "white",
   legend.position = "right",
-  legend.height = 0.2,
-  legend.width = 0.15,
-  legend.rel = 0.6,
+  legend.justification = "bottom",
+  legend.height = 0.5,
+  legend.width = 0.5,
+  legend.rel = 0.9,
   legend.colour = "black",
   ticks.linewidth = 0.5,
   breaks = waiver(),
@@ -46,7 +47,7 @@ gmap(
   legend.breaks = NULL,
   legend.labels = NULL,
   legend.title = NULL,
-  legend.title.rel = 0.6,
+  legend.title.rel = 0.9,
   expand = c(0, 0)
 )
 }

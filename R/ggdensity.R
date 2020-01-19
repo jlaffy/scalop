@@ -22,13 +22,11 @@
 #' @seealso 
 #'  \code{\link[stats]{setNames}}
 #'  \code{\link[ggpubr]{ggdensity}}
-#'  \code{\link[scalop]{Unlist}},\code{\link[scalop]{add_to_dataframe}},\code{\link[scalop]{flip}}
 #'  \code{\link[dplyr]{filter}},\code{\link[dplyr]{mutate}}
 #' @rdname ggDensity
 #' @export 
 #' @importFrom stats setNames
 #' @importFrom ggpubr ggdensity
-#' @importFrom scalop Unlist add_to_dataframe flip
 #' @importFrom dplyr filter mutate
 ggDensity = function(data,
                      x,
@@ -58,9 +56,9 @@ ggDensity = function(data,
     nas <- names(vals)[!names(vals) %in% unlist(modes)]
     modes = c(modes, list(`NA`=nas))
     modes0 = modes
-    modes = scalop::Unlist(modes)
-    data = scalop::add_to_dataframe(data,
-                                    vec = scalop::flip(modes),
+    modes = Unlist(modes)
+    data = add_to_dataframe(data,
+                                    vec = flip(modes),
                                     col = colnames(data)[1],
                                     newcol = 'Mode')
     #palette =c("#00AFBB", "#E7B800", "#FC4E07")

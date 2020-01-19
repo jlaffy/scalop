@@ -4,14 +4,14 @@
 \alias{add_to_dataframe}
 \title{Join a dataframe and a named vector}
 \usage{
-add_to_dataframe(dat, vec, col, newcol = "val")
+add_to_dataframe(dat, vec, by, newcol = "val")
 }
 \arguments{
 \item{dat}{dataframe}
 
 \item{vec}{named vector whose names are a column of the dataframe}
 
-\item{col}{the name of the column that joining should be performed on.}
+\item{by}{the name of the column that joining should be performed on.}
 
 \item{newcol}{the name of the new column to add from vec. Default: 'val'}
 }
