@@ -58,9 +58,9 @@ ggDensity = function(data,
     modes0 = modes
     modes = Unlist(modes)
     data = add_to_dataframe(data,
-                                    vec = flip(modes),
-                                    col = colnames(data)[1],
-                                    newcol = 'Mode')
+                            vec = flip(modes),
+                            by = colnames(data)[1],
+                            newcol = 'Mode')
     #palette =c("#00AFBB", "#E7B800", "#FC4E07")
     if (na.action == 'hide') {
         data = data %>%
