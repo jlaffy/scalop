@@ -7,6 +7,7 @@
 sigScores(
   m,
   groups,
+  center.rows = TRUE,
   center = T,
   expr.center = T,
   expr.bin.m = NULL,

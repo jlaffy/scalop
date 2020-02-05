@@ -39,6 +39,10 @@ dea(
 
 \item{center.rows}{should the matrix rows be centered around 0? If TRUE and group2 was provided, centering is performed after the matrix has been subset to include only group and group2 columns. Default: TRUE}
 
+\item{center.rows.by.sample}{center rows within subsets of columns corresponding to samples where list of samples' cell ids are provided in <samples>. If TRUE and group2 was provided, centering is performed before the matrix has been subsetted for group and group2 cells only. Default: FALSE}
+
+\item{samples}{list of character vectors corresponding to cell ids of the different samples. Not all cells in <m> need be represented in <samples but be aware that missing cell ids will be removed from the matrix.}
+
 \item{two.way}{should the reverse dea test be performed too? i.e. group becomes group2 and vice versa. Default: FALSE}
 }
 \value{

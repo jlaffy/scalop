@@ -102,6 +102,7 @@ baseScores = function(m, groups, conserved.genes = 0.7) {
 #' @export 
 sigScores = function(m,
                      groups,
+                     center.rows = TRUE,
                      center = T,
                      expr.center = T,
                      expr.bin.m = NULL,
@@ -119,8 +120,11 @@ sigScores = function(m,
     groups = filter_groups(groups, ref = rownames(m), conserved = conserved.genes)
 
     # base scores (no centering / expression normalisation of scores (yet))
-    scores = baseScores(m = rowcenter(m), groups = groups, conserved = conserved.genes)
-
+    if (center.rows) {
+        scores = baseScores(m = rowcenter(m), groups = groups, conserved = conserved.genes)
+    } else {
+        scores = baseScores(m = m, groups = groups, conserved = conserved.genes)
+    }
     # no mean centering OR expr/complexity centering
     if (!center) expr.center = F
 
@@ -143,7 +147,11 @@ sigScores = function(m,
             names(expr.groups) = names(groups)
         }
 
-        expr.scores = baseScores(m = rowcenter(expr.bin.m), groups = expr.groups)
+        if (center.rows) {
+            expr.scores = baseScores(m = rowcenter(expr.bin.m), groups = expr.groups)
+        } else {
+            expr.scores = baseScores(m = expr.bin.m, groups = expr.groups)
+        }
         scores = scores - expr.scores
     }
 

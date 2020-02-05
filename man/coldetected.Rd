@@ -4,7 +4,12 @@
 \alias{coldetected}
 \title{Number of non-zero values per column}
 \usage{
-coldetected(m)
+coldetected(
+  m,
+  value = 0,
+  method = c("notequal", "greaterthan", "lessthan", "equal"),
+  counts = TRUE
+)
 }
 \arguments{
 \item{m}{matrix}

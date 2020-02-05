@@ -37,9 +37,29 @@ rowcenter = function(m, by = 'mean') {
 #'  \code{\link[stats]{setNames}}
 #' @rdname coldetected
 #' @export 
-coldetected = function(m) {
+coldetected = function(m, value = 0,method = c('notequal','greaterthan','lessthan','equal'), counts = TRUE) {
+    method = match.arg(method)
     m = as.matrix(m)
-    res = matrixStats::colCounts(m != 0)
+    if (method == 'notequal') {
+        bool = m != value
+        if (!counts) return(bool)
+        res = matrixStats::colCounts(bool)
+    }
+    if (method == 'equal') {
+        bool = m == value
+        if (!counts) return(bool)
+        res = matrixStats::colCounts(bool)
+    }
+    if (method == 'greaterthan') {
+        bool = m > value
+        if (!counts) return(bool)
+        res = matrixStats::colCounts(bool)
+    }
+    if (method == 'lessthan') {
+        bool = m < value
+        if (!counts) return(bool)
+        res = matrixStats::colCounts(bool)
+    }
     stats::setNames(res, colnames(m))
 }
 
@@ -52,9 +72,29 @@ coldetected = function(m) {
 #'  \code{\link[stats]{setNames}}
 #' @rdname rowdetected
 #' @export 
-rowdetected = function(m) {
+rowdetected = function(m, value = 0,method = c('notequal','greaterthan','lessthan','equal'), counts = TRUE) {
+    method = match.arg(method)
     m = as.matrix(m)
-    res = matrixStats::rowCounts(m != 0)
+    if (method == 'notequal') {
+        bool = m != value
+        if (!counts) return(bool)
+        res = matrixStats::rowCounts(bool)
+    }
+    if (method == 'equal') {
+        bool = m == value
+        if (!counts) return(bool)
+        res = matrixStats::rowCounts(bool)
+    }
+    if (method == 'greaterthan') {
+        bool = m > value
+        if (!counts) return(bool)
+        res = matrixStats::rowCounts(bool)
+    }
+    if (method == 'lessthan') {
+        bool = m < value
+        if (!counts) return(bool)
+        res = matrixStats::rowCounts(bool)
+    }
     stats::setNames(res, rownames(m))
 }
 
