@@ -9,6 +9,8 @@
 #' @param arrange.by arrange genes by decreasing 'lfc', increasing 'p' or 'none. Default: 'lfc'
 #' @param return.val 'lfc', 'df', 'gene' or 'p'. Default: 'lfc' 
 #' @param center.rows should the matrix rows be centered around 0? If TRUE and group2 was provided, centering is performed after the matrix has been subset to include only group and group2 columns. Default: TRUE
+#' @param center.rows.by.sample center rows within subsets of columns corresponding to samples where list of samples' cell ids are provided in <samples>. If TRUE and group2 was provided, centering is performed before the matrix has been subsetted for group and group2 cells only. Default: FALSE
+#' @param samples list of character vectors corresponding to cell ids of the different samples. Not all cells in <m> need be represented in <samples but be aware that missing cell ids will be removed from the matrix.
 #' @param two.way should the reverse dea test be performed too? i.e. group becomes group2 and vice versa. Default: FALSE
 #' @return a numeric vector of gene fold changes or p-values, a character vector of gene names or the full dataframe.
 #' @rdname dea
@@ -110,6 +112,11 @@ dea = function(m,
     arrange.by = match.arg(arrange.by)
     alternative = match.arg(alternative)
 
+    if (center.rows.by.sample) {
+        center.rows = FALSE
+        m = grouped_rowcenter(m, groups = samples)
+    }
+
     if (!is.list(group)) {
         group = list(group)
     }
@@ -154,6 +161,11 @@ dea = function(m,
                                 simplify = F)},
                      simplify = F)
     }
+
+    if (length(res) == 1)  {
+        res = res[[1]]
+    }
+
     res
 }
 

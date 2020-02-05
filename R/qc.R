@@ -29,6 +29,6 @@ expr_housekeeping = function(m, na.rm = T) {
 #' @param m matrix of expression values to test
 #' @export
 #' @rdname aggr_gene_expr
-aggr_gene_expr = function(m, na.rm = T) {
-    logtpm(rowMeans(unlogtpm(m), na.rm = na.rm), bulk = TRUE)
+aggr_gene_expr = function(m, na.rm = T, isBulk = FALSE) {
+    logtpm(rowMeans(unlogtpm(m, bulk = isBulk), na.rm = na.rm), bulk = TRUE)
 }

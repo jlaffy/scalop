@@ -4,7 +4,7 @@
 \alias{aggr_gene_expr}
 \title{log-Average expression of genes across all cells}
 \usage{
-aggr_gene_expr(m, na.rm = T)
+aggr_gene_expr(m, na.rm = T, isBulk = FALSE)
 }
 \arguments{
 \item{m}{matrix of expression values to test}
