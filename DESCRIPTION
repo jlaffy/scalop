@@ -43,7 +43,11 @@ Imports:
     GO.db,
     org.Hs.eg.db,
     TxDb.Hsapiens.UCSC.hg19.knownGene,
-    calibrate
+    calibrate,
+    mixtools,
+    RColorBrewer,
+    nor1mix
+Remotes: jlaffy/brewerland
 Suggests: 
     testthat (>= 2.1.0),
     knitr,

@@ -13,9 +13,9 @@
 #' @rdname hca
 #' @export 
 hca = function(x,
-               cor.method = cor.methods,
-               dist.method = dist.methods,
-               cluster.method = cluster.methods,
+               cor.method = scalop::cor.methods,
+               dist.method = scalop::dist.methods,
+               cluster.method = scalop::cluster.methods,
                max.dist = 1,
                h = NULL,
                k = NULL,

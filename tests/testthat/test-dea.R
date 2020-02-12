@@ -5,6 +5,6 @@ test_that("foldchange works with character group", {
     c(m1,m2) %<-% split_matrix(m, cells)
     ref = rowMeans(m1) - rowMeans(m2)
     class(ref) = c(class(ref), "dea")
-    res = dea(m, cells, fc = NULL, p = NULL, val = 'fc')
+    res = dea(m, cells, lfc = NULL, p = NULL, return.val = 'lfc')
     expect_equal(res, ref)
 })
