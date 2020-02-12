@@ -14,13 +14,6 @@
 #' @param tries the number of bootstrap replicates.
 #' @param force.tries Should bootstrap replicates continue to run if bimodality has already been found? Logical. Default: FALSE
 #' @return The posterior probabilities of each observation to one of two modes. If boolean = TRUE, return a boolean value indicating whether bimodality was found. If assign = TRUE, return a list of length two with the observations (IDs) in each mode.
-#' @examples 
-#'  cna = infercna(m = useData(), refCells = refCells)
-#'  # Malignant cells only (remove columns corresponding to refCells)
-#'  cna = cna[, !colnames(cna) %in% unlist(refCells)] 
-#'  cnaByChr = splitGenes(cna, by = 'chr')
-#'  sapply(cnaByChr, fitBimodal, assign = TRUE)
-#'  sapply(cnaByChr, fitBimodal, boolean = TRUE, coverage = 0.5)
 #' @seealso 
 #'  \code{\link[mixtools]{normalmixEM}}
 #' @rdname fitBimodal 
