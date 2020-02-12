@@ -121,9 +121,9 @@ sigScores = function(m,
 
     # base scores (no centering / expression normalisation of scores (yet))
     if (center.rows) {
-        scores = baseScores(m = rowcenter(m), groups = groups, conserved = conserved.genes)
+        scores = baseScores(m = rowcenter(m), groups = groups, conserved.genes = conserved.genes)
     } else {
-        scores = baseScores(m = m, groups = groups, conserved = conserved.genes)
+        scores = baseScores(m = m, groups = groups, conserved.genes = conserved.genes)
     }
     # no mean centering OR expr/complexity centering
     if (!center) expr.center = F

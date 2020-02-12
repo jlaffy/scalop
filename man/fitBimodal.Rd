@@ -54,14 +54,6 @@ The posterior probabilities of each observation to one of two modes. If boolean 
 \description{
 Fit a bimodal gaussian distribution to a set of observations.
 }
-\examples{
- cna = infercna(m = useData(), refCells = refCells)
- # Malignant cells only (remove columns corresponding to refCells)
- cna = cna[, !colnames(cna) \%in\% unlist(refCells)] 
- cnaByChr = splitGenes(cna, by = 'chr')
- sapply(cnaByChr, fitBimodal, assign = TRUE)
- sapply(cnaByChr, fitBimodal, boolean = TRUE, coverage = 0.5)
-}
 \seealso{
 \code{\link[mixtools]{normalmixEM}}
 }
