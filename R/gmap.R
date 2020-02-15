@@ -63,24 +63,26 @@ gmap <- function(dat,
                  na.value = 'white',
                  legend.position = 'right',
                  legend.justification = 'bottom',
-                 legend.height = 0.5,
-                 legend.width = 0.5,
-                 legend.rel = 0.9,
+                 legend.height = 0.4,
+                 legend.width = 0.6,
+                 legend.rel = 0.8,
                  legend.colour = 'black',
                  ticks.linewidth = 0.5,
                  breaks = waiver(),
                  labels = waiver(),
                  x.breaks = waiver(),
+                 x.axis.position = 'bottom',
                  y.breaks = waiver(),
                  x.labels = waiver(),
                  y.labels = waiver(),
                  num = T,
                  y.num = num, 
                  x.num = num,
+                 label.col = 'black',
                  legend.breaks = NULL,
                  legend.labels = NULL,
                  legend.title = NULL,
-                 legend.title.rel = 0.9,
+                 legend.title.rel = 0.8,
                  expand = c(0,0)) {
     
     x = rlang::enquo(x)
@@ -202,7 +204,11 @@ gmap <- function(dat,
         eval(y.scale)
 
     if ("label" %in% colnames(dat)) {
-        G = G + ggplot2::geom_text(aes(label = label))
+        G = G + ggplot2::geom_text(aes(label = label), colour = label.col)
+    }
+
+    if (x.axis.position == 'top') {
+        G = G + ggplot2::scale_x_discrete(position = 'top',expand = c(0,0))
     }
     
     G
