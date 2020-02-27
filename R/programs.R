@@ -1,6 +1,5 @@
-# m should not be row-centered
-#' @title  
-#' @description FUNCTION_DESCRIPTION
+#' @title Find cell clusters and retrieve significant expresion programs 
+#' @description Cell clusters are filtered on the basis of size, their corresponding expression programs are subsequently filtered on the basis of number of genes with sufficiently high fold-change values and sufficiently small p-values, and lastly filtered on the basis of sufficiently low jaccard similarity between any two pairs of cell clusters, whereby the cell cluster with a larger number of significant genes is kept. 
 #' @param m expression matrix of genes by cells. not row-centered
 #' @param nsig1 minimum number of genes with p-value 'p' to keep a cluster. Default: 50
 #' @param nsig2 number of genes with p-value 'p'/10. Default: 10
@@ -8,8 +7,7 @@
 #' @param p DEA adjusted p value for genes. Default: 0.01
 #' @param lfc DEA log2-FC value for genes. Default: log2(2)
 #' @param pmethod adjust method. Default: 'BH'
-#' @return ********
-#' @details **********
+#' @return The cell clusters, their gene expression profiles (all genes log2-foldchanges), their top DE genes (n = nsig1) and their p-values are all returned.
 #' @rdname programs
 #' @export 
 programs = function(m,
@@ -51,28 +49,7 @@ programs = function(m,
     sig1 = sig1[jac.pass]
     sig2 = sig2[jac.pass]
     sig3 = sig3[jac.pass]
-
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
-#' @param m PARAM_DESCRIPTION
-#' @param nsig1 PARAM_DESCRIPTION, Default: 50
-#' @param nsig2 PARAM_DESCRIPTION, Default: 10
-#' @param jaccard PARAM_DESCRIPTION, Default: 0.7
-#' @param p PARAM_DESCRIPTION, Default: 0.01
-#' @param lfc PARAM_DESCRIPTION, Default: log2(2)
-#' @param pmethod PARAM_DESCRIPTION, Default: 'BH'
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
-#' @examples 
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @rdname programs
-#' @export 
     programs = sapply(deas, function(d) d$gene[1:nsig1], simplify = F)
-
     lfcs = dea(m,
                group = groups,
                return.val = 'lfc',
@@ -80,7 +57,6 @@ programs = function(m,
                p = NULL,
                lfc = NULL, 
                pmethod = pmethod)
-
     list(programs = programs,
          profiles = lfcs,
          groups = groups,

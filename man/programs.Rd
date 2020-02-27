@@ -2,7 +2,7 @@
 % Please edit documentation in R/programs.R
 \name{programs}
 \alias{programs}
-\title{}
+\title{Find cell clusters and retrieve significant expresion programs}
 \usage{
 programs(
   m,
@@ -15,39 +15,23 @@ programs(
 )
 }
 \arguments{
-\item{m}{PARAM_DESCRIPTION}
+\item{m}{expression matrix of genes by cells. not row-centered}
 
-\item{nsig1}{PARAM_DESCRIPTION, Default: 50}
+\item{nsig1}{minimum number of genes with p-value 'p' to keep a cluster. Default: 50}
 
-\item{nsig2}{PARAM_DESCRIPTION, Default: 10}
+\item{nsig2}{number of genes with p-value 'p'/10. Default: 10}
 
-\item{jaccard}{PARAM_DESCRIPTION, Default: 0.7}
+\item{jaccard}{allowed jaccard similarity between clusters of cells. Default: 0.7}
 
-\item{p}{PARAM_DESCRIPTION, Default: 0.01}
+\item{p}{DEA adjusted p value for genes. Default: 0.01}
 
-\item{lfc}{PARAM_DESCRIPTION, Default: log2(2)}
+\item{lfc}{DEA log2-FC value for genes. Default: log2(2)}
 
-\item{pmethod}{PARAM_DESCRIPTION, Default: 'BH'}
+\item{pmethod}{adjust method. Default: 'BH'}
 }
 \value{
-********
-
-OUTPUT_DESCRIPTION
+The cell clusters, their gene expression profiles (all genes log2-foldchanges), their top DE genes (n = nsig1) and their p-values are all returned.
 }
 \description{
-FUNCTION_DESCRIPTION
-
-FUNCTION_DESCRIPTION
-}
-\details{
-**********
-
-DETAILS
-}
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
+Cell clusters are filtered on the basis of size, their corresponding expression programs are subsequently filtered on the basis of number of genes with sufficiently high fold-change values and sufficiently small p-values, and lastly filtered on the basis of sufficiently low jaccard similarity between any two pairs of cell clusters, whereby the cell cluster with a larger number of significant genes is kept.
 }
