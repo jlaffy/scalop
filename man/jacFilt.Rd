@@ -15,7 +15,7 @@ jacFilt(x, threshold = 0.7, which = FALSE)
 OUTPUT_DESCRIPTION
 }
 \description{
-Filter List By Jaccard
+*********
 }
 \details{
 DETAILS
