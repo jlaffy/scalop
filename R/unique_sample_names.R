@@ -11,7 +11,12 @@
 #' @importFrom stringr str_split
 unique_sample_names = function(x, sep = "-|_", pos = 1, max.nchar = NULL, replace = NULL) {
 
-    samples = sapply(stringr::str_split(x, sep), `[`, pos)
+    #samples = sapply(stringr::str_split(x, sep), `[`, pos)
+    samples = stringr::str_split(x, sep)
+    samples = sapply(samples, `[`, pos, simplify = F)
+    sep = sapply(stringr::str_split(sep, "\\|"), `[`, 1)
+    samples = sapply(samples, paste0, collapse = sep, simplify = F)
+    samples = as.character(unlist(samples))
 
     if (!is.null(max.nchar)) {
         samples = sapply(samples, function(sample) {
