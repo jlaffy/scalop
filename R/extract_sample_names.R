@@ -16,12 +16,12 @@ extract_sample_names = function(x,
                                 max.nchar = NULL,
                                 replace = NULL) {
     if (is.null(samples)) {
-        sample_names = unique_sample_names(x,
-                                           sep = sep,
-                                           pos = pos,
-                                           max.nchar = max.nchar,
-                                           replace = replace)
+        samples = unique_sample_names(x,
+                                      sep = sep,
+                                      pos = pos,
+                                      max.nchar = max.nchar,
+                                      replace = replace)
     }
 
-    extract_substring(x = x, choose = sample_names)
+    extract_substring(x = x, choose = samples)
 }
