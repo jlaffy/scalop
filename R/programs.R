@@ -1,6 +1,7 @@
 #' @title Find cell clusters and retrieve significant expresion programs 
 #' @description Cell clusters are filtered on the basis of size, their corresponding expression programs are subsequently filtered on the basis of number of genes with sufficiently high fold-change values and sufficiently small p-values, and lastly filtered on the basis of sufficiently low jaccard similarity between any two pairs of cell clusters, whereby the cell cluster with a larger number of significant genes is kept. 
 #' @param m expression matrix of genes by cells. not row-centered
+#' @param groups cell clusters provided and will not be computed from data.
 #' @param nsig1 minimum number of genes with p-value 'p' to keep a cluster. Default: 50
 #' @param nsig2 number of genes with p-value 'p'/10. Default: 10
 #' @param jaccard allowed jaccard similarity between clusters of cells. Default: 0.7
@@ -11,6 +12,7 @@
 #' @rdname programs
 #' @export 
 programs = function(m,
+                    groups = NULL,
                     nsig1 = 50,
                     nsig2 = 10,
                     jaccard = 0.7,
@@ -19,7 +21,10 @@ programs = function(m,
                     pmethod = 'BH') {
 
     library(scalop)
-    groups = hca_groups(rowcenter(m))
+    if (is.null(groups)) {
+        groups = hca_groups(rowcenter(m))
+    }
+
     deas = dea(m, 
                group = groups, 
                return.val = 'df', 

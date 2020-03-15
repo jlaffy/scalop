@@ -6,6 +6,7 @@
 \usage{
 programs(
   m,
+  groups = NULL,
   nsig1 = 50,
   nsig2 = 10,
   jaccard = 0.7,
@@ -16,6 +17,8 @@ programs(
 }
 \arguments{
 \item{m}{expression matrix of genes by cells. not row-centered}
+
+\item{groups}{cell clusters provided and will not be computed from data.}
 
 \item{nsig1}{minimum number of genes with p-value 'p' to keep a cluster. Default: 50}
 
