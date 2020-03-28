@@ -162,6 +162,10 @@ dea = function(m,
                      simplify = F)
     }
 
+    if (!is.null(group2)) {
+        res = sapply(res, `[[`, 1, simplify = F)
+    }
+
     if (length(res) == 1)  {
         res = res[[1]]
     }
