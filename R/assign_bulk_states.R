@@ -63,17 +63,17 @@ bootstrapped_state_fractions = function(scores,
 #' @param return.cells logical value; return cell ids instead of sample ids? Default: FALSE
 #' @param bootstraps if provided, will be used instead of computing bootstrapped repeats. Should be a dataframe with the same rownames as colnames in <scores> and with as many columns as there are bootstrap repeats. Default: NULL
 #' @return a list of sample assignments to states. The list is organised by state, and nested for state-high and state-low samples.
-#' @rdname assign_bulk_to_states
+#' @rdname assign_bulk_states
 #' @export 
-assign_bulk_to_states = function(scores,
-                                 groups,
-                                 n.iter = 1e3L,
-                                 sample.size = 200,
-                                 p = 1e-3,
-                                 min = NULL,
-                                 diff = NULL,
-                                 return.cells = FALSE,
-                                 bootstraps = NULL) {
+assign_bulk_states = function(scores,
+                              groups,
+                              n.iter = 1e3L,
+                              sample.size = 200,
+                              p = 1e-3,
+                              min = NULL,
+                              diff = NULL,
+                              return.cells = FALSE,
+                              bootstraps = NULL) {
 
     data = state_fractions(scores,
                            groups = groups,
