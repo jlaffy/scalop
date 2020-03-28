@@ -2,8 +2,8 @@
 #' @title Genes Associated with High Frequency of a Cellular State
 #' @description The expression of genes in bulk samples reflects the combined effect from multiple expressing cell types and cell states, and therefore many genes that are good markers for a particular cellular state in single cell data may not be good markers in bulk data. To address this problem, this function identifies genes that are associated with high frequency of a particular cellular state. This analysis can highlight, amongst other things, genes whose sample-wide expression promotes particular cellular states.
 #' @param scores a dataframe of cell signature scores. Cells are rows and signatures are columns. Samples or <groups> are split into state-high and state-low groups according to the states in <scores> columns.
-#' @param scores2 a dataframe of cell signature scores. Cells are rows and signatures are columns. Cells within state-high and state-low groups are further subdivided into cellular states according to the columns in <scores2>, to allow for state-frequency controlled comparisons between state-high and state-low groups in bulk. In most cases, this can be left as the default : where the cellular state definitions are the same as provided by <scores>. Default: scores
 #' @param groups a list of cell IDS by sample. 
+#' @param scores2 a dataframe of cell signature scores. Cells are rows and signatures are columns. Cells within state-high and state-low groups are further subdivided into cellular states according to the columns in <scores2>, to allow for state-frequency controlled comparisons between state-high and state-low groups in bulk. In most cases, this can be left as the default : where the cellular state definitions are the same as provided by <scores>. Default: scores
 #' @param min minimum value required for a cell (row in <scores>) to be assigned to a state (col in <scores>). Default: 0.5
 #' @param diff minimum difference in value to the 'next-best' row that is required for a row to be assigned to a column. Default: NULL
 #' @param gene.occurence the fraction of times a gene must be differentially expressed in order to be retained as a final high-freq-associated gene. Default: 0.5
@@ -12,8 +12,8 @@
 #' @rdname state_high_genes
 #' @export 
 state_high_genes = function(scores,
-                            scores2 = scores,
                             groups,
+                            scores2 = scores,
                             gene.occurence = 0.5,
                             min = 0.5, 
                             diff = NULL) {

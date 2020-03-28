@@ -6,8 +6,8 @@
 \usage{
 state_high_genes(
   scores,
-  scores2 = scores,
   groups,
+  scores2 = scores,
   gene.occurence = 0.5,
   min = 0.5,
   diff = NULL
@@ -16,9 +16,9 @@ state_high_genes(
 \arguments{
 \item{scores}{a dataframe of cell signature scores. Cells are rows and signatures are columns. Samples or <groups> are split into state-high and state-low groups according to the states in <scores> columns.}
 
-\item{scores2}{a dataframe of cell signature scores. Cells are rows and signatures are columns. Cells within state-high and state-low groups are further subdivided into cellular states according to the columns in <scores2>, to allow for state-frequency controlled comparisons between state-high and state-low groups in bulk. In most cases, this can be left as the default : where the cellular state definitions are the same as provided by <scores>. Default: scores}
-
 \item{groups}{a list of cell IDS by sample.}
+
+\item{scores2}{a dataframe of cell signature scores. Cells are rows and signatures are columns. Cells within state-high and state-low groups are further subdivided into cellular states according to the columns in <scores2>, to allow for state-frequency controlled comparisons between state-high and state-low groups in bulk. In most cases, this can be left as the default : where the cellular state definitions are the same as provided by <scores>. Default: scores}
 
 \item{gene.occurence}{the fraction of times a gene must be differentially expressed in order to be retained as a final high-freq-associated gene. Default: 0.5}
 
