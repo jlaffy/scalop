@@ -32,13 +32,18 @@ state_high_genes = function(scores,
     assig = sapply(sample.assig, function(X) sapply(X, function(x) split(x, cell.assig[x]), simplify = F), simplify = F)
     
     .dea_matched = function(highFreq, lowFreq, m) {
-        res = Map(dea,
-                  group = highFreq,
-                  group2 = lowFreq,
-                  MoreArgs = list(m = m, return.val = 'gene'))
+        res0 = Map(dea,
+                   group = highFreq,
+                   group2 = lowFreq,
+                   MoreArgs = list(m = m, return.val = 'lfc'))
     
-        res = table(unlist(res))
-        names(res)[res >= (gene.occurence * ncol(scores2))]
+        res0 = ldcast(res0)
+        occ = rowMeans(!is.na(res0))
+        res = res0[occ >= gene.occurence, ]
+        occ = occ[occ >= gene.occurence]
+        res = rowMeans(res, na.rm = TRUE)
+        res = res[order(occ, res, decreasing = T)]
+        res
     }
     
     sapply(assig, function(X) .dea_matched(highFreq = X$high, lowFreq = X$low, m = m))
