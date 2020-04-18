@@ -1,5 +1,5 @@
 .hca_cor = function(m, method) {
-    method = match.arg(method, cor.methods)
+    method = match.arg(method, scalop::cor.methods)
     if (method == 'none') return(m)
     if (is_cor(m)) {
         warning('\nComputing correlations over a correlation matrix...\n',
@@ -9,7 +9,7 @@
 }
 
 .hca_dist = function(m, method, max.dist = NULL) {
-    method = match.arg(method, dist.methods)
+    method = match.arg(method, scalop::dist.methods)
     if (!is_square(m)) m = t(m)
     if (!is.null(max.dist)) {
         if (is_square(m) && unique(diag(m)) != max.dist) {
@@ -22,7 +22,7 @@
 }
 
 .hca_tree = function(d, method) {
-    method = match.arg(method, cluster.methods)
+    method = match.arg(method, scalop::cluster.methods)
     stats::hclust(d, method = method)
 }
 
