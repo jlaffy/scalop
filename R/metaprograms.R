@@ -4,7 +4,7 @@
 #' @param programs list of differentially expressed genes in each group/cell cluster
 #' @param profiles list of differential expression profiles for all genes in each group/cell cluster
 #' @param m matrix of genes by cells
-#' @param metaclusters list of cell clusters
+#' @param metaclusters list of program metaclusters 
 #' @param samples character vector of unique sample names. Default: readRDS("samples_2020-03-01.rds")
 #' @param freq minimum number of metacluster-specific sample-specific programs a gene must appear in. Default: 3
 #' @param gene.order choose between 1 and 2. 1 orders first by frequency and then average log2-foldchange, while 2 priorities log2FC and then frequency. Default: 1

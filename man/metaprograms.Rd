@@ -21,7 +21,7 @@ metaprograms(
 
 \item{m}{matrix of genes by cells}
 
-\item{metaclusters}{list of cell clusters}
+\item{metaclusters}{list of program metaclusters}
 
 \item{samples}{character vector of unique sample names. Default: readRDS("samples_2020-03-01.rds")}
 

@@ -10,7 +10,7 @@
 #'
 #' (4) Campbell, J. N., Macosko, E. Z., Fenselau, H., Pers, T. H., Lyubetskaya, A., Tenen, D., … Tsai, L. T. (2017). A molecular census of arcuate hypothalamus and median eminence cell types. Nature Neuroscience, 20(3), 484–496.
 #'
-#' (5) Allen - get ref. Paper on all organs, but focusing on data from brain. 
+#' (5) Schaum, N., Karkanias, J., Neff, N. F., May, A. P., Quake, S. R., Wyss-Coray, T., … Weissman, I. L. (2018). Single-cell transcriptomics of 20 mouse organs creates a Tabula Muris. Nature, 562(7727), 367–372.
 #'
 #' @docType data
 #'
