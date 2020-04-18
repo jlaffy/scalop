@@ -87,6 +87,7 @@ hca_reorder = function(x,
                        col = T,
                        row = T,
                        cor.force = F,
+                       cor.method = 'pearson',
                        ...) {
 
     stopifnot(has_dim(x))
