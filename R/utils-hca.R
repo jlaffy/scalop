@@ -79,7 +79,7 @@
     res = c()
 
     if (class(x) == 'matrix') {
-        x = .hca_cor(x, method = match.arg(cor.method))
+        x = .hca_cor(x, method = cor.method)
         res = c(res, list(cr = x))
         if (cor.end) return(res)
         x = .hca_dist(x, method = dist.method, max.dist = max.dist)
@@ -88,7 +88,7 @@
     }
 
     if (class(x) == 'dist') {
-        x = .hca_tree(x, method = match.arg(cluster.method))
+        x = .hca_tree(x, method = cluster.method)
         res = c(res, list(tree = x, order = x$labels[x$order]))
         if (hclust.end) return(res)
     }

@@ -86,21 +86,10 @@ hca_groups = function(x, return.steps = F, ...) {
 hca_reorder = function(x,
                        col = T,
                        row = T,
-                       cor.force = F,
                        cor.method = 'pearson',
                        ...) {
 
-    stopifnot(has_dim(x))
-    skip.cor = (!isTRUE(cor.force) & is_cor(x))
-    if (skip.cor) {
-        message('\nInput matrix <x> is a correlation matrix. Skipping correlation...',
-                '\nSet cor.force = T to force correlation step.')
-        ord = .hca(x = x, hclust.end = T, cor.method = 'none', ...)$order
-        if (col) x = x[, ord]
-        if (row) x = x[ord, ]
-    } else {
-        if (col) x = x[, .hca(x = x, hclust.end = T, ...)$order]
-        if (row) x = x[.hca(x = t(x), hclust.end = T, ...)$order, ]
-    } 
+    if (col) x = x[, .hca(x = x, hclust.end = T, ...)$order]
+    if (row) x = x[.hca(x = t(x), hclust.end = T, ...)$order, ]
     x
 }
