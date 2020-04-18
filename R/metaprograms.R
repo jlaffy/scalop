@@ -60,10 +60,11 @@ metaprograms = function(programs,
     df = df %>% dplyr::ungroup()
     df = df %>% dplyr::group_by(mp, gene) %>% dplyr::mutate(mp.lfc = mean(tum.lfc))
     df = df %>% dplyr::ungroup() %>% dplyr::select(-sample, -tum.lfc) %>% dplyr::distinct()
+    df = df %>% dplyr::filter(freq >= freq)
     if (gene.order == 1) {
-        df = df %>% dplyr::filter(freq >= freq) %>% dplyr::arrange(mp, desc(freq), desc(mp.lfc))
+        df = df %>% dplyr::arrange(mp, desc(freq), desc(mp.lfc))
     } else {
-        df = df %>% dplyr::filter(freq >= freq) %>% dplyr::arrange(mp, desc(mp.lfc))
+        df = df %>% dplyr::arrange(mp, desc(mp.lfc))
     }
 
     mp = split(df$gene, df$mp) 
