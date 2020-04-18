@@ -21,16 +21,19 @@ metaprograms = function(programs,
                         profiles,
                         m,
                         metaclusters,
-                        samples = readRDS('samples_2020-03-01.rds'),
+                        samples = NULL,
                         freq = 3,
-                        gene.order = 1) {
+                        gene.order = 1,
+                        return.data = FALSE) {
     library(scalop)
 
     mp = metaclusters
     sigs = programs
     lfc = profiles
-    # define metaprograms from program clustering by cell scores
     
+    # bit of a hack
+    if (is.null(samples)) samples = names(programs)
+
     # data with 'allowed' genes per metaprogram
     gmp = data.frame(gene = unlist(sigs),
                      program = rep(names(sigs), lengths(sigs)),

@@ -39,7 +39,7 @@ hca_order(x, return.steps = F, cor.method = "pearson", ...)
 
 hca_groups(x, return.steps = F, ...)
 
-hca_reorder(x, col = T, row = T, cor.force = F, ...)
+hca_reorder(x, col = T, row = T, cor.method = "none", ...)
 }
 \arguments{
 \item{x}{a matrix (features X observations), an object of class `dist` or an object of class `hclust`.}

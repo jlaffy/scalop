@@ -9,9 +9,10 @@ metaprograms(
   profiles,
   m,
   metaclusters,
-  samples = readRDS("samples_2020-03-01.rds"),
+  samples = NULL,
   freq = 3,
-  gene.order = 1
+  gene.order = 1,
+  return.data = FALSE
 )
 }
 \arguments{
