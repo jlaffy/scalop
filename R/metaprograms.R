@@ -7,7 +7,7 @@
 #' @param metaclusters list of program metaclusters 
 #' @param samples character vector of unique sample names. Default: readRDS("samples_2020-03-01.rds")
 #' @param freq minimum number of metacluster-specific sample-specific programs a gene must appear in. Default: 3
-#' @param gene.order choose between 1 and 2. 1 orders first by frequency and then average log2-foldchange, while 2 priorities log2FC and then frequency. Default: 1
+#' @param order.priority order by 'freq' first or 'lfc' first. Default: 'freq'
 #' @return if return.data = F, just the list of metaprograms. Else, the list of metaprograms, and the dataframe of metacluster-, sample- and gene- specific LFC and freq values.
 #' @details DETAILS
 #' @seealso 
@@ -22,8 +22,8 @@ metaprograms = function(programs,
                         m,
                         metaclusters,
                         samples = NULL,
-                        freq = 3,
-                        gene.order = 1,
+                        freq.cutoff = 3,
+                        order.priority = c('freq', 'lfc'),
                         return.data = FALSE) {
     library(scalop)
 
@@ -60,8 +60,9 @@ metaprograms = function(programs,
     df = df %>% dplyr::ungroup()
     df = df %>% dplyr::group_by(mp, gene) %>% dplyr::mutate(mp.lfc = mean(tum.lfc))
     df = df %>% dplyr::ungroup() %>% dplyr::select(-sample, -tum.lfc) %>% dplyr::distinct()
-    df = df %>% dplyr::filter(freq >= freq)
-    if (gene.order == 1) {
+    df = df %>% dplyr::filter(freq >= freq.cutoff)
+
+    if (match.arg(order.priority) == 'freq') {
         df = df %>% dplyr::arrange(mp, desc(freq), desc(mp.lfc))
     } else {
         df = df %>% dplyr::arrange(mp, desc(mp.lfc))

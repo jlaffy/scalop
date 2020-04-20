@@ -11,7 +11,7 @@ metaprograms(
   metaclusters,
   samples = NULL,
   freq = 3,
-  gene.order = 1,
+  order.priority = c("freq", "lfc"),
   return.data = FALSE
 )
 }
@@ -28,7 +28,7 @@ metaprograms(
 
 \item{freq}{minimum number of metacluster-specific sample-specific programs a gene must appear in. Default: 3}
 
-\item{gene.order}{choose between 1 and 2. 1 orders first by frequency and then average log2-foldchange, while 2 priorities log2FC and then frequency. Default: 1}
+\item{order.priority}{order by 'freq' first or 'lfc' first. Default: 'freq'}
 }
 \value{
 if return.data = F, just the list of metaprograms. Else, the list of metaprograms, and the dataframe of metacluster-, sample- and gene- specific LFC and freq values.
