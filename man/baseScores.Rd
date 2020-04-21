@@ -2,20 +2,20 @@
 % Please edit documentation in R/sigScores.R
 \name{baseScores}
 \alias{baseScores}
-\title{Basic Scoring of Matrix by Gene Groups}
+\title{Basic Scoring of Matrix by Gene sigs}
 \usage{
-baseScores(m, groups, conserved.genes = 0.7)
+baseScores(m, sigs, conserved.genes = 0.7)
 }
 \arguments{
 \item{m}{a non-centered matrix of genes X cells/samples. The matrix will be row-centered internally prior to scoring.}
 
-\item{groups}{a character vector of genes or list of character vectors. Groups will be filtered to remove genes that are missing from rows in <m>.}
+\item{sigs}{a character vector of genes or list of character vectors. Sigs will be filtered to remove genes that are missing from rows in <m>.}
 
-\item{conserved.genes}{minimum fraction of genes retained in groups after filtering that is allowed. groups not passing this cutoff will not be used to score the matrix. This can be ignored if all genes in groups are present in rownames(<m>). Default: 0.7}
+\item{conserved.genes}{minimum fraction of genes retained in sigs after filtering that is allowed. sigs not passing this cutoff will not be used to score the matrix. This can be ignored if all genes in sigs are present in rownames(<m>). Default: 0.7}
 }
 \value{
-a dataframe of scores, with as many rows as there are columns in <m> and as many columns as there are <groups> to score against.
+a dataframe of scores, with as many rows as there are columns in <m> and as many columns as there are <sigs> to score against.
 }
 \description{
-Average expression level of each column in m for (each) group(s) in <groups>.
+Average expression level of each column in m for (each) sig(s) in <sigs>.
 }

@@ -10,7 +10,7 @@ metaprograms(
   m,
   metaclusters,
   samples = NULL,
-  freq = 3,
+  freq.cutoff = 3,
   order.priority = c("freq", "lfc"),
   return.data = FALSE
 )
@@ -26,9 +26,9 @@ metaprograms(
 
 \item{samples}{character vector of unique sample names. Default: readRDS("samples_2020-03-01.rds")}
 
-\item{freq}{minimum number of metacluster-specific sample-specific programs a gene must appear in. Default: 3}
-
 \item{order.priority}{order by 'freq' first or 'lfc' first. Default: 'freq'}
+
+\item{freq}{minimum number of metacluster-specific sample-specific programs a gene must appear in. Default: 3}
 }
 \value{
 if return.data = F, just the list of metaprograms. Else, the list of metaprograms, and the dataframe of metacluster-, sample- and gene- specific LFC and freq values.
