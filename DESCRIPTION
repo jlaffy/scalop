@@ -46,7 +46,11 @@ Imports:
     calibrate,
     mixtools,
     RColorBrewer,
-    nor1mix
+    nor1mix,
+    ggrepel,
+    clusterProfiler,
+    msigdbr,
+    irlba
 Remotes: jlaffy/brewerland
 Suggests: 
     testthat (>= 2.1.0),

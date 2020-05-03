@@ -1,4 +1,4 @@
-#' 205 Signatures for Normal Cell Types
+#' 98 Signatures for Normal Brain Cell Types
 #'
 #' Signatures were derived from 5 publications (below). Clusters were taken from each publication, and differentially expressed genes were computed for each cluster using scalop::dea. If the publication had subclusters, then scalop::dea was computed for that subcluster against other cells in the same cluster, rather than across the whole dataset.
 #'
@@ -15,4 +15,4 @@
 #' @docType data
 #'
 #' @format list of character vectors
-"NormalSignatures"
+"NormalBrainSignatures"
