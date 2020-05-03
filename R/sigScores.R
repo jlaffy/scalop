@@ -118,10 +118,10 @@ sigScores = function(m,
     # if only one group, convert to list
     if (is.character(sigs)) sigs = list(sigs)
 
-    Args = mget(ls())
-
     # filter sigs
     sigs = filter_sigs(sigs, ref = rownames(m), conserved = conserved.genes)
+
+    Args = mget(ls())
 
     if (!is.null(groups)) {
         Args$expr.bin.m <- m
