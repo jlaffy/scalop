@@ -1,6 +1,6 @@
 
-#' @title Plot model and outliers 
-#' @description Plot model and outliers 
+#' @title Plot model and Outliers 
+#' @description Plot model and Outliers 
 #' @param formula PARAM_DESCRIPTION
 #' @param data PARAM_DESCRIPTION
 #' @param mod PARAM_DESCRIPTION, Default: loess
@@ -58,19 +58,28 @@ ggoutliers = function(formula,
                       alt.min = 0.5,
                       xlab.min = 0,
                       ylab.min = 0,
-                      text.size = 14,
+                      xlab.max = NULL,
+                      ylab.max = NULL,
+                      text.size = 16,
                       legend.text.size = 12,
-                      label.size = 3,
-                      force = 20,
+                      label.size = 3.5,
+                      segment.colour = 'grey85',
+                      segment.size = 0.15,
+                      min.segment.length = 0.5,
+                      nudge_y = 0,
+                      force = 5,
                       xlab = all.vars(formula)[2],
                       ylab = all.vars(formula)[1],
                       selected.col ='red',
                       subtitle = NULL,
+                      midline = TRUE,
+                      outerlines = FALSE,
                       title = NULL,
                       caption = NULL) {
 
+    userdefined = unique(c(selected, add.to.selected))
     data = outliers(formula = formula, data = data, mod = mod, n.sd = n.sd, ...)
-
+    data$gene = as.character(data$gene)
 
     if (is.null(selected)) {
 
@@ -78,7 +87,7 @@ ggoutliers = function(formula,
         if (!is.null(yvar.ngenes)) {
             y2show = data %>%
                 dplyr::mutate(gene = as.character(gene)) %>%
-                dplyr::filter(y > gene.min, x > alt.min) %>%
+                dplyr::filter(y >= gene.min, x >= alt.min) %>%
                 dplyr::arrange(desc(resid.high)) %>%
                 dplyr::pull(gene)
             y2show = y2show[1:min(yvar.ngenes, length(y2show))]
@@ -88,7 +97,7 @@ ggoutliers = function(formula,
         if (!is.null(xvar.ngenes)) {
             x2show = data %>%
                 dplyr::mutate(gene = as.character(gene)) %>%
-                dplyr::filter(y > alt.min, x > gene.min) %>%
+                dplyr::filter(y >= alt.min, x >= gene.min) %>%
                 dplyr::arrange(desc(resid.low)) %>%
                 dplyr::pull(gene)
             x2show = x2show[1:min(xvar.ngenes, length(x2show))]
@@ -107,17 +116,25 @@ ggoutliers = function(formula,
     data = data %>% dplyr::mutate(genes2show = ifelse(gene %in% g2show, gene, ''))
     data = data %>% dplyr::mutate(group = ifelse(y < ylower | y > yupper, 1, 0))
     data = data %>% dplyr::mutate(group = ifelse(genes2show == gene & group == 1, 2, as.numeric(group)))
-    data = data %>% dplyr::mutate(group = factor(group, labels = c('Normal', 'Outlier', 'Selected')))
-    palette = c(Normal = 'black', Outlier = 'black', Selected = selected.col)
-    #palette = c(Normal = 'grey85', Outlier = 'grey55', Selected = selected.col)
+    data = data %>% dplyr::mutate(genes2show = ifelse(group == 2 | gene %in% userdefined,
+                                                      as.character(genes2show),
+                                                      ''))
+    labels = setNames(c('All genes', 'Outlier', 'Outliers'), as.character(0:2))
+    labels = labels[names(labels) %in% as.character(unique(data$group))]
+    data = data %>% dplyr::mutate(group = factor(group, labels = labels))
+    palette = c(`All genes` = 'gray85', Outlier = 'black', Outliers = selected.col)
+    #palette = c(All genes = 'grey85', Outliers = 'grey55', Outliers = selected.col)
     #sizes = stats::setNames(c(1.5, 1.5, 2.5), names(palette))
-    sizes = stats::setNames(c(0.2, 0.5, 1), names(palette))
-    ylim = c(ylab.min, max(max(data$y), max(data$yupper)))
-    xlim = c(xlab.min, max(data$x))
+    sizes = stats::setNames(c(0.5, 0.5, 1.5), names(palette))
+    #ylim = c(ylab.min, max(max(data$y), max(data$yupper)))
+    if (!is.null(ylab.max)) ylim = c(ylab.min, ylab.max)
+    else ylim = c(ylab.min, max(data$y, data$x))
+    if (!is.null(xlab.max)) xlim = c(xlab.min, xlab.max)
+    else xlim = c(xlab.min, max(data$x, data$x))
 
     invisible(data)
 
-    ggplot2::ggplot(data, aes(x = x,
+    G = ggplot2::ggplot(data, aes(x = x,
                               y = y,
                               colour = group,
                               size = group,
@@ -132,8 +149,11 @@ ggoutliers = function(formula,
         ggrepel::geom_text_repel(size = label.size,
                                   show.legend = FALSE,
                                   colour = palette[2],
-                                  segment.colour = 'transparent',
-                                  #segment.colour = palette[1],
+                                  nudge_y = nudge_y,
+                                  min.segment.length = min.segment.length,
+                                  segment.size = segment.size,
+                                  #segment.colour = 'transparent',
+                                  segment.colour = segment.colour,
                                   force = force)  +
         ggplot2::scale_colour_manual(values = palette) +
         ggplot2::scale_size_manual(values = sizes) +
@@ -142,5 +162,18 @@ ggoutliers = function(formula,
                        legend.justification = 'right',
                        legend.text = element_text(size = legend.text.size),
                        text = element_text(size = text.size)) +
-        labs(y = ylab, x = xlab, subtitle = subtitle, caption = caption, title = title)
+        labs(y = ylab, x = xlab, subtitle = subtitle, caption = caption, title = title) +
+        ggplot2::guides(colour = guide_legend(override.aes = list(size = 2.5)))
+    
+    if (midline) {
+        G = G + ggplot2::geom_line(aes(y = ymid), col = 'grey30', size = 0.5)
+    }
+
+    if (outerlines) {
+        G = G +
+            ggplot2::geom_line(aes(y = yupper), col = 'grey30', size = 0.3) +
+            ggplot2::geom_line(aes(y = ylower), col = 'grey30', size = 0.3) 
+    }
+
+    G
 }

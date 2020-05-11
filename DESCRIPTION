@@ -50,7 +50,10 @@ Imports:
     ggrepel,
     clusterProfiler,
     msigdbr,
-    irlba
+    irlba,
+    Rtsne,
+    scran,
+    igraph
 Remotes: jlaffy/brewerland
 Suggests: 
     testthat (>= 2.1.0),

@@ -31,12 +31,12 @@
 #' @seealso 
 #'  \code{\link[dplyr]{mutate}},\code{\link[dplyr]{filter}},\code{\link[dplyr]{arrange}},\code{\link[dplyr]{pull}}
 #'  \code{\link[ggplot2]{ggplot}},\code{\link[ggplot2]{geom_point}},\code{\link[ggplot2]{scale_continuous}},\code{\link[ggplot2]{ggtheme}},\code{\link[ggplot2]{theme}},\code{\link[ggplot2]{labs}},\code{\link[ggplot2]{scale_manual}},\code{\link[ggplot2]{geom_abline}}
-#'  \code{\link[ggrepel]{geom_label_repel}}
+#'  \code{\link[ggrepel]{geom_text_repel}}
 #' @rdname ggvolcano
 #' @export 
 #' @importFrom dplyr mutate filter arrange pull
 #' @importFrom ggplot2 ggplot geom_point scale_x_continuous scale_y_continuous theme_bw theme labs scale_colour_manual scale_size_manual geom_vline
-#' @importFrom ggrepel geom_label_repel
+#' @importFrom ggrepel geom_text_repel
 ggvolcano = function(
                      m = NULL,
                      group = NULL,
@@ -51,6 +51,7 @@ ggvolcano = function(
                      pmethod = 'BH',
                      ngenes = 10,
                      text.size = 14,
+                     segment.colour = 'grey30',
                      label.size = 5,
                      symmetric = TRUE,
                      add.line = TRUE, 
@@ -111,7 +112,7 @@ ggvolcano = function(
     dea.res = dea.res %>% dplyr::mutate(groups = factor(groups, labels = labels))
 
     palette = setNames(c('grey85', 'grey55', selected.col), c('Not Significant', 'Significant','Selected'))[labels]
-    sizes = setNames(c(1.5,1.5,2.5), names(palette))[labels]
+    sizes = setNames(c(0.5,0.5,1.5), names(palette))[labels]
 
     if (is.null(ymax)) {
         ymax = max(dea.res$logP)
@@ -137,7 +138,7 @@ ggvolcano = function(
             ggplot2::scale_x_continuous(expand = c(0, 0), limits = xlim) +
             ggplot2::scale_y_continuous(expand = c(0, 0), limits = ylim) + 
             ggplot2::theme_bw() +
-            ggrepel::geom_label_repel(size = label.size,
+            ggrepel::geom_text_repel(size = label.size,
                                       show.legend = FALSE,
                                       colour = palette[2],
                                       segment.colour = palette[1],
@@ -163,10 +164,11 @@ ggvolcano = function(
             ggplot2::scale_x_continuous(expand = c(0, 0), limits = xlim) +
             ggplot2::scale_y_continuous(expand = c(0, 0), limits = ylim) + 
             ggplot2::theme_bw() +
-            ggrepel::geom_label_repel(size = label.size,
+            ggrepel::geom_text_repel(size = label.size,
                                       show.legend = FALSE,
-                                      colour = palette[2],
-                                      segment.colour = palette[1],
+                                      colour = segment.colour,
+                                      segment.colour = segment.colour,
+                                      segment.size = 0.2,
                                       force = 10)  +
             ggplot2::theme(legend.title = element_blank(),
                            legend.position = 'top',

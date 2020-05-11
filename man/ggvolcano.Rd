@@ -18,6 +18,7 @@ ggvolcano(
   pmethod = "BH",
   ngenes = 10,
   text.size = 14,
+  segment.colour = "grey30",
   label.size = 5,
   symmetric = TRUE,
   add.line = TRUE,
@@ -84,5 +85,5 @@ if(interactive()){
 \seealso{
 \code{\link[dplyr]{mutate}},\code{\link[dplyr]{filter}},\code{\link[dplyr]{arrange}},\code{\link[dplyr]{pull}}
  \code{\link[ggplot2]{ggplot}},\code{\link[ggplot2]{geom_point}},\code{\link[ggplot2]{scale_continuous}},\code{\link[ggplot2]{ggtheme}},\code{\link[ggplot2]{theme}},\code{\link[ggplot2]{labs}},\code{\link[ggplot2]{scale_manual}},\code{\link[ggplot2]{geom_abline}}
- \code{\link[ggrepel]{geom_label_repel}}
+ \code{\link[ggrepel]{geom_text_repel}}
 }

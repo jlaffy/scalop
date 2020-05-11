@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggoutliers.R
 \name{ggoutliers}
 \alias{ggoutliers}
-\title{Plot model and outliers}
+\title{Plot model and Outliers}
 \usage{
 ggoutliers(
   formula,
@@ -19,14 +19,22 @@ ggoutliers(
   alt.min = 0.5,
   xlab.min = 0,
   ylab.min = 0,
-  text.size = 14,
+  xlab.max = NULL,
+  ylab.max = NULL,
+  text.size = 16,
   legend.text.size = 12,
-  label.size = 3,
-  force = 20,
+  label.size = 3.5,
+  segment.colour = "grey85",
+  segment.size = 0.15,
+  min.segment.length = 0.5,
+  nudge_y = 0,
+  force = 5,
   xlab = all.vars(formula)[2],
   ylab = all.vars(formula)[1],
   selected.col = "red",
   subtitle = NULL,
+  midline = TRUE,
+  outerlines = FALSE,
   title = NULL,
   caption = NULL
 )
@@ -84,7 +92,7 @@ ggoutliers(
 OUTPUT_DESCRIPTION
 }
 \description{
-Plot model and outliers
+Plot model and Outliers
 }
 \details{
 DETAILS
