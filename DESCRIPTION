@@ -53,7 +53,8 @@ Imports:
     irlba,
     Rtsne,
     scran,
-    igraph
+    igraph,
+    plyr
 Remotes: jlaffy/brewerland
 Suggests: 
     testthat (>= 2.1.0),
