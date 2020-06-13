@@ -55,8 +55,8 @@ doubletCells = function(m, clusters, samples, clusters_to_check = clusters, retu
             }
 
             results = c(results, setNames(list(cors), cell))
-            message('Finished cluster <', name, '>')
         }
+        message('cluster <', name, '>: done')
     }
 
     switch(match.arg(return.type),
