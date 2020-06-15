@@ -1,4 +1,9 @@
 ## approximate equality
+
+Sapply = function(X, FUN, ..., simplify = FALSE, USE.NAMES = TRUE) {
+    sapply(X, FUN, ..., simplify = simplify, USE.NAMES = TRUE)
+}
+
 about_equal = function(x,y,tol=1e-10) {
     stopifnot(is.numeric(x), is.numeric(y), length(x)==length(y), all(abs(x-y) < tol))
 }

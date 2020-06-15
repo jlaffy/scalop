@@ -1,0 +1,22 @@
+#' 178 Signatures for Normal Brain Cell Types
+#'
+#' Signatures were derived from 7 publications (below). Clusters were taken from each publication, and differentially expressed genes were computed for each cluster using scalop::dea. If the publication had subclusters, then scalop::dea was computed for that subcluster against other cells in the same cluster, rather than across the whole dataset.
+#'
+#' (1) Nowakowski, T. J., Bhaduri, A., Pollen, A. A., Alvarado, B., Mostajo-Radji, M. A., Di Lullo, E., … Kriegstein, A. R. (2017). Spatiotemporal gene expression trajectories reveal developmental hierarchies of the human cortex. Science, 358(6368), 1318–1323.
+#'
+#' (2) Polioudakis, D., de la Torre-Ubieta, L., Langerman, J., Elkins, A. G., Shi, X., Stein, J. L., … Geschwind, D. H. (2019). A Single-Cell Transcriptomic Atlas of Human Neocortical Development during Mid-gestation. Neuron, 103(5), 785-801.e8. 
+#'
+#' (3) Habib, N., Li, Y., Heidenreich, M., Swiech, L., Avraham-Davidi, I., Trombetta, J. J., … Regev, A. (2016). Div-Seq: Single-nucleus RNA-Seq reveals dynamics of rare adult newborn neurons. Science, 353(6302), 925–928.
+#'
+#' (4) Campbell, J. N., Macosko, E. Z., Fenselau, H., Pers, T. H., Lyubetskaya, A., Tenen, D., … Tsai, L. T. (2017). A molecular census of arcuate hypothalamus and median eminence cell types. Nature Neuroscience, 20(3), 484–496.
+#'
+#' (5) Schaum, N., Karkanias, J., Neff, N. F., May, A. P., Quake, S. R., Wyss-Coray, T., … Weissman, I. L. (2018). Single-cell transcriptomics of 20 mouse organs creates a Tabula Muris. Nature, 562(7727), 367–372.
+#'
+#' (6) Velmeshev, D., Schirmer, L., Jung, D., Haeussler, M., Perez, Y., Mayer, S., … Kriegstein, A. R. (2019). Single-cell genomics identifies cell type–specific molecular changes in autism. Science, 364(6441), 685–689.
+#'
+#' (7) Luo, C., Liu, H., Xie, F., Armand, E. J., Siletti, K., Bakken, T. E., … Ecker, J. R. (2019). Single nucleus multi-omics links human cortical cell regulatory genome diversity to disease risk variants. BioRxiv, 2019.12.11.873398. 
+#'
+#' @docType data
+#'
+#' @format list of character vectors
+"NormalBrainSignatures3"
