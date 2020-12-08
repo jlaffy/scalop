@@ -4,7 +4,9 @@
 \name{ensembl2symbol}
 \alias{ensembl2symbol}
 \title{ensembl2symbol}
-\format{A character vector.}
+\format{
+A character vector.
+}
 \usage{
 symbols = ensembl2symbol[ensembl_gene_ids]
 }

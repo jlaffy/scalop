@@ -2,45 +2,35 @@
 % Please edit documentation in R/pca.R
 \name{pca}
 \alias{pca}
-\title{FUNCTION_TITLE}
+\title{Principal Component Analysis}
 \usage{
-pca(
-  m,
-  npcs = 100,
-  retx = TRUE,
-  center = TRUE,
-  grouped.center = NULL,
-  scale = FALSE
-)
+pca(m, npcs = 100, retx = TRUE, center = TRUE, scale = FALSE)
 }
 \arguments{
-\item{m}{PARAM_DESCRIPTION}
+\item{m}{A numeric matrix or data frame.}
 
-\item{npcs}{PARAM_DESCRIPTION, Default: 100}
+\item{npcs}{The number of principal component vectors to return. Must be less than 'min(dim(m))' Default: 100}
 
-\item{retx}{PARAM_DESCRIPTION, Default: TRUE}
+\item{retx}{A logical value indicating whether the rotated variables should be returned. Default: TRUE}
 
-\item{center}{PARAM_DESCRIPTION, Default: TRUE}
+\item{center}{A logical value indicating whether the variables should be shifted to be zero centered. Alternately, a centering vector of length equal to the number of columns of 'm' can be supplied. Default: TRUE}
 
-\item{grouped.center}{PARAM_DESCRIPTION, Default: NULL}
-
-\item{scale}{PARAM_DESCRIPTION, Default: FALSE}
+\item{scale}{A logical value indicating whether the variables should be scaled to have unit variance before the analysis is performed. The value of 'scale' determines how column scaling is performed (after centering). If 'scale' is a numeric vector with length equal to the number of columns of 'm', then each column of 'm' is divided by the corresponding value from 'scale'. If 'scale' is 'TRUE', then scaling is done by dividing the (centered) columns of 'm' by their standard deviations if 'center=TRUE', and the root mean square otherwise.  If 'scale' is 'FALSE', no scaling is done. Default: FALSE}
 }
 \value{
-OUTPUT_DESCRIPTION
+A list of class "prcomp" containing the following components:
+\itemize{
+\item {sdev:} {the standard deviations of the principal components (i.e. the square roots of the eigenvalues of the covariance/correlation matrix, though the calculation is actually done with the singular values of the data matrix).}
+\item {rotation:} {the matrix of variable loadings (i.e. a matrix whose columns contain the eigenvectors).}
+\item {x:} {if 'retx' is 'TRUE' the value of the rotated data (the centered (and scaled if requested) data multipleied by the 'rotation' matrix) is returned. Hence, 'cov(m)' is the diagonal matrix 'diag(sdev^2)'.}
+\item {center, scale:} {the centering and scaling used, or 'FALSE'.}
+}
 }
 \description{
-FUNCTION_DESCRIPTION
+A wrapper for irlba::prcomp_irlba(). Performs efficient computation of a principal component analysis of a given data matrix.
 }
 \details{
-DETAILS
-}
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
+see 'irlba::prcomp_irlba()' for more details.
 }
 \seealso{
 \code{\link[irlba]{prcomp_irlba}}

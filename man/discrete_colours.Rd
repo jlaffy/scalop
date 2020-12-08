@@ -4,7 +4,9 @@
 \name{discrete_colours}
 \alias{discrete_colours}
 \title{The 297 discrete colours available across different RColorBrewer palettes.}
-\format{A character vector.}
+\format{
+A character vector.
+}
 \usage{
 data(discrete_colours)
 }

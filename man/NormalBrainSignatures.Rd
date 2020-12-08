@@ -4,7 +4,9 @@
 \name{NormalBrainSignatures}
 \alias{NormalBrainSignatures}
 \title{98 Signatures for Normal Brain Cell Types}
-\format{list of character vectors}
+\format{
+list of character vectors
+}
 \usage{
 NormalBrainSignatures
 }

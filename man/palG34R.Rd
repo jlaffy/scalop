@@ -4,7 +4,9 @@
 \name{palG34R}
 \alias{palG34R}
 \title{palG34R, a palette of reds and blues for cases within two groups}
-\format{A character vector.}
+\format{
+A character vector.
+}
 \usage{
 data(palG34R)
 }

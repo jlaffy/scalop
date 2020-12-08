@@ -5,7 +5,9 @@
 \alias{cor.methods}
 \title{Correlation method
 method for computing correlation coefficients}
-\format{cor.methods}
+\format{
+cor.methods
+}
 \usage{
 cor.methods
 }

@@ -5,7 +5,9 @@
 \alias{dist.methods}
 \title{distance metric
 method for computing distances from a matrix object}
-\format{dist.methods}
+\format{
+dist.methods
+}
 \usage{
 dist.methods
 }

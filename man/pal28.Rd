@@ -4,7 +4,9 @@
 \name{pal28}
 \alias{pal28}
 \title{pal28, 28 Pretty Discrete Colours}
-\format{A character vector.}
+\format{
+A character vector.
+}
 \usage{
 data(pal28)
 }

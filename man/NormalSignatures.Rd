@@ -4,7 +4,9 @@
 \name{NormalSignatures}
 \alias{NormalSignatures}
 \title{205 Signatures for Normal Cell Types}
-\format{list of character vectors}
+\format{
+list of character vectors
+}
 \usage{
 NormalSignatures
 }

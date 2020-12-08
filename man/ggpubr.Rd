@@ -4,7 +4,9 @@
 \name{ggpubr}
 \alias{ggpubr}
 \title{ggpubr, 3 Discrete Colours}
-\format{A character vector.}
+\format{
+A character vector.
+}
 \usage{
 data(ggpubr)
 }

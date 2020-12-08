@@ -4,15 +4,16 @@
 \name{futurama}
 \alias{futurama}
 \title{futurama, 12 Discrete Colours}
-\format{A character vector.}
+\format{
+A character vector.
+}
 \usage{
-data(futurama)
+futurama
 }
 \description{
 futurama, 12 Discrete Colours
 }
 \examples{
-data(futurama)
 scales::show_col(futurama)
 }
-\keyword{datasets}
+\keyword{palettes}

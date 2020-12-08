@@ -4,15 +4,16 @@
 \name{simpsons}
 \alias{simpsons}
 \title{simpsons, 16 Discrete Colours}
-\format{A character vector.}
+\format{
+A character vector.
+}
 \usage{
-data(simpsons)
+simpsons
 }
 \description{
 simpsons, 16 Discrete Colours
 }
 \examples{
-data(simpsons)
 scales::show_col(simpsons)
 }
-\keyword{datasets}
+\keyword{palettes}
