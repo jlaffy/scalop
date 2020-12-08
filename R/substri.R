@@ -1,21 +1,19 @@
 #' @title Extract substrings between delimiters by position 
 #' @description substri() splits each element in 'x' into substrings and returns the desired substring(s). 'sep' defines the delimiters separating the strings into substrings, such that the input data between the matches become the fields themselves. 'pos' defines the substring index(es) to be returned.
 #' @param x A character vector.
-#' @param sep The pattern to split each element of 'x' by. Default: '\.|-|_'
+#' @param sep The pattern to split each element of 'x' by. Default: '\\.|-|_'
 #' @param pos The substring index(es) to be returned. Default: 1
 #' @param max.nchar 'NULL', or a maximum number of characters that the substrings should be trimmed to contain. Default: NULL
 #' @param na.rm Remove NA substring positions. Default: TRUE 
 #' @return A character vector containing the extracted substrings. 
 #' @examples
 #' \dontrun{
-#' if(interactive()){
 #' x = c('dog.cat.mat', 'dog_frog')
 #' substri(x)
 #' substri(x, pos = 2)
 #' substri(x, pos = c(1,3))
 #' substri(x, pos = c(1,3), na.rm = FALSE)
 #' substri(x, sep = "-")
-#'  }
 #' }
 #' @seealso 
 #'  \code{\link[stringr]{str_split}},\code{\link[stringr]{str_replace_all}}
