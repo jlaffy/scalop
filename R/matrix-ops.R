@@ -191,6 +191,6 @@ is_cor = function(m) {
 
 #' @export
 is_symm = function(m) {
-    (is_square(m)) && (sum(m == t(m)) != nrow(m)^2)
+    (is_square(m)) && (sum(m == t(m)) == nrow(m)^2)
 }
 
