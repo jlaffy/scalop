@@ -2,13 +2,10 @@
 #'
 #' @docType data
 #'
-#' @usage data(simpsons)
-#'
 #' @format A character vector.
 #'
-#' @keywords datasets
+#' @keywords palettes
 #'
 #' @examples
-#' data(simpsons)
 #' scales::show_col(simpsons)
 "simpsons"

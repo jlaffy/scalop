@@ -2,13 +2,10 @@
 #'
 #' @docType data
 #'
-#' @usage data(futurama)
-#'
 #' @format A character vector.
 #'
-#' @keywords datasets
+#' @keywords palettes 
 #'
 #' @examples
-#' data(futurama)
 #' scales::show_col(futurama)
 "futurama"
