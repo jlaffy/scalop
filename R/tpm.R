@@ -3,5 +3,5 @@
 #' @rdname tpm
 #' @export
 tpm = function(m, bulk = F) {
-    message('This function has been deprecated. Please instead use `scalop::unlogtpm`')
+    message('This function has been deprecated. Please instead use `scalop::unlogtpm()')
 }
