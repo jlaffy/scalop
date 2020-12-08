@@ -8,13 +8,12 @@
 A character vector.
 }
 \usage{
-data(pal19)
+pal19
 }
 \description{
 pal19, 19 Pretty Discrete Colours
 }
 \examples{
-data(pal19)
 scales::show_col(pal19)
 }
 \keyword{datasets}
