@@ -1,26 +1,32 @@
 
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
-#' @param m PARAM_DESCRIPTION, Default: NULL
-#' @param group PARAM_DESCRIPTION, Default: NULL
-#' @param group2 PARAM_DESCRIPTION, Default: NULL
-#' @param dea.res PARAM_DESCRIPTION, Default: NULL
-#' @param selected PARAM_DESCRIPTION, Default: NULL
+#' @title Volcano plot 
+#' @description Perform differential expression and create a volcano plot.
+#' @param m A matrix of features (e.g. genes) by observations (e.g. cells). Default: NULL
+#' @param group The group (of observations) to test. This should be a character vector or a two-level factor in which the first level corresponds to the group. Default: NULL
+#' @param group2 A second group to test against. This should be a character vector. If 'group2=NULL', defaults to all remaining observations in the matrix 'm'. Default: NULL
+#' @param dea.res The output of scalop::dea(..., return.val = 'df'). If provided, the function will not perform DEA and skip straight to plotting. Default: NULL
+#' @param pmethod The correction method for multiple testing, or 'none' if no correction is desired. See stats::p.adjust.methods for options. Default: 'BH'
+#' @param alternative The alternative hypothesis. If 'alternative=NULL' and 'group2' was provided, defaults to 'two-sided'. Else defaults to 'greater'. Default: NULL
+#' @param logp The minimum -log10(P) value at which differential expression is considered significant. Default: 2
+#' @param lfc The minimum log2 foldchange value at which differential expression is considered signficant. Default: 1
+#' @param n The number of top features to display. Default: 10
+#' @param selected  Default: NULL
 #' @param add.to.selected PARAM_DESCRIPTION, Default: NULL
 #' @param selected.col PARAM_DESCRIPTION, Default: 'red'
-#' @param alternative PARAM_DESCRIPTION, Default: NULL
-#' @param xlab PARAM_DESCRIPTION, Default: 'Log2 Fold Change'
-#' @param ylab PARAM_DESCRIPTION, Default: '- Log10 P-value (adjusted)'
-#' @param pmethod PARAM_DESCRIPTION, Default: 'BH'
-#' @param ngenes PARAM_DESCRIPTION, Default: 10
-#' @param text.size PARAM_DESCRIPTION, Default: 14
-#' @param label.size PARAM_DESCRIPTION, Default: 5
+#' @param xlab X-axis title. Default: 'Log2 Fold Change'
+#' @param ylab Y-axis title. Default: '-Log10 P-value (adjusted)'
 #' @param symmetric PARAM_DESCRIPTION, Default: TRUE
-#' @param add.line PARAM_DESCRIPTION, Default: TRUE
-#' @param ymax PARAM_DESCRIPTION, Default: NULL
+#' @param xintercept One or more numeric values to be added as vertical delimiters to the plot. Default: 0
+#' @param ymax Y-axis upper limit. If 'NULL', defaults to the maximum -log10(P) value. Setting 'ymax' can be useful to 'zoom in' on the y-axis, making feature points/labels below 'ymax' easier to see. Default: NULL
 #' @param xlim PARAM_DESCRIPTION, Default: NULL
-#' @param legend.text.size PARAM_DESCRIPTION, Default: 12
-#' @return OUTPUT_DESCRIPTION
+#' @param text.size Axes text size. Default: 14
+#' @param label.size Feature label text sizes. Default: 5
+#' @param legend.text.size Legend text size. Default: 12
+#' @return A list containing:
+#' \itemize{
+#' \item {data:} {A data frame; the differential expression results used in the plotting.}
+#' \item {G:} {A ggplot2 object; the volcano plot.}
+#' }
 #' @details DETAILS
 #' @examples 
 #' \dontrun{
@@ -42,22 +48,24 @@ ggvolcano = function(
                      group = NULL,
                      group2 = NULL,
                      dea.res = NULL,
+                     pmethod = 'BH',
+                     alternative = NULL,
+                     logp = 2,
+                     lfc = 1,
+                     n = 10,
                      selected = NULL,
                      add.to.selected = NULL,
                      selected.col = 'red',
-                     alternative = NULL,
                      xlab = 'Log2 Fold Change',
-                     ylab = '- Log10 P-value (adjusted)',
-                     pmethod = 'BH',
-                     ngenes = 10,
-                     text.size = 14,
-                     segment.colour = 'grey30',
-                     label.size = 5,
+                     ylab = '-Log10 P-value (adjusted)',
                      symmetric = TRUE,
-                     add.line = TRUE, 
+                     xintercept = 0, 
+                     segment.colour = 'grey30',
+                     text.size = 14,
+                     label.size = 5,
+                     legend.text.size = 12,
                      ymax = NULL,
-                     xlim = NULL,
-                     legend.text.size = 12) {
+                     xlim = NULL) {
 
     if (is.null(dea.res)) {
 
@@ -78,20 +86,20 @@ ggvolcano = function(
 
     dea.res = dea.res %>%
         dplyr::mutate(logP = -log10(p.adj)) %>%
-        dplyr::mutate(groups = ifelse(logP >= 2 & foldchange >= 1, 1, ifelse(logP >= 2 & foldchange <= -1, 1, 0)))
+        dplyr::mutate(groups = ifelse(logP >= logp & foldchange >= lfc, 1, ifelse(logP >= logp & foldchange <= -1*lfc, 1, 0)))
 
     if (is.null(selected)) {
         g1 = dea.res %>%
             dplyr::filter(groups == 1) %>%
             dplyr::arrange(desc(foldchange)) %>%
             dplyr::pull(gene)
-        g1 = as.character(g1)[1:ngenes]
+        g1 = as.character(g1)[1:n]
     
         g2 = dea.res %>%
             dplyr::filter(groups == 1) %>%
             dplyr::arrange(foldchange) %>%
             dplyr::pull(gene)
-        g2 = as.character(g2)[1:ngenes]
+        g2 = as.character(g2)[1:n]
     
         genes2show = unique(c(g1, g2))
     
@@ -178,8 +186,8 @@ ggvolcano = function(
             ggplot2::labs(x = xlab, y = ylab)
     }
 
-    if (add.line) {
-        G = G + ggplot2::geom_vline(xintercept = 0, linetype = 2, colour = 'gray65')
+    if (!is.null(xintercept)) {
+        G = G + ggplot2::geom_vline(xintercept = xintercept, linetype = 2, colour = 'gray65')
     }
 
     G

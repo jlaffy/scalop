@@ -2,75 +2,85 @@
 % Please edit documentation in R/ggvolcano.R
 \name{ggvolcano}
 \alias{ggvolcano}
-\title{FUNCTION_TITLE}
+\title{Volcano plot}
 \usage{
 ggvolcano(
   m = NULL,
   group = NULL,
   group2 = NULL,
   dea.res = NULL,
+  pmethod = "BH",
+  alternative = NULL,
+  logp = 2,
+  lfc = 1,
+  n = 10,
   selected = NULL,
   add.to.selected = NULL,
   selected.col = "red",
-  alternative = NULL,
   xlab = "Log2 Fold Change",
-  ylab = "- Log10 P-value (adjusted)",
-  pmethod = "BH",
-  ngenes = 10,
-  text.size = 14,
-  segment.colour = "grey30",
-  label.size = 5,
+  ylab = "-Log10 P-value (adjusted)",
   symmetric = TRUE,
-  add.line = TRUE,
+  xintercept = 0,
+  segment.colour = "grey30",
+  text.size = 14,
+  label.size = 5,
+  legend.text.size = 12,
   ymax = NULL,
-  xlim = NULL,
-  legend.text.size = 12
+  xlim = NULL
 )
 }
 \arguments{
-\item{m}{PARAM_DESCRIPTION, Default: NULL}
+\item{m}{A matrix of features (e.g. genes) by observations (e.g. cells). Default: NULL}
 
-\item{group}{PARAM_DESCRIPTION, Default: NULL}
+\item{group}{The group (of observations) to test. This should be a character vector or a two-level factor in which the first level corresponds to the group. Default: NULL}
 
-\item{group2}{PARAM_DESCRIPTION, Default: NULL}
+\item{group2}{A second group to test against. This should be a character vector. If 'group2=NULL', defaults to all remaining observations in the matrix 'm'. Default: NULL}
 
-\item{dea.res}{PARAM_DESCRIPTION, Default: NULL}
+\item{dea.res}{The output of scalop::dea(..., return.val = 'df'). If provided, the function will not perform DEA and skip straight to plotting. Default: NULL}
 
-\item{selected}{PARAM_DESCRIPTION, Default: NULL}
+\item{pmethod}{The correction method for multiple testing, or 'none' if no correction is desired. See stats::p.adjust.methods for options. Default: 'BH'}
+
+\item{alternative}{The alternative hypothesis. If 'alternative=NULL' and 'group2' was provided, defaults to 'two-sided'. Else defaults to 'greater'. Default: NULL}
+
+\item{logp}{The minimum -log10(P) value at which differential expression is considered significant. Default: 2}
+
+\item{lfc}{The minimum log2 foldchange value at which differential expression is considered signficant. Default: 1}
+
+\item{n}{The number of top features to display. Default: 10}
+
+\item{selected}{Default: NULL}
 
 \item{add.to.selected}{PARAM_DESCRIPTION, Default: NULL}
 
 \item{selected.col}{PARAM_DESCRIPTION, Default: 'red'}
 
-\item{alternative}{PARAM_DESCRIPTION, Default: NULL}
+\item{xlab}{X-axis title. Default: 'Log2 Fold Change'}
 
-\item{xlab}{PARAM_DESCRIPTION, Default: 'Log2 Fold Change'}
-
-\item{ylab}{PARAM_DESCRIPTION, Default: '- Log10 P-value (adjusted)'}
-
-\item{pmethod}{PARAM_DESCRIPTION, Default: 'BH'}
-
-\item{ngenes}{PARAM_DESCRIPTION, Default: 10}
-
-\item{text.size}{PARAM_DESCRIPTION, Default: 14}
-
-\item{label.size}{PARAM_DESCRIPTION, Default: 5}
+\item{ylab}{Y-axis title. Default: '-Log10 P-value (adjusted)'}
 
 \item{symmetric}{PARAM_DESCRIPTION, Default: TRUE}
 
-\item{add.line}{PARAM_DESCRIPTION, Default: TRUE}
+\item{xintercept}{One or more numeric values to be added as vertical delimiters to the plot. Default: 0}
 
-\item{ymax}{PARAM_DESCRIPTION, Default: NULL}
+\item{text.size}{Axes text size. Default: 14}
+
+\item{label.size}{Feature label text sizes. Default: 5}
+
+\item{legend.text.size}{Legend text size. Default: 12}
+
+\item{ymax}{Y-axis upper limit. If 'NULL', defaults to the maximum -log10(P) value. Setting 'ymax' can be useful to 'zoom in' on the y-axis, making feature points/labels below 'ymax' easier to see. Default: NULL}
 
 \item{xlim}{PARAM_DESCRIPTION, Default: NULL}
-
-\item{legend.text.size}{PARAM_DESCRIPTION, Default: 12}
 }
 \value{
-OUTPUT_DESCRIPTION
+A list containing:
+\itemize{
+\item {data:} {A data frame; the differential expression results used in the plotting.}
+\item {G:} {A ggplot2 object; the volcano plot.}
+}
 }
 \description{
-FUNCTION_DESCRIPTION
+Perform differential expression and create a volcano plot.
 }
 \details{
 DETAILS
