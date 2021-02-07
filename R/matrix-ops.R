@@ -7,7 +7,7 @@
 #' @export 
 colcenter = function(m, by = 'mean') {
     m = as.matrix(m)
-    if (by == 'mean')  by = matrixStats::colMeans2(m, na.rm = T)
+    if (by == 'mean')  by = colMeans(m, na.rm = T)
     else if (by == 'median') by = matrixStats::colMedians(m, na.rm = T)
     else stopifnot(is.numeric(by) & length(by) == ncol(m))
     scale(m, center = by, scale = F)
@@ -22,7 +22,7 @@ colcenter = function(m, by = 'mean') {
 #' @export 
 rowcenter = function(m, by = 'mean') {
     m = as.matrix(m)
-    if (by == 'mean')  by = matrixStats::rowMeans2(m, na.rm = T)
+    if (by == 'mean')  by = rowMeans(m, na.rm = T)
     else if (by == 'median') by = matrixStats::rowMedians(m, na.rm = T)
     else stopifnot(is.numeric(by) & length(by) == nrow(m))
     t(scale(t(m), center = by, scale = F))
