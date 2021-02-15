@@ -59,8 +59,7 @@ Remotes: jlaffy/brewerland
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
-    rmarkdown,
-    pkgdown
+    rmarkdown
 VignetteBuilder: knitr
 LinkingTo: 
     Rcpp
