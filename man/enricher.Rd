@@ -2,7 +2,7 @@
 % Please edit documentation in R/enricher.R, R/old-enricher.R
 \name{enricher}
 \alias{enricher}
-\title{FUNCTION_TITLE}
+\title{Functional enrichments}
 \usage{
 enricher(
   my_gene_sets,
@@ -35,30 +35,34 @@ enricher(
 
 \item{subcategory}{PARAM_DESCRIPTION, Default: NULL}
 
-\item{ref_gene_sets}{PARAM_DESCRIPTION}
+\item{test_gene_sets}{(list of) character vector gene IDs}
 
-\item{minGSSize}{PARAM_DESCRIPTION, Default: 10}
+\item{ref_gene_sets}{(list of) character vector gene IDs}
 
-\item{maxGSSize}{PARAM_DESCRIPTION, Default: 500}
+\item{universe}{all genes considered. If NULL, uses all genes in test_gene_sets. Default: NULL}
 
-\item{pAdjustMethod}{PARAM_DESCRIPTION, Default: 'BH'}
+\item{minGSSize}{minimum gene set size, Default: 10}
 
-\item{pvalueCutoff}{PARAM_DESCRIPTION, Default: 0.05}
+\item{maxGSSize}{maximum gene set size, Default: 500}
 
-\item{qvalueCutoff}{PARAM_DESCRIPTION, Default: 0.2}
+\item{pAdjustMethod}{p-value adjustment method, Default: 'BH'}
+
+\item{pvalueCutoff}{p-value cutoff, Default: 0.05}
+
+\item{qvalueCutoff}{FDR cutoff, Default: 0.2}
 }
 \value{
-OUTPUT_DESCRIPTION
+dataframe with enrichment statistics.
 
 OUTPUT_DESCRIPTION
 }
 \description{
-FUNCTION_DESCRIPTION
+Functional enrichments by hypergeometric test
 
 FUNCTION_DESCRIPTION
 }
 \details{
-DETAILS
+enriched ref_gene_sets per test_gene_set are returned. test_gene_set names are specified in the name column and ref_gene_set name are specified in the ID column.
 
 DETAILS
 }
