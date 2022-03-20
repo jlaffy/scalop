@@ -179,7 +179,12 @@ gmap <- function(dat,
                                       labels = legend.breaks,
                                       name = legend.title,
                                       na.value = na.value,
-                                      guide = ggplot2::guide_colorbar(frame.colour = 'black')) +
+                                      guide = ggplot2::guide_colorbar(frame.colour='black',
+								      ticks.colour='black',
+								      title.position='top',
+								      title.hjust=0.5,
+								      barwidth=3,
+								      barheight=0.75)) +
         ggplot2::labs(x = x.name,
                       y = y.name,
                       title = title,
