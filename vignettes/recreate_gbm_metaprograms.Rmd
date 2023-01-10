@@ -11,7 +11,7 @@ vignette: >
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 options(tibble.print_min = 4L, tibble.print_max = 4L)
 knitr::opts_knit$set(warning = FALSE, error = TRUE)
-library(infercna)
+#library(infercna)
 library(magrittr)
 set.seed(1014)
 ```
@@ -19,14 +19,15 @@ set.seed(1014)
 ### 1. MGH136 expression programs toy example
 ##### 1.1. Load data
 ```{r}
-MGH136 = readRDS('data/MGH136.rds')
+?scalop::MGH136
+head(scalop::MGH136)
 ```
 ##### 1.2. Center expression matrix
 ```{r}
-MGH136.cent = scalop::rowcenter(MGH136)
+MGH136.cent = scalop::rowcenter(scalop::MGH136)
 ```
 ##### 1.3. Generate an ordered correlation matrix
-```{r}
+```{r}	
 r.matrix = scalop::hca_cor(MGH136.cent)
 ```
 ##### 1.4. Retrieve cell clusters with a specified <\k>\

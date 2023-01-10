@@ -7,60 +7,57 @@ Authors@R:
            role = c("aut", "cre"),
            email = "julie.laffy@weizmann.ac.il",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: A toolbox for analyses of single-cell RNA-seq data. High-level functions include hca() for hierarchical clustering analysis and dea() for differential expression analysis. 
+Description: A toolbox for analyses of single-cell RNA-seq data.
+    High-level functions include hca() for hierarchical clustering
+    analysis and dea() for differential expression analysis.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
 URL: https://github.com/jlaffy/scalop
 BugReports: https://github.com/jlaffy/scalop/issues
-RoxygenNote: 7.1.1
 Depends:
     R (>= 2.10)
-biocViews:
 Imports: 
-    stats,
-    dplyr,
-    zeallot,
-    grid,
-    ggplot2,
-    Rcpp,
-    methods,
-    magrittr,
-    ggpubr,
-    gtable,
-    tibble,
-    matrixStats,
-    grDevices,
-    graphics,
-    gridExtra,
-    stringr,
-    patchwork,
-    rlang,
-    scales,
-    reshape2,
-    biomaRt,
     AnnotationDbi,
     GO.db,
-    org.Hs.eg.db,
-    TxDb.Hsapiens.UCSC.hg19.knownGene,
-    calibrate,
-    mixtools,
     RColorBrewer,
-    nor1mix,
-    ggrepel,
-    clusterProfiler,
-    msigdbr,
-    irlba,
+    Rcpp,
     Rtsne,
-    scran,
+    TxDb.Hsapiens.UCSC.hg19.knownGene,
+    biomaRt,
+    clusterProfiler,
+    dplyr,
+    ggplot2,
+    ggpubr,
+    ggrepel,
+    gridExtra,
+    gtable,
     igraph,
-    plyr
-Remotes: jlaffy/brewerland
+    irlba,
+    magrittr,
+    matrixStats,
+    mixtools,
+    msigdbr,
+    nor1mix,
+    org.Hs.eg.db,
+    patchwork,
+    plyr,
+    reshape2,
+    scales,
+    scran,
+    stringr,
+    zeallot
 Suggests: 
-    testthat (>= 2.1.0),
     knitr,
+    pkgdown,
+    rlang,
     rmarkdown,
-    pkgdown
-VignetteBuilder: knitr
+    testthat (>= 2.1.0)
 LinkingTo: 
     Rcpp
+VignetteBuilder: 
+    knitr
+Remotes: 
+    jlaffy/brewerland
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.1
+biocViews:

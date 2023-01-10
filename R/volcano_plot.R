@@ -61,14 +61,14 @@ volcano_plot = function(
                                                                       col="green"))
     
     
-    with(subset(d, p.adj < vis.p & abs(foldchange) > vis.lfc), calibrate::textxy(foldchange,
-                                                                                logp,
-                                                                                labs = gene,
-                                                                                cex = text.cex,
-                                                                                pos = 4))
+    with(subset(d, p.adj < vis.p & abs(foldchange) > vis.lfc), textxy(foldchange,
+                                                                      logp,
+                                                                      labs = gene,
+                                                                      cex = text.cex,
+                                                                      pos = 4))
 
 #    d3 = dplyr::filter(d, p.adj >= vis.p & p.adj < 0.05 & abs(foldchange) <= vis.lfc & abs(foldchange) > log2(2))
-#    with(d3, calibrate::textxy(foldchange,
+#    with(d3, textxy(foldchange,
 #                               logp,
 #                               labs = gene,
 #                               cex = .3))
