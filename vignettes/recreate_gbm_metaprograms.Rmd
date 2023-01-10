@@ -28,7 +28,7 @@ MGH136.cent = scalop::rowcenter(scalop::MGH136)
 ```
 ##### 1.3. Generate an ordered correlation matrix
 ```{r}	
-r.matrix = scalop::hca_cor(MGH136.cent)
+cr.matrix = scalop::hca_cor(MGH136.cent)
 ```
 ##### 1.4. Retrieve cell clusters with a specified <\k>\
 ```{r}
