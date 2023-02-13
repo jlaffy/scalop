@@ -1,17 +1,10 @@
 citHeader("To cite scalop in publications, please use:")
 
-@Manual{,
-  title = {scalop: Single Cell Analysis Operations},
-  author = {Julie Laffy},
-  year = {2023},
-  note = {R package version 1.1.0},
-  url = {https://github.com/jlaffy/scalop},
+citEntry(
+  title = scalop: Single Cell Analysis Operations,
+  author = Julie Laffy,
+  year = 2022,
+  note = R package version 1.1.0,
+  url = https://github.com/jlaffy/scalop,
+  textVersion = "Laffy J (2022). scalop: Single Cell Analysis Operations. R package version 1.1.0, https://github.com/jlaffy/scalop."
 }
-
-citEntry(entry = "book",
-  author = "Julie Laffy",
-  title = "scalop: Single Cell Analysis Operations",
-  year = "2022",
-  url = "",
-  textVersion = "H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016."
-)
