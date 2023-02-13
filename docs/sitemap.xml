@@ -10,7 +10,16 @@
     <loc>/LICENSE.html</loc>
   </url>
   <url>
+    <loc>/articles/01_intra_tumour_programs.html</loc>
+  </url>
+  <url>
+    <loc>/articles/02_MGH136_programs_the_real_deal.html</loc>
+  </url>
+  <url>
     <loc>/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>/articles/old_01.html</loc>
   </url>
   <url>
     <loc>/articles/recreate_gbm_metaprograms.html</loc>

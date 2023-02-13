@@ -2,9 +2,8 @@ pandoc: 2.17.1.1
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
-  recreate_gbm_metaprograms: recreate_gbm_metaprograms.html
-last_built: 2023-01-10T11:47Z
+  01_intra_tumour_programs: 01_intra_tumour_programs.html
+  02_MGH136_programs_the_real_deal: 02_MGH136_programs_the_real_deal.html
+  old_01: old_01.html
+last_built: 2023-02-09T09:11Z
 
-template:
-  bootstrap: 5
-  package: tidytemplate

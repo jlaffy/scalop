@@ -1,0 +1,35 @@
+# load data
+MGH136 = readRDS('data/MGH136.rds')
+
+# 1: Center expression matrix
+MGH136.cent = scalop::rowcenter(MGH136)
+
+# ... Using scalop::programs ...
+# 2: Generate an ordered correlation matrix
+# 3: Retrieve cell clusters with NO <K> CUTOFF. This is the real step 3!
+# 4: Define gene programs from each cell cluster
+# 5i: Remove not-significant programs
+# 5ii: Remove too-redundant clusters/programs
+prog_obj = scalop::programs(MGH136.cent,
+			    lfc = log2(2),
+			    pmethod = 'BH',
+			    p = 0.01,
+			    nsig1 = 50,
+			    jaccard = 0.7)
+
+# Output object
+# 25 clusters
+lengths(prog_obj)
+
+# cluster 1: CC?
+prog_obj$groups[[1]]
+prog_obj$profiles[[1]] %>% head
+prog_obj$profiles[[1]] %>% length
+prog_obj$programs[[1]]
+
+# cluster 10: MES?
+prog_obj$groups[[10]]
+prog_obj$profiles[[10]] %>% head
+prog_obj$profiles[[10]] %>% length
+prog_obj$programs[[10]]
+

@@ -1,0 +1,143 @@
+---
+title: "1 Defining intra-tumour programs of heterogeneity"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse=FALSE,
+		      comment="#>", 
+		      warning=FALSE, 
+		      message=FALSE, 
+		      error=TRUE)
+options(tibble.print_min=4L,
+	tibble.print_max=4L)
+knitr::opts_knit$set(warning=FALSE,
+		     message=FALSE,
+		     error=TRUE)
+library(magrittr)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+set.seed(1014)
+```
+
+```{css, echo=FALSE}
+.scroll-300 {
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: inherit;
+}
+```
+
+### 1 Load data
+```{r}
+?scalop::MGH136
+head(scalop::MGH136[,1:6])
+```
+
+### 2 Center expression matrix
+```{r}
+MGH136.cent = scalop::rowcenter(scalop::MGH136)
+```
+
+```{r, eval=FALSE}
+"""
+MGH136.cent = t(scale(t(MGH136),center=T, scale=F))
+# Or with sweep, apply, etc.
+"""
+```
+
+### 3 Generate an ordered correlation matrix
+```{r}	
+cr.matrix = scalop::hca_cor(MGH136.cent)
+```
+
+```{r, eval=FALSE}
+"""
+cr.matrix = scalop::hca_cor(MGH136.cent)
+dist.matrix = as.dist(1-cr.matrix)
+tree = hclust(dist.matrix)
+cell.order = tree$order
+cr.matrix = cr.matrix[cell.order, cell.order]
+"""
+```
+
+### 4 Retrieve cell clusters with a specified *k*
+```{r, collapse=FALSE}
+scalop::graster(
+		reshape2::melt(cr.matrix),
+		limits=c(-0.3,0.3),
+		num=TRUE)
+```
+
+```{r}
+clusters_4 = scalop::hca_groups(
+				cr.matrix,
+				k=4,
+				cor.method='none',
+				min.size=0,
+				max.size=1
+)
+
+```
+```{r, eval=FALSE}
+"""
+clusters_4 = stats::cutree(tree = tree, k = 4)
+"""
+```
+
+### 5 Define expression programs from each cell cluster
+
+# <a href="https://github.com/jlaffy/scalop/blob/master/img/DEA.pdf"><img
+
+```{r}
+programs_4 = scalop::dea(
+			 MGH136.cent,
+			 group=clusters_4,
+			 center.rows=FALSE,
+			 return.val='gene'
+)
+
+# ==========================
+# Arguments (default values)
+# ==========================
+# lfc = log2(2) (or NULL)
+# p = 0.01 (or NULL)
+# pmethod = “BH”
+# arrange.by = ‘lfc’ (or ‘p’)
+# return.val = ‘lfc’ (or ‘p’ or  ‘gene’)
+```
+
+```{r, collapse=TRUE}
+lengths(programs_4)
+```
+
+Let's have a look at the top differentially expressed genes (DEGs) in each cluster:
+```{r, class.output="scroll-300"}
+scalop::ntop(programs_4, 100) %>%
+	as.data.frame %>%
+	scalop::setColNames(., c('NPC','CC','OPC','AC/MES'))
+```
+
+### 6 Retrieve cell clusters with no cutoff
+Let's revisit step 4. Can you see the problems with this method?
+
+1. `MGH136` clearly showed four clusters of cells, but many tumours would not be so structured: the correlation maps would look be messy, with no obvious number of clusters to choose. 
+
+2. This method would limit us to working with mutually exclusive clusters of cells, whereas in reality we would prefer some degree of redundancy, since biology is redundant, after all!
+   
+To address these points, we can instead retrieve clusters at many values of *k*  (a.k.a. heights on the dendrogram) and thereby avoid selecting clusters at arbitrarily defined cutoffs.
+
+```{r}
+# The k argument now takes a value of NULL
+clusters_all = scalop::hca_groups(
+				  cr.matrix,
+				  k=NULL,
+				  cor.method ="none")
+
+### ADD EQUIVALENT CODE IN BASE R
+```
