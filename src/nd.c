@@ -21,7 +21,7 @@
   _R_ !!
 */
 
-#include "S.h"
+#include "R.h"
 
 #if defined(USING_R) /*( R-specific stuff */
 
