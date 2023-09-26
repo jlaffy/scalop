@@ -17,5 +17,5 @@ grouped_rowcenter(m, groups = split_by_sample_names(colnames(m)), by = "mean")
 A row-centered matrix, centered within groups and with the order of cells within groups retained. The matrix has the same number of rows as <m> and as many columns as there are cell ids in groups.
 }
 \description{
-Center matrix rows by subsets of columns
+
 }
