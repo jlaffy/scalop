@@ -21,7 +21,7 @@
   _R_ !!
 */
 
-#include "S.h"
+#include "R.h"
 
 #if defined(USING_R) /*( R-specific stuff */
 
@@ -63,8 +63,6 @@ static void detectTies(RSInt geneNum, RSInt nResults, RSInt nRows, gene_t *data)
     
     for (i = 1; i < nResults; i++) {
 	if (data[i].geneDist == data[i+1].geneDist) {
-	    PROBLEM "There are distance ties in the data for gene %d\n",geneNum
-            WARN;
 	    break;
 	}
     }
