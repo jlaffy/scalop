@@ -78,7 +78,7 @@
 
     res = c()
 
-    if (class(x) == 'matrix') {
+    if ('matrix' %in% class(x)) {
         x = .hca_cor(x, method = cor.method)
         res = c(res, list(cr = x))
         if (cor.end) return(res)
