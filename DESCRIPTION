@@ -5,8 +5,7 @@ Authors@R:
     person(given = "Julie",
            family = "Laffy",
            role = c("aut", "cre"),
-           email = "julie.laffy@weizmann.ac.il",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "julie.laffy@weizmann.ac.il")
 Description: A toolbox for the analysis of single-cell RNA-seq data and semi-automated identification of intra-tumour programs.
 License: MIT + file LICENSE
 URL: https://github.com/jlaffy/scalop
@@ -53,8 +52,6 @@ LinkingTo:
     Rcpp
 VignetteBuilder: 
     knitr
-Remotes: 
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.1
-biocViews:

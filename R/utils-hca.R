@@ -11,12 +11,6 @@
 .hca_dist = function(m, method, max.dist = NULL) {
     method = match.arg(method, scalop::dist.methods)
     if (!is_square(m)) m = t(m)
-    if (!is.null(max.dist)) {
-        if (is_square(m) && unique(diag(m)) != max.dist) {
-            warning("<max.dist> = ", max.dist, " but <m> diagonal = ", unique(diag(m)), "...")
-        }
-        m = max.dist - m
-    }
     if (method == 'none') return(stats::as.dist(m))
     stats::dist(m, method = method)
 }
