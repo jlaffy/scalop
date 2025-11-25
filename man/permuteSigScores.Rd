@@ -2,7 +2,7 @@
 % Please edit documentation in R/permuteSigScores.R
 \name{permuteSigScores}
 \alias{permuteSigScores}
-\title{FUNCTION_TITLE}
+\title{Permutation-based signature scoring with statistical testing}
 \usage{
 permuteSigScores(
   m,
@@ -16,41 +16,25 @@ permuteSigScores(
 )
 }
 \arguments{
-\item{m}{PARAM_DESCRIPTION}
+\item{m}{expression matrix (genes by cells)}
 
-\item{sigs}{PARAM_DESCRIPTION}
+\item{sigs}{list of gene signatures}
 
-\item{center.fun}{PARAM_DESCRIPTION, Default: NULL}
+\item{center.fun}{optional centering function to apply to matrix before scoring. Default: NULL}
 
-\item{center.rows}{PARAM_DESCRIPTION, Default: TRUE}
+\item{center.rows}{whether to center rows in sigScores. Default: TRUE}
 
-\item{expr.bin.m}{PARAM_DESCRIPTION, Default: NULL}
+\item{expr.bin.m}{optional expression bin matrix for sigScores. Default: NULL}
 
-\item{N}{PARAM_DESCRIPTION, Default: 50}
+\item{N}{number of permutations to generate null distribution. Default: 50}
 
-\item{alternative}{PARAM_DESCRIPTION, Default: c("greater", "two.sided", "less")}
+\item{alternative}{test direction: 'greater' (high scores), 'two.sided' (extreme scores in either direction), or 'less' (low scores). Default: 'greater'}
 
-\item{...}{PARAM_DESCRIPTION}
+\item{...}{additional arguments passed to sigScores}
 }
 \value{
-OUTPUT_DESCRIPTION
+data frame with columns: id (cell), sig (signature name), score (observed score), fdr (adjusted p-value)
 }
 \description{
-FUNCTION_DESCRIPTION
-}
-\details{
-DETAILS
-}
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
-\seealso{
-\code{\link[scalop]{sigScores}}, \code{\link[scalop]{setRowNames}}, \code{\link[scalop]{setColNames}}
- \code{\link[tibble]{rownames}}
- \code{\link[reshape2]{melt}}
- \code{\link[dplyr]{rename}}, \code{\link[dplyr]{mutate}}
+Computes signature scores for observed data and compares against N permuted null distributions. For each permutation, gene expression values are shuffled across cells (independently for each gene) to break co-expression patterns while preserving gene identities and expression distributions. Identifies cells with significantly high (or low) signature scores based on permutation testing. Scores are considered significant if they exceed mean + 2*SD (or fall below mean - 2*SD) of the permuted distribution.
 }

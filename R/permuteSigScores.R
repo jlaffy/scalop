@@ -1,22 +1,10 @@
 
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
-#' @param m PARAM_DESCRIPTION
-#' @param adjust.method PARAM_DESCRIPTION, Default: 'fdr'
-#' @param MARGIN PARAM_DESCRIPTION, Default: 1
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
-#' @examples 
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @seealso 
-#'  \code{\link[stats]{p.adjust}}
-#' @rdname binom.test_matrix
-#' @export 
-#' @importFrom stats p.adjust
+#' @title Binomial test on matrix
+#' @description Performs binomial test on each row (or column) of a logical/binary matrix to test if there are more TRUE values than expected by chance. Tests the alternative hypothesis that the proportion of successes is greater than expected.
+#' @param m matrix (logical or binary)
+#' @param adjust.method p-value adjustment method. Default: 'fdr'
+#' @param MARGIN 1 for rows, 2 for columns. Default: 1
+#' @return adjusted p-values
 binom.test_matrix = function(m, adjust.method='fdr', MARGIN=1) {
     # H1 = more TRUE (extreme values) than expected
     alternative='greater'
@@ -28,58 +16,29 @@ binom.test_matrix = function(m, adjust.method='fdr', MARGIN=1) {
     stats::p.adjust(pvals, method=adjust.method)
 }
 
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
-#' @param m PARAM_DESCRIPTION
-#' @param MARGIN PARAM_DESCRIPTION, Default: 1
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
-#' @examples 
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @seealso 
-#'  \code{\link[scalop]{setColNames}}, \code{\link[scalop]{setRowNames}}
-#' @rdname permute_matrix
-#' @export 
-#' @importFrom scalop setColNames setRowNames
+#' @title Permute matrix by shuffling across cells
+#' @description Shuffles expression values across cells independently for each gene (row). Preserves gene identities and expression distributions while breaking co-expression patterns within cells. Used to generate null distributions for permutation testing.
+#' @param m matrix (genes by cells)
+#' @param MARGIN 1 for rows (shuffles across cells for each gene), 2 for columns. Default: 1
+#' @return permuted matrix with same dimensions and names as input
 permute_matrix = function(m, MARGIN = 1) {
     t(apply(m, MARGIN, sample, replace = FALSE)) %>%
         scalop::setColNames(., colnames(m)) %>%
         scalop::setRowNames(., rownames(m))
 }
 
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
-#' @param m PARAM_DESCRIPTION
-#' @param sigs PARAM_DESCRIPTION
-#' @param center.fun PARAM_DESCRIPTION, Default: NULL
-#' @param center.rows PARAM_DESCRIPTION, Default: TRUE
-#' @param expr.bin.m PARAM_DESCRIPTION, Default: NULL
-#' @param N PARAM_DESCRIPTION, Default: 50
-#' @param alternative PARAM_DESCRIPTION, Default: c("greater", "two.sided", "less")
-#' @param ... PARAM_DESCRIPTION
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
-#' @examples 
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @seealso 
-#'  \code{\link[scalop]{sigScores}}, \code{\link[scalop]{setRowNames}}, \code{\link[scalop]{setColNames}}
-#'  \code{\link[tibble]{rownames}}
-#'  \code{\link[reshape2]{melt}}
-#'  \code{\link[dplyr]{rename}}, \code{\link[dplyr]{mutate}}
-#' @rdname permuteSigScores
-#' @export 
-#' @importFrom scalop sigScores setRowNames setColNames
-#' @importFrom tibble rownames_to_column
-#' @importFrom reshape2 melt
-#' @importFrom dplyr rename mutate
+#' @title Permutation-based signature scoring with statistical testing
+#' @description Computes signature scores for observed data and compares against N permuted null distributions. For each permutation, gene expression values are shuffled across cells (independently for each gene) to break co-expression patterns while preserving gene identities and expression distributions. Identifies cells with significantly high (or low) signature scores based on permutation testing. Scores are considered significant if they exceed mean + 2*SD (or fall below mean - 2*SD) of the permuted distribution.
+#' @param m expression matrix (genes by cells)
+#' @param sigs list of gene signatures
+#' @param center.fun optional centering function to apply to matrix before scoring. Default: NULL
+#' @param center.rows whether to center rows in sigScores. Default: TRUE
+#' @param expr.bin.m optional expression bin matrix for sigScores. Default: NULL
+#' @param N number of permutations to generate null distribution. Default: 50
+#' @param alternative test direction: 'greater' (high scores), 'two.sided' (extreme scores in either direction), or 'less' (low scores). Default: 'greater'
+#' @param ... additional arguments passed to sigScores
+#' @return data frame with columns: id (cell), sig (signature name), score (observed score), fdr (adjusted p-value)
+#' @export
 permuteSigScores = function(m, 
 			    sigs, 
 			    center.fun=NULL, 
@@ -144,4 +103,3 @@ permuteSigScores = function(m,
     
     full_join(scores0, pvals)
 }
-

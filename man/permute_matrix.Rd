@@ -2,31 +2,18 @@
 % Please edit documentation in R/permuteSigScores.R
 \name{permute_matrix}
 \alias{permute_matrix}
-\title{FUNCTION_TITLE}
+\title{Permute matrix by shuffling across cells}
 \usage{
 permute_matrix(m, MARGIN = 1)
 }
 \arguments{
-\item{m}{PARAM_DESCRIPTION}
+\item{m}{matrix (genes by cells)}
 
-\item{MARGIN}{PARAM_DESCRIPTION, Default: 1}
+\item{MARGIN}{1 for rows (shuffles across cells for each gene), 2 for columns. Default: 1}
 }
 \value{
-OUTPUT_DESCRIPTION
+permuted matrix with same dimensions and names as input
 }
 \description{
-FUNCTION_DESCRIPTION
-}
-\details{
-DETAILS
-}
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
-\seealso{
-\code{\link[scalop]{setColNames}}, \code{\link[scalop]{setRowNames}}
+Shuffles expression values across cells independently for each gene (row). Preserves gene identities and expression distributions while breaking co-expression patterns within cells. Used to generate null distributions for permutation testing.
 }

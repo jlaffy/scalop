@@ -41,6 +41,7 @@ Imports:
     scales,
     scran,
     stringr,
+    tibble,
     zeallot
 Suggests: 
     knitr,

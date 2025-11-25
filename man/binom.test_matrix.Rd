@@ -2,33 +2,20 @@
 % Please edit documentation in R/permuteSigScores.R
 \name{binom.test_matrix}
 \alias{binom.test_matrix}
-\title{FUNCTION_TITLE}
+\title{Binomial test on matrix}
 \usage{
 binom.test_matrix(m, adjust.method = "fdr", MARGIN = 1)
 }
 \arguments{
-\item{m}{PARAM_DESCRIPTION}
+\item{m}{matrix (logical or binary)}
 
-\item{adjust.method}{PARAM_DESCRIPTION, Default: 'fdr'}
+\item{adjust.method}{p-value adjustment method. Default: 'fdr'}
 
-\item{MARGIN}{PARAM_DESCRIPTION, Default: 1}
+\item{MARGIN}{1 for rows, 2 for columns. Default: 1}
 }
 \value{
-OUTPUT_DESCRIPTION
+adjusted p-values
 }
 \description{
-FUNCTION_DESCRIPTION
-}
-\details{
-DETAILS
-}
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
-\seealso{
-\code{\link[stats]{p.adjust}}
+Performs binomial test on each row (or column) of a logical/binary matrix to test if there are more TRUE values than expected by chance. Tests the alternative hypothesis that the proportion of successes is greater than expected.
 }
