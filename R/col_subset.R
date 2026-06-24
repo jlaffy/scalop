@@ -10,7 +10,7 @@
 col_subset = function(m, pattern, negate = FALSE) {
     pattern = unlist(pattern)
     if (length(pattern) > 1) {
-        pattern = pattern[order(sapply(pattern, nchar), decreasing = T), ]
+        pattern = pattern[order(sapply(pattern, nchar), decreasing = T)]
         pattern = paste0(pattern, collapse = "|")
     }
     if (negate) {
